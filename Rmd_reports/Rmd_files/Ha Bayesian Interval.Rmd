@@ -1,0 +1,116 @@
+---
+title: "Col4a5xDO Ha Bayesian Interval Tables"
+author: "Yuka Takemon"
+date: "10/28/2016"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+#setdirectory
+setwd("~/Desktop/Col4a5xDO/R_col4a5xdo/qtl/")
+
+#load libraries
+library(DOQTL)
+library(knitr)
+
+#load appropritate qtl maps 
+load("qtl.GFR.log.C2.192.Rdata")
+load("qtl.log.Alb6WK.192.Rdata")
+load("qtl.log.Alb10WK.192.Rdata")
+load("qtl.log.Alb15WK.192.Rdata")
+```
+
+## Col4a5 x DO Ha QTL
+
+This is an R Markdown document displaying bayesian intervals of 1415 Col4a5xDO qtl maps for GFR C2 and Albuminura at 6 ,10, and 15 wks of 192 animals. 
+This Ha QTL was calculated with sex as an additive covariate, additionally Albumin QTL data also considers creatinine as a covariate.
+
+###QTL LOD score linear regresion models:
+
+$H_{0} : y = \mu + \beta_{x} x_{i} + \epsilon_{i}$\
+$H_{a} : y = \mu + \beta_{x} x_{i} + \beta_{x} g_{i} + \epsilon_{i}$\
+$H_{f} : y = \mu + \beta_{x} x_{i} + \beta_{x} g_{i} + \gamma x_{i} g_{i} + \epsilon_{i}$\
+$H_{i} : y = \gamma x_{i} g_{i}$
+
+###Terms:
+
+$H_{0} =$ QTL without covariates.\
+$H_{a} =$ QTL with additive covariates.\
+$H_{f} =$ QTL with additive covariates and interactive covariates. (Full QTL model)\
+$H_{i} =$ QTL interaction.
+
+###Interaction:
+
+$H_{i} = H_{f} - H_{a}$\
+$H_{0}$ will cancel out, leaving only the interaction term:\
+$y_{i} = \gamma x_{i} g_{i}$
+
+
+### Ha GFR C2 Bayesian Invervals
+```{r Ha GFR C2 intervals, include = FALSE}
+interval2 <- bayesint(qtl.GFR.log.C2.192, chr = 2)
+interval4 <- bayesint(qtl.GFR.log.C2.192, chr = 4)
+interval7 <- bayesint(qtl.GFR.log.C2.192, chr = 7)
+interval9 <- bayesint(qtl.GFR.log.C2.192, chr = 9)
+interval10 <- bayesint(qtl.GFR.log.C2.192, chr = 10)
+interval15 <- bayesint(qtl.GFR.log.C2.192, chr = 15)
+interval19 <- bayesint(qtl.GFR.log.C2.192, chr = 19)
+```
+\footnotesize
+```{r GHa FR C2 table creation, echo = FALSE}
+knitr::kable(interval2, caption = "GFR C2 Model Bayesian Interval Table: Chromosome 2")
+knitr::kable(interval4, caption = "GFR C2 Model Bayesian Interval Table: Chromosome 4")
+knitr::kable(interval7, caption = "GFR C2 Model Bayesian Interval Table: Chromosome 7")
+knitr::kable(interval9, caption = "GFR C2 Model Bayesian Interval Table: Chromosome 9")
+knitr::kable(interval10, caption = "GFR C2 Model Bayesian Interval Table: Chromosome 10")
+knitr::kable(interval15, caption = "GFR C2 Model Bayesian Interval Table: Chromosome 15")
+knitr::kable(interval19, caption = "GFR C2 Model Bayesian Interval Table: Chromosome 19")
+```
+
+### Ha Albuminuria 6wk Baysian Intervals
+
+```{r Ha Alb 6wk intervals, include = FALSE}
+interval2 <- bayesint(qtl.log.Alb6WK.192, chr = 2)
+interval11 <- bayesint(qtl.log.Alb6WK.192, chr = 11)
+interval12 <- bayesint(qtl.log.Alb6WK.192, chr = 12)
+```
+
+```{r HaAlb 6wk table creation, echo = FALSE}
+knitr::kable(interval2, caption = "Albuminuria 6wk Bayesian Interval Table: Chromosome 2")
+knitr::kable(interval11, caption = "Albuminuria 6wk Bayesian Interval Table: Chromosome 11")
+knitr::kable(interval12, caption = "Albuminuria 6wk Bayesian Interval Table: Chromosome 12")
+```
+
+### Ha Albuminuria 10wk Baysian Intervals
+```{r Ha Alb 10wk intervals, include = FALSE}
+interval2 <- bayesint(qtl.log.Alb10WK.192, chr = 2)
+interval4 <- bayesint(qtl.log.Alb10WK.192, chr = 4)
+interval11 <- bayesint(qtl.log.Alb10WK.192, chr = 11)
+interval13 <- bayesint(qtl.log.Alb10WK.192, chr = 13)
+```
+
+```{r Ha Alb 10wk table creation, echo = FALSE}
+knitr::kable(interval2, caption = "Albuminuria 10wk Bayesian Interval Table: Chromosome 2")
+knitr::kable(interval4, caption = "Albuminuria 10wk Bayesian Interval Table: Chromosome 4")
+knitr::kable(interval11, caption = "Albuminuria 10wk Bayesian Interval Table: Chromosome 11")
+knitr::kable(interval13, caption = "Albuminuria 10wk Bayesian Interval Table: Chromosome 13")
+```
+
+### Ha Albuminuria 15wk Baysian Intervals
+```{r Ha Alb 15wk intervals, include = FALSE}
+interval15 <- bayesint(qtl.log.Alb15WK.192, chr = 15)
+```
+
+```{r Ha Alb 15wk table creation, echo = FALSE}
+knitr::kable(interval15, caption = "Albuminuria 15wk Bayesian Interval Table: Chromosome 15")
+```
+
+
+
+
+
+
+
+
+
+

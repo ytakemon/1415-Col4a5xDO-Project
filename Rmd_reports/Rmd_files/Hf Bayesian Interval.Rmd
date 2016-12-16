@@ -1,0 +1,92 @@
+---
+title: "Col4a5xDO Hf Bayesian Interval Tables"
+author: "Yuka Takemon"
+date: "11/04/2016"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+#setdirectory
+setwd("~/Desktop/Col4a5xDO/R_col4a5xdo/qtl/")
+
+#load libraries
+library(DOQTL)
+library(knitr)
+
+#load appropritate qtl maps 
+load("qtl.GFR.log.C2.sex.intcovar.192.Rdata")
+load("qtl.log.Alb6WK.192.sex.intcovar.Rdata")
+load("qtl.log.Alb10WK.192.sex.intcovar.Rdata")
+load("qtl.log.Alb15WK.192.sex.intcovar.Rdata")
+```
+
+## Col4a5 x DO Hf QTL
+
+This is an R Markdown document displaying bayesian intervals of 1415 Col4a5xDO qtl maps for GFR C2 and Albuminura at 6 ,10, and 15 wks of 192 animals. 
+This Hf QTL model incudes sex as an interactive covariate in addition to the Ha model. 
+
+###QTL LOD score linear regresion models:
+
+$H_{0} : y = \mu + \beta_{x} x_{i} + \epsilon_{i}$\
+$H_{a} : y = \mu + \beta_{x} x_{i} + \beta_{x} g_{i} + \epsilon_{i}$\
+$H_{f} : y = \mu + \beta_{x} x_{i} + \beta_{x} g_{i} + \gamma x_{i} g_{i} + \epsilon_{i}$\
+$H_{i} : y = \gamma x_{i} g_{i}$
+
+###Terms:
+
+$H_{0} =$ QTL without covariates.\
+$H_{a} =$ QTL with additive covariates.\
+$H_{f} =$ QTL with additive covariates and interactive covariates. (Full QTL model)\
+$H_{i} =$ QTL interaction.
+
+###Interaction:
+
+$H_{i} = H_{f} - H_{a}$\
+$H_{0}$ will cancel out, leaving only the interaction term:\
+$y_{i} = \gamma x_{i} g_{i}$
+
+
+### Hf GFR C2 Bayesian Invervals
+```{r Hf GFR C2 intervals, include = FALSE}
+interval10 <- bayesint(qtl.GFR.log.C2.sex.intcovar.192, chr = 10)
+interval11 <- bayesint(qtl.GFR.log.C2.sex.intcovar.192, chr = 11)
+```
+\footnotesize
+```{r GHf FR C2 table creation, echo = FALSE}
+knitr::kable(interval10, caption = "Hf: GFR C2 Model Bayesian Interval Table: Chromosome 10")
+knitr::kable(interval11, caption = "Hf: GFR C2 Model Bayesian Interval Table: Chromosome 11")
+```
+
+### Hf Albuminuria 6wk Baysian Intervals
+
+```{r Hf Alb 6wk intervals, include = FALSE}
+interval2 <- bayesint(qtl.log.Alb6WK.192.sex.intcovar, chr = 2)
+interval11 <- bayesint(qtl.log.Alb6WK.192.sex.intcovar, chr = 11)
+```
+
+```{r HfAlb 6wk table creation, echo = FALSE}
+knitr::kable(interval2, caption = "Hf: Albuminuria 6wk Bayesian Interval Table: Chromosome 2")
+knitr::kable(interval11, caption = "Hf: Albuminuria 6wk Bayesian Interval Table: Chromosome 11")
+```
+
+### Hf Albuminuria 10wk Baysian Intervals
+```{r Hf Alb 10wk intervals, include = FALSE}
+interval13 <- bayesint(qtl.log.Alb10WK.192.sex.intcovar, chr = 13)
+```
+
+```{r Hf Alb 10wk table creation, echo = FALSE}
+knitr::kable(interval13, caption = "Hf: Albuminuria 10wk Bayesian Interval Table: Chromosome 13")
+```
+
+### Hf Albuminuria 15wk Baysian Intervals
+\normalsize
+No LOD score past significant threshold.
+
+
+
+
+
+
+
+
+
