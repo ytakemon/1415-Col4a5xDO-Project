@@ -1,5 +1,9 @@
 #QTL mapping README
 This directory contains all scripts used for QTL analysis for Albuminuria and GFR.
+There are 3 models of QTL:
+* Ha QTL: additive QTL with additive covariate.
+* Hf QTL: full QTL with addititve and interactive covarite.
+* Hi QTL: Hf - Ha, showing only effect of the interaction.
 
 #Description of Scripts:
 ### Ha_QTL_ACR_Alb.R: 
