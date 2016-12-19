@@ -1,11 +1,11 @@
-## QTL analsyses of ACR as covariate
+## QTL analysis for Ha model of ACR and Albumin
 ## Yuka Takemon
 ## Created 10/03/16
 ## Updataed 12/05/16
 
 #	Two different analysis
 #	ACR with sex as covariate at 6wks, 10wks, and 15wks
-#	Albumin with creatinine as covariate at 6wks, 10wks, and 15wks
+#	Albumin with sex and creatinine as covariate at 6wks, 10wks, and 15wks
 
 library(DOQTL)
 library(abind)
