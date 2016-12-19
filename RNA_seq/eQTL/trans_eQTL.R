@@ -24,7 +24,7 @@ library(DOQTL)
 setwd("/hpcdata/ytakemon/Col4a5xDO")
 
 #	Helperfuntions used:
-#SubstrLeft()
+source("substrR_L.R")
 
 #	Input data
 load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/genoprobs/best.genoprobs.192.Rdata")
