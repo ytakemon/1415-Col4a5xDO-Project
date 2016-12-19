@@ -2,7 +2,7 @@
 ## Identifying trans-eQTL for Formin 1 (Fmn1)
 ## Yuka Takemon
 ## Created: 12/14/16
-## Last modified: 12/14/16
+## Last modified: 12/19/16
 
 ## This script will identify trans-eQTL for Formin 1 by using the eQTL scanone objects created by eQTL_all.R Each scanone eQTL 
 ##	object will be assessed for significant peaks at Fmn1, more specifically at  "JAX00098823" or "rs27466023". Sigificance will
@@ -64,28 +64,12 @@ for (i in 1:length(All_eqtl_files)){
 	temp <- get(ls(pattern = "ENSMUSG")) 
 	#	temp$lod$A is a data frame with colnames: marker & lod	
 	Fmn1_trans_eQTL$LOD_score_at_JAX00098823[i] <- temp$lod$A[Marker, "lod"]
+	print(i)
+	print(Fmn1_trans_eQTL$LOD_score_at_JAX00098823[i])
 }
 
 save(Fmn1_trans_eQTL, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/Fmn1_trans_eQTL.Rdata")
 #subset Fmn1_trans_eQTL by significance level  (something wrong with rownames of Fmn1)
-
-
-
-
-
-
-
-
-
-
-
-#########
-RNA_seq <- array(0, c(192, 46517), dimnames = list (Complete_set_names$genoprob_names, locus_names))
-
-
-
-
-
 
 
 
