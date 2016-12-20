@@ -42,7 +42,7 @@ References to the GBRS suit used were written by K.B.Choi and can be found [here
 * Bash script
 * Takes genome reconstruct and interpolates up to standard 64K grid.
 
-###[subset64k.genoprob.reconstruction.R](https://github.com/TheJacksonLaboratory/1415-Col4a5xDO-Project/blob/master/Genoprob_reconstruction/subset64k.genoprob.reconstruction.R)
+###[genoprobs_reconstruction.R](https://github.com/TheJacksonLaboratory/1415-Col4a5xDO-Project/blob/master/Genoprob_reconstruction/genoprobs_reconstruction.R)
 * Rscript.
 * Combined reconstruct with GeneSeek genoprob.
 * Includes kinship QC.
