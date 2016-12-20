@@ -2,7 +2,7 @@
 ## Identifying trans-eQTL for Formin 1 (Fmn1)
 ## Yuka Takemon
 ## Created: 12/14/16
-## Last modified: 12/19/16
+## Last modified: 12/20/16
 
 ## This script will identify trans-eQTL for Formin 1 by using the eQTL scanone objects created by eQTL_all.R Each scanone eQTL 
 ##	object will be assessed for significant peaks at Fmn1, more specifically at  "JAX00098823" or "rs27466023". Sigificance will
