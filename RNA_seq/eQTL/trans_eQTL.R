@@ -71,14 +71,15 @@ for (i in 1:length(All_eqtl_files)){
 save(Fmn1_trans_eQTL, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/Fmn1_trans_eQTL.Rdata")
 #subset Fmn1_trans_eQTL by significance level  (something wrong with rownames of Fmn1)
 
+Fmn1_trans_eQTL_Sig.0.05 <- Fmn1_trans_eQTL[Fmn1_trans_eQTL$LOD_score_at_JAX00098823 > 8.104061,]
 
+Fmn1_trans_eQTL_Sig.0.1 <- Fmn1_trans_eQTL[Fmn1_trans_eQTL$LOD_score_at_JAX00098823 > 7.632182,]
 
+Fmn1_trans_eQTL_Sig.0.63 <- Fmn1_trans_eQTL[Fmn1_trans_eQTL$LOD_score_at_JAX00098823 > 6.047843,]
 
-
-
-
-
-
-
+write.table(Fmn1_trans_eQTL, "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/Fmn1_trans_eQTL_all.txt", sep="\t")
+write.table(Fmn1_trans_eQTL_Sig.0.05, "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/Fmn1_trans_eQTL_Sig.0.05.txt", sep="\t")
+write.table(Fmn1_trans_eQTL_Sig.0.1, "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/Fmn1_trans_eQTL_Sig.0.1.txt", sep="\t")
+write.table(Fmn1_trans_eQTL_Sig.0.63, "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/Fmn1_trans_eQTL_Sig.0.63.txt", sep="\t")
 
 
