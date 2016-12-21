@@ -68,3 +68,55 @@ for (i in 1:length(Ensemble_ID)){
 	print(knitr::kable(interval))
 }
 
+
+#View region in detail for Scg5 and Arhgap11a
+load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/genoprobs/best.genoprobs.192.Rdata")
+load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/GM_snps.Rdata")
+load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/kinship/K_GS.Rdata")
+load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/RNA_seq_rankZ_tpm.Rdata")
+pheno <- read.delim("./Phenotype/1415_master_pheno.txt", sep = "\t", header = TRUE)
+
+rownames(pheno) <- make.names(pheno[,1]) #move sample ID to row names
+pheno <- pheno[rownames(best.genoprobs.192),] #subset pheno to match 192 samples
+sex.covar <- model.matrix(~0+Sex, data = pheno)
+colnames(sex.covar)[2] <- "sex"
+sex.covar <- sex.covar[,"sex"]
+sex.covar <- as.data.frame(sex.covar)
+colnames(sex.covar)[1] <- "sex"
+
+interval <- bayesint(ENSMUSG00000023236.Scg5.eQTL, chr  = 2)
+kable(interval)
+chr <- 2
+
+Scg5_chr2 <- assoc.map(
+	pheno = RNA_seqZ,
+	pheno.col = "ENSMUSG00000023236",
+	probs = best.genoprobs.192,
+	K = K_GS[[chr]],
+	addcovar = sex.covar,
+	snps = GM_snps, 
+	chr = chr, 
+	start = 113,
+	end = 114,
+	output = "p-value")
+
+Arh_chr2 <- assoc.map(
+	pheno = RNA_seqZ,
+	pheno.col = "ENSMUSG00000041219",
+	probs = best.genoprobs.192,
+	K = K_GS[[chr]],
+	addcovar = sex.covar,
+	snps = GM_snps, 
+	chr = chr, 
+	start = 113,
+	end = 114,
+	output = "p-value")
+
+pdf( paste(plot_dir, "ENSMUSG00000023236",".Scg5",".chr2.candidates.pdf"), width = 10.0, height = 7.5)
+assoc.plot(Scg5_chr2, thr = 10, show.sdps = TRUE)
+dev.off()
+
+pdf( paste(plot_dir, "ENSMUSG00000041219",".Arhgap11a",".chr2.candidates.pdf"), width = 10.0, height = 7.5)
+assoc.plot(Arh_chr2, thr = 10, show.sdps = TRUE)
+dev.off()
+
