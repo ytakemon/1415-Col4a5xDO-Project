@@ -61,6 +61,8 @@ for (i in 1:length(Ensemble_ID)){
 for (i in 1:length(Ensemble_ID)){
 	sample_obj <- paste(Ensemble_ID[i],".",MGI_ID[i],".eQTL", sep = "")
 	print(sample_obj)
+	sample_file <- paste(qtl_dir, Ensemble_ID[i], ".", MGI_ID[i], ".eQTL.rankZ.tpm.Rdata", sep = "")
+	load(sample_file)
 	temp <- get(ls(pattern = sample_obj)) 
 	interval <- bayesint(temp , chr = 2)
 	print(knitr::kable(interval))
