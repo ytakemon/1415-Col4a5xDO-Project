@@ -13,6 +13,9 @@ This directory contains scripts for eQTL analysis.
 * Creates and saves qtl (scanone) object for every gene expressed,
 * Creates and saves pdf of qtl manhattan plots. 
 
-### [trans_eQTL.R](https://github.com/TheJacksonLaboratory/1415-Col4a5xDO-Project/blob/master/RNA_seq/eQTL/trans_eQTL.R)
+### [Fmn1_trans_eQTL.R](https://github.com/TheJacksonLaboratory/1415-Col4a5xDO-Project/blob/master/RNA_seq/eQTL/Fmn1_trans_eQTL.R)
 * contains a loop script to identify LOD score at FMN1 (region of interst).
 * Then subsetted into genes that surpass 3 levels of LOD significance. 
+
+### [Rfx3_trans_eQTL.R](https://github.com/TheJacksonLaboratory/1415-Col4a5xDO-Project/blob/master/RNA_seq/eQTL/Rfx3_trans_eQTL.R)
+* Copied form Fmn1_trans_eQTL.R, still underconstruction
