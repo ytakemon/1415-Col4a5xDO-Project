@@ -1,28 +1,93 @@
-## Col4a5xDO eQTL analysis
-#	Author: Yuka Takemon
-#	Date Created: 11/30/16
-#	Date Last Modified: 12/06/16
+########################################################################################################################
+## Col4a5xDO eQTL analysis for select genes
+##	Author: Yuka Takemon
+##	Date Created: 11/30/16
+##	Date Last Modified: 12/06/16
 
+## OBJECTIVE
 ## Ron identified genes to follow up with for eQTL analysis, so that we can narrow down to a few genes to send to Dan our new
-#	collaborator who has a human cohort of Alport patients from Cyprus.
-#	We will do doign an eQTL analysis of the following genes:
+##	collaborator who has a human cohort of Alport patients from Cyprus.
+##	We will do doign an eQTL analysis of the following genes:
 ## From the GFR qtl:
-#	Kcnv2 	(chr19)	ENSMUSG00000047298
-#	Pum3 	(chr19)	ENSMUSG00000041360
-#	Rfx3 	(chr19)	ENSMUSG00000040929
+##	Kcnv2 	(chr19)	ENSMUSG00000047298
+##	Pum3 	(chr19)	ENSMUSG00000041360
+##	Rfx3 	(chr19)	ENSMUSG00000040929
 ## From the Alb/ACR 6wk :
-#	Dgke	(Chr11)	ENSMUSG00000000276
+##	Dgke	(Chr11)	ENSMUSG00000000276
 ## From the Alb/ACR 10wk :
-#	Pik3r1	(Chr13)	ENSMUSG00000041417
+##	Pik3r1	(Chr13)	ENSMUSG00000041417
 ## From the Alb/ACR 6 and 10:
-#	Fmn1 		(chr2)	ENSMUSG00000044042
+##	Fmn1 		(chr2)	ENSMUSG00000044042
 ## From the ACR 15wk:
-#	Tbc1d22a	(chr15)	ENSMUSG00000051864
-#	Fam19a5		(chr15)	ENSMUSG00000054863
-#	Brd1		(chr15) ENSMUSG00000022387
-#	Zbed4		(chr15)	ENSMUSG00000034333
-#	Alg12		(chr15)	ENSMUSG00000035845
-#	Creld2		(chr15)	ENSMUSG00000023272
+##	Tbc1d22a	(chr15)	ENSMUSG00000051864
+##	Fam19a5		(chr15)	ENSMUSG00000054863
+##	Brd1		(chr15) ENSMUSG00000022387
+##	Zbed4		(chr15)	ENSMUSG00000034333
+##	Alg12		(chr15)	ENSMUSG00000035845
+##	Creld2		(chr15)	ENSMUSG00000023272
+
+## sessionInfo()
+## R version 3.1.1 (2014-07-10)
+## Platform: x86_64-unknown-linux-gnu (64-bit)
+## locale:
+## [1] C
+## attached base packages:
+## [1] grid      parallel  stats4    stats     graphics  grDevices utils
+## [8] datasets  methods   base
+## other attached packages:
+## [1] knitr_1.11           DOQTL_1.0.0          AnnotationDbi_1.28.2
+## [4] GenomeInfoDb_1.2.5   IRanges_2.0.1        S4Vectors_0.4.0
+## [7] Biobase_2.26.0       BiocGenerics_0.12.1  RSQLite_1.0.0
+## [10] DBI_0.3.1
+## loaded via a namespace (and not attached):
+## [1] Biostrings_2.34.1      GenomicRanges_1.18.4   MUGAExampleData_1.0.0
+## [4] QTLRel_0.2-14          RCurl_1.95-4.7         RUnit_0.4.30
+## [7] Rcpp_0.11.3            Rsamtools_1.18.3       XML_3.98-1.3
+## [10] XVector_0.6.0          annotate_1.44.0        annotationTools_1.40.0
+## [13] biomaRt_2.22.0         bitops_1.0-6           colorspace_1.2-6
+## [16] corpcor_1.6.8          digest_0.6.8           gdata_2.17.0
+## [19] gtable_0.1.2           gtools_3.5.0           hwriter_1.3.2
+## [22] mclust_5.1             munsell_0.4.2          org.Hs.eg.db_3.0.0
+## [25] org.Mm.eg.db_3.0.0     plyr_1.8.3             scales_0.3.0
+## [28] tools_3.1.1            xtable_1.8-0           zlibbioc_1.12.0
+
+## List of data saved from this script (time savers for reanalysis)
+## Rdata:
+## save(sex.covar, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/sex.covar.Rdata")
+## save(qtl.Kcnv2, 	file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Kcnv2.Rdata")
+## save(qtl.Pum3, 		file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Pum3.Rdata")
+## save(qtl.Rfx3, 		file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Rfx3.Rdata")
+## save(qtl.Tbc1d22a, 	file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Tbc1d22a.Rdata")
+## save(qtl.Fam19a5, 	file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Fam19a5.Rdata")
+## save(qtl.Brd1,		file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Brd1.Rdata")
+## save(qtl.Zbed4, 	file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Zbed4.Rdata")
+## save(qtl.Alg12, 	file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Alg12.Rdata")
+## save(qtl.Creld2, 	file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Creld2.Rdata")
+## save(qtl.Fmn1, 		file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Fmn1.Rdata")
+## save(qtl.Dgke, 		file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Dgke.Rdata")
+## save(qtl.Pik3r1, 	file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Pik3r1.Rdata")
+## Tables:
+## Plots:
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Kcnv2.qtl.perm1000.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Pum3.qtl.perm1000.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Rfx3.qtl.perm1000.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Tbc1d22a.qtl.perm1000.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Fam19a5.qtl.perm1000.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Brd1.qtl.perm1000.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Zbed4.qtl.perm1000.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Alg12.qtl.perm1000.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Creld2.qtl.perm1000.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Fmn1.qtl.perm1000.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Rfx3.coef.chr19.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Fmn1.coef.chr2.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Rfx3.allele.dist1.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Rfx3.allele.dist2.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Fmn1.allele.dist1.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Fmn1.allele.dist2.png", width = 1500, height = 1000, res = 100)
+## pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Dgke.qtl.perm1000.pdf", width = 10.0, height = 7.5)
+## pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Pik3r1.qtl.perm1000.pdf", width = 10.0, height = 7.5)
+
+########################################################################################################################
 library(DOQTL)
 library(knitr)
 setwd("/hpcdata/ytakemon/Col4a5xDO")
@@ -231,20 +296,4 @@ dev.off()
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Fmn1.allele.dist2.png", width = 1500, height = 1000, res = 100)
 pxg.plot( pheno = RNA_seqZ, pheno.col = "ENSMUSG00000044042", probs = best.genoprobs.192, snp.id = "UNC3776734", snps = GM_snps)
 dev.off()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
