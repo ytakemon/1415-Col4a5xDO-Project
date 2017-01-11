@@ -1,41 +1,93 @@
-#Col4a5xDO Fmn1 isoform sequence
-#Yuka Takemon
-#Created: 12/02/16
+################################################################################################################################
+## Col4a5xDO Fmn1 isoform sequence
+## Yuka Takemon
+## Created: 12/02/16
 
-#Probes I-III
-#Chan 1995: Probe I-III was constructed by subcloning the 1692 basepair XbaI/HindIII fragment from isoform I (Woychik et al., 1990b) into pBluescript Stratagene).
+## OBJECTIVE
+## We want to identify which transcript of Fmn1 is expressed in the Col4a5 B6xDO animals.
+## Isoforms have not been previously documented in detail, and we are using Chan 1995 to decipher which transcirpts we are seeing 
+##
+## Probes I-III
+## Chan 1995: Probe I-III was constructed by subcloning the 1692 basepair XbaI/HindIII fragment from isoform I (Woychik et al., 1990b) into pBluescript Stratagene).
+##
+## Probes IV
+## Chan 1995: Probe IV is a 1568 basepair EcoRI/NaeI fragment from isoform IV (Jackson- Grusby et al., 1992) in pBluescript.
+##
+## Probs I-IV
+## Chan 1995: Probe I-IV is a 1346 basepair Stu/Spe fragment from isoform I in pBluescript. 
+##
+## GeneID Ensembl
+## Fmn1 ENSMUSG00000044042
+##
+## TranscriptID Ensembl
+## Fmn1-001: ENSMUST00000102547.9 (20 exons)
+## Fmn1-002: ENSMUST00000081349.8 (17 exons)
+## Fmn1-003: ENSMUST00000110954.6 (4 exons)
+## Fmn1-004: ENSMUST00000152255.1 (5 exons)
+## Fmn1-005: ENSMUST00000153151.1 (2 exons)
+## Fmn1-006: ENSMUST00000145891.7 (6 exons)
+## Fmn1-007: ENSMUST00000150510.7 (5 exons)
+## Fmn1-008: ENSMUST00000161731.4 (16 exons)
+## Fmn1-201: ENSMUST00000099576.8 (19 exons)
+## 
+## TranscriptID as found in isoform.tpm files
+## Fmn1-001: ENSMUST00000102547
+## Fmn1-002: ENSMUST00000081349
+## Fmn1-003: ENSMUST00000110954
+## Fmn1-004: ENSMUST00000152255
+## Fmn1-005: ENSMUST00000153151
+## Fmn1-006: ENSMUST00000145891
+## Fmn1-007: ENSMUST00000150510
+## Fmn1-008: ENSMUST00000161731
+## Fmn1-201: ENSMUST00000099576
 
-#Probes IV
-#Chan 1995: Probe IV is a 1568 basepair EcoRI/NaeI fragment from isoform IV (Jackson- Grusby et al., 1992) in pBluescript.
+## sessionInfo()
+## R version 3.1.1 (2014-07-10)
+## Platform: x86_64-unknown-linux-gnu (64-bit)
+## locale:
+## [1] C
+## attached base packages:
+## [1] grid      parallel  stats4    stats     graphics  grDevices utils
+## [8] datasets  methods   base
+## other attached packages:
+## [1] reshape2_1.4.1       knitr_1.11           DOQTL_1.0.0
+## [4] AnnotationDbi_1.28.2 GenomeInfoDb_1.2.5   IRanges_2.0.1
+## [7] S4Vectors_0.4.0      Biobase_2.26.0       BiocGenerics_0.12.1
+## [10] RSQLite_1.0.0        DBI_0.3.1
+## loaded via a namespace (and not attached):
+## [1] Biostrings_2.34.1      GenomicRanges_1.18.4   MUGAExampleData_1.0.0
+## [4] QTLRel_0.2-14          RCurl_1.95-4.7         RUnit_0.4.30
+## [7] Rcpp_0.11.3            Rsamtools_1.18.3       XML_3.98-1.3
+## [10] XVector_0.6.0          annotate_1.44.0        annotationTools_1.40.0
+## [13] biomaRt_2.22.0         bitops_1.0-6           colorspace_1.2-6
+## [16] corpcor_1.6.8          digest_0.6.8           gdata_2.17.0
+## [19] gtable_0.1.2           gtools_3.5.0           hwriter_1.3.2
+## [22] magrittr_1.5           mclust_5.1             munsell_0.4.2
+## [25] org.Hs.eg.db_3.0.0     org.Mm.eg.db_3.0.0     plyr_1.8.3
+## [28] scales_0.3.0           stringi_1.0-1          stringr_1.0.0
+## [31] tools_3.1.1            xtable_1.8-0           zlibbioc_1.12.0
 
-#Probs I-IV
-#Chan 1995: Probe I-IV is a 1346 basepair Stu/Spe fragment from isoform I in pBluescript. 
+## List of data saved from this script (time savers for reanalysis)
+## Rdata:
+## save(All_transcript_tpm, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/All_transcript_tpm.Rdata")
+## save(Fmn1_transcript_tpm, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/Fmn1_transcript_tpm.Rdata")
 
-#GeneID Ensembl
-#Fmn1 ENSMUSG00000044042
+## Tables:
+## Plots:
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_transcirpt_tpm_rankZ.png", width = 1500, height = 1000, res =
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_transcirpt_tpm.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Fmn1_002.qtl.perm1000.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Fmn1_005.qtl.perm1000.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Fmn1_201.qtl.perm1000.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Fmn1_002.coef.chr2.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Fmn1_005.coef.chr2.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Fmn1_201.coef.chr2.png", width = 1500, height = 1000, res = 100)
+## pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_transcript_rankZ_tpm_by_allele.pdf", width = 10.0, height = 7.5)
+## pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_transcript_tpm_by_allele.pdf", width = 10.0, height = 7.5)
+## pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_coding_transcript_tpm.pdf", width = 10.0, height = 7.5)
+## pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_coding_transcript_tpm_by_allele.pdf", width = 10.0, height = 7.5)
 
-#TranscriptID Ensembl
-#Fmn1-001: ENSMUST00000102547.9 (20 exons)
-#Fmn1-002: ENSMUST00000081349.8 (17 exons)
-#Fmn1-003: ENSMUST00000110954.6 (4 exons)
-#Fmn1-004: ENSMUST00000152255.1 (5 exons)
-#Fmn1-005: ENSMUST00000153151.1 (2 exons)
-#Fmn1-006: ENSMUST00000145891.7 (6 exons)
-#Fmn1-007: ENSMUST00000150510.7 (5 exons)
-#Fmn1-008: ENSMUST00000161731.4 (16 exons)
-#Fmn1-201: ENSMUST00000099576.8 (19 exons)
-
-#TranscriptID as found in isoform.tpm files
-#Fmn1-001: ENSMUST00000102547
-#Fmn1-002: ENSMUST00000081349
-#Fmn1-003: ENSMUST00000110954
-#Fmn1-004: ENSMUST00000152255
-#Fmn1-005: ENSMUST00000153151
-#Fmn1-006: ENSMUST00000145891
-#Fmn1-007: ENSMUST00000150510
-#Fmn1-008: ENSMUST00000161731
-#Fmn1-201: ENSMUST00000099576
-
+################################################################################################################################
 library(DOQTL)
 library(ggplot2)
 library(reshape2)
@@ -242,64 +294,6 @@ qtl.Fmn1_201$coef$A[abs(qtl.Fmn1_201$coef$A) > 0.05 ] = 0
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Fmn1_201.coef.chr2.png", width = 1500, height = 1000, res = 100)
 coefplot(qtl.Fmn1_201, chr = 2, main = "Allele effect of Fmn1_201 QTL at Chr 2")
 dev.off()
-
-
-############ reference
-qtl.Kcnv2 		<- scanone( pheno = RNA_seqZ, pheno.col = "ENSMUSG00000047298", probs = best.genoprobs.192, K = K_GS, addcovar = sex.covar, snps = GM_snps)
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/perm1000/perms.1000.qtl.RNA.rankZ.tpm.Rdata")
-threshold <- get.sig.thr( perms.1000.qtl.RNA.rankZ.tpm[,,1], alpha = c(0.05, 0.1, 0.63), Xchr = TRUE)
-save(threshold, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/perm1000/Threshold.perms.1000.qtl.RNA.rankZ.tpm.Rdata")
-
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Kcnv2.Rdata")
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Pum3.Rdata")
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Rfx3.Rdata")
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Tbc1d22a.Rdata")
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Fam19a5.Rdata")
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Brd1.Rdata")
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Zbed4.Rdata")
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Alg12.Rdata")
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Creld2.Rdata")
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/qtl.RNA.rankZ.tpm.Fmn1.Rdata")
-
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Kcnv2.qtl.perm1000.png", width = 1500, height = 1000, res = 100)
-plot(qtl.Kcnv2, sig.thr = threshold, sig.col = c("red", "orange", "chartreuse"), main = "Col4a5xDO Kcnv2 QTL perm 1000")
-dev.off()
-
-
-
-aql <- melt(airquality, id.vars = c("month", "day"),
-  variable.name = c("climate_variable", 
-  value.name = "climate_value")
-head(aql)
-
-RNA_seqZ <- t(RNA_seq)
-RNA_seqZ <- apply(RNA_seqZ, 2, rankZ)
-RNA_seqZ <- t(RNA_seqZ)
-
-ggplot(Col4a5_tpm_counts, aes(x = Col4a1_tpm, y = Col4a3_tpm)) +
-	geom_smooth(method = lm) +
-	geom_point( aes(colour = Col4a3_allele), size = 2) +
-	annotate( "text" , x = 1.9, y = 2.1, label = eq, fontface = "bold", size = 3) + 
-	guides( colour = "legend") +
-	scale_x_continuous( "Col4a1 TPM", breaks = seq(0, 2.5, by = 0.1)) +
-	scale_y_continuous( "Col4a3 TPM", breaks = seq(0, 2.5, by = 0.1)) +
-	labs( title = "Col4a1 vs Col4a3 TPM") +
-	theme(legend.position = "right", plot.title = element_text(hjust = 0.5)) 
-
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4a1.v.Col4a3.png", width = 1500, height = 1000, res = 100)
-print(ggplot13)
-dev.off(
-
-
-
-
-
-
-
-
-
-
-
 
 
 
