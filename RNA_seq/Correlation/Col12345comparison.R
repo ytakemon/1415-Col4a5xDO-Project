@@ -1,23 +1,79 @@
+########################################################################################################################
 ## Comparing Type IV Collagen expressions
-# In this initial analysis we will be comparing Type IV Collagen a1 ,a2, a3, and a4
-# We will be creating a corelation map between the following and using 8 colours to represent each founders:
+## Author: Yuka Takemon
+## Date created: 12/16/16
+ 
+## OBJECTIVE
+## In this initial analysis we will be comparing Type IV Collagen a1 ,a2, a3, and a4
+## We will be creating a corelation map between the following and using 8 colours to represent each founders:
+## Cominations of Col4 genes for comparison
+## Col4a1 vs Col4a2
+## Col4a1 vs Col4a3
+## Col4a1 vs Col4a4
+## Col4a2 vs Col4a3
+## Col4a2 vs Col4a4
+## Col4a3 vs Col4a4
+##
+## ENSEMBL ID
+## Col4a1: ENSMUSG00000031502
+## Col4a2: ENSMUSG00000031503
+## Col4a3: ENSMUSG00000079465
+## Col4a4: ENSMUSG00000067158
+## Col4a5: ENSMUSG00000031274
 
-#Col4a1 vs Col4a2
-#Col4a1 vs Col4a3
-#Col4a1 vs Col4a4
+## sessionInfo()
+## R version 3.1.1 (2014-07-10)
+## Platform: x86_64-unknown-linux-gnu (64-bit)
+## locale:
+## [1] C
+## attached base packages:
+## [1] grid      parallel  stats4    stats     graphics  grDevices utils
+## [8] datasets  methods   base
+## other attached packages:
+## [1] ggplot2_2.1.0        DOQTL_1.0.0          AnnotationDbi_1.28.2
+## [4] GenomeInfoDb_1.2.5   IRanges_2.0.1        S4Vectors_0.4.0
+## [7] Biobase_2.26.0       BiocGenerics_0.12.1  RSQLite_1.0.0
+## [10] DBI_0.3.1
+## loaded via a namespace (and not attached):
+## [1] Biostrings_2.34.1      GenomicRanges_1.18.4   MUGAExampleData_1.0.0
+## [4] QTLRel_0.2-14          RCurl_1.95-4.7         RUnit_0.4.30
+## [7] Rcpp_0.11.3            Rsamtools_1.18.3       XML_3.98-1.3
+## [10] XVector_0.6.0          annotate_1.44.0        annotationTools_1.40.0
+## [13] biomaRt_2.22.0         bitops_1.0-6           colorspace_1.2-6
+## [16] corpcor_1.6.8          gdata_2.17.0           gtable_0.1.2
+## [19] gtools_3.5.0           hwriter_1.3.2          mclust_5.1
+## [22] munsell_0.4.2          org.Hs.eg.db_3.0.0     org.Mm.eg.db_3.0.0
+## [25] plyr_1.8.3             scales_0.3.0           tools_3.1.1
+## [28] xtable_1.8-0           zlibbioc_1.12.0
 
-#Col4a2 vs Col4a3
-#Col4a2 vs Col4a4
-#Col4a3 vs Col4a4
+## List of data saved from this script (time savers for reanalysis)
+## Rdata:
+## save(Col4a5_tpm_counts, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/Col4a5_rankZ_tpm_counts.Rdata")
+## save(Col4a5_tmp_pheno, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/Col4a5_rankZ_tmp_pheno.Rdata")
+## Tables:
+## Plots:
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4a1.v.Col4a2.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4a1.v.Col4a3.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4a1.v.Col4a4.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4a2.v.Col4a3.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4a2.v.Col4a4.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4a3.v.Col4a4.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4aX_allele1.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4aX_allele2.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4aX_sex.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Alb_hist.png", width = 1000, height = 1500, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Creat_hist.png", width = 1000, height = 1500, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4aX_GFR_by_Allele.png", width = 2000, height = 1000, res = 
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4aX_GFR_by_sex.png", width = 2000, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4aX_Albumin6WK_log_by_allele.png", width = 2500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4aX_Albumin6WK_log_by_sex.png", width = 2500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4aX_Albumin10WK_log_by_allele.png", width = 2500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4aX_Albumin10WK_log_by_sex.png", width = 2500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4aX_Albumin15WK_log_by_allele.png", width = 2500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4aX_Albumin15WK_log_by_sex.png", width = 2500, height = 1000, res = 100)
 
-#ENSEMBL ID
-#Col4a1: ENSMUSG00000031502
-#Col4a2: ENSMUSG00000031503
-#Col4a3: ENSMUSG00000079465
-#Col4a4: ENSMUSG00000067158
-#Col4a5: ENSMUSG00000031274
-
-#Prior to, on cadillac created a list of civet run list 
+########################################################################################################################
+#Prior to anlysis, on cadillac created a list of civet run list 
 #ls civet_run/ > civet_list.txt
 
 library(DOQTL)

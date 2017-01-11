@@ -65,11 +65,9 @@
 
 ########################################################################################################################
 
-#load necasary data
+#load necessary data
 library(DOQTL)
 library(knitr)
-library(pcaMethods) # for PCA analysis
-library(RColorBrewer) #in case i want pretty colours
 
 # set to working directory
 setwd("/hpcdata/ytakemon/Col4a5xDO")
