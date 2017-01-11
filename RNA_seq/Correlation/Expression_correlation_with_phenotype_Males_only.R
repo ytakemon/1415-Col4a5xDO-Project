@@ -1,12 +1,68 @@
 ########################################################################################################################
-## 
+## Expression correlation with phenotype (Males only)
+## Author: Yuka Takemon
+## Date created: 01/11/17
+
+## OBJECTIVE
+## This script is adapted from Expression_correlation_with_phenotype.R by subsetting phenotype data from both to 
+## single sex (Males). The reason why we decided to do this analysis is because Males are hemizygous to Col4a5 mutation,
+## thus disease phenotypes are not moderated by Xce allele such as the female. Due to the effect of X- inactivation in the 
+## females, the phenotype effect will not be uniform/linear and will skew correlation effects.
+
+## sessionInfo()
+## R version 3.1.1 (2014-07-10)
+## Platform: x86_64-unknown-linux-gnu (64-bit)
+## locale:
+## [1] C
+## attached base packages:
+## [1] parallel  stats4    stats     graphics  grDevices utils     datasets
+## [8] methods   base
+## other attached packages:
+## [1] RColorBrewer_1.1-2   knitr_1.11           DOQTL_1.0.0
+## [4] AnnotationDbi_1.28.2 GenomeInfoDb_1.2.5   IRanges_2.0.1
+## [7] S4Vectors_0.4.0      Biobase_2.26.0       BiocGenerics_0.12.1
+## [10] RSQLite_1.0.0        DBI_0.3.1
+## loaded via a namespace (and not attached):
+##  [1] Biostrings_2.34.1      GenomicRanges_1.18.4   MUGAExampleData_1.0.0
+##  [4] QTLRel_0.2-14          RCurl_1.95-4.7         RUnit_0.4.30
+##  [7] Rsamtools_1.18.3       XML_3.98-1.3           XVector_0.6.0
+## [10] annotate_1.44.0        annotationTools_1.40.0 biomaRt_2.22.0
+## [13] bitops_1.0-6           corpcor_1.6.8          gdata_2.17.0
+## [16] gtools_3.5.0           hwriter_1.3.2          mclust_5.1
+## [19] org.Hs.eg.db_3.0.0     org.Mm.eg.db_3.0.0     tools_3.1.1
+## [22] xtable_1.8-0           zlibbioc_1.12.0
+
+## List of data saved from this script (time savers for reanalysis)
+## Rdata:
+## Tables:
+## write.table(RNA_GFR_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_M_cor.txt", sep = "\t", row.names = FALSE)
+## write.table(RNA_A6_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_Alb6_M_cor.txt", sep = "\t", row.names = FALSE)
+## write.table(RNA_A10_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_Alb10_M_cor.txt", sep = "\t", row.names = FALSE)
+## write.table(RNA_A15_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_Alb15_M_cor.txt", sep = "\t", row.names = FALSE)
+## write.table(RNA_ACR6_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR6_M_cor.txt", sep = "\t", row.names = FALSE)
+## write.table(RNA_ACR10_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR10_M_cor.txt", sep = "\t", row.names = FALSE)
+## write.table(RNA_ACR15_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor.txt", sep = "\t", row.names = FALSE)
+## Plots:
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GFR_cor_M.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GFR_rank_M.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A6_cor_M.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A6_rank_M.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A10_cor_M.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A10_rank_M.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A15_cor_M.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A15_rank_M.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR6_cor_M.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR6_rank_M.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR10_cor_M.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR10_rank_M.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR15_cor_M.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR15_rank_M.png", width = 1500, height = 1000, res = 100)
 ########################################################################################################################
 
+# Load libraries
 library(DOQTL)
-library(knitr)
-library(pcaMethods)
-library(RColorBrewer)
 
+# set to working directory on cadillac
 setwd("/hpcdata/ytakemon/Col4a5xDO")
 
 #Calculate correlation between phenotype and gene expression via tpm
@@ -32,11 +88,17 @@ pheno[pheno ==  -Inf] = NA
 options(na.action = 'na.pass') #leave in NAs
 #keep only interested columns
 pheno <- pheno[,c("MouseID", "Sex", "C2_log", "Alb6WK_log","Creat6WK_log","Alb10WK_log","Creat10WK_log","Alb15WK_log","Creat15WK_log", "ACR6WK_log", "ACR10WK_log", "ACR15WK_log")]
+
+# Subset out males
 pheno_M <- pheno[pheno$Sex == "M",] #95x9
 
+# Phenotpe data has samples where pheotype measurements were not obtained due to QC or other technical errors.
+# In order to successfully run cor(), we must remove sampels with NA in phenotype data
+# Once that is done, an empty array is created to place the results from cor(gene exp, phenotyp) for each gene.
+
 #GFR
-G_pheno <- pheno_M[complete.cases(pheno_M$C2_log),]
-G_RNA_seq <- RNA_seq[rownames(G_pheno),]
+G_pheno <- pheno_M[complete.cases(pheno_M$C2_log),] #remove NAs
+G_RNA_seq <- RNA_seq[rownames(G_pheno),] #Extract genes that 
 RNA_GFR_cor <- array(0, c(length(colnames(G_RNA_seq)),1), dimnames = list (colnames(G_RNA_seq), "GFR_corelation"))
 
 for (i in 1 : length(colnames(G_RNA_seq))){
@@ -105,6 +167,7 @@ for (i in 1 : length(colnames(ACR15.RNA_seq))){
 }
 RNA_ACR15_cor <- RNA_ACR15_cor[complete.cases(RNA_ACR15_cor),] #removes NAs that occured to 0 tpm counts
 
+#To quickly check max and min correlation results 
 max(RNA_GFR_cor)
 max(RNA_A6_cor)
 max(RNA_A10_cor)
@@ -121,12 +184,15 @@ min(RNA_ACR6_cor)
 min(RNA_ACR10_cor)
 min(RNA_ACR15_cor)
 
-##Combine biomart data with RNA correlation data
-#	append new columns with corresponding data.
-#	probably data needs to get sorted first by ensembl gene id before subsetting and appending to the list
 
+##Combine biomart data with RNA correlation data
+#	Append new columns with corresponding data.
+#	Sort data first by ensembl gene id before subsetting and appending to the list, otherwise there might be errors with subsetting
+
+#load Ensemble ID form biomart (preivously saved on cadillac)
 load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/EnsemblID_GRCm38.p4.Rdata")
 
+#Change to data.frame for easy access
 RNA_GFR_cor <- as.data.frame(RNA_GFR_cor)
 RNA_A6_cor <- as.data.frame(RNA_A6_cor)
 RNA_A10_cor <- as.data.frame(RNA_A10_cor)
@@ -141,7 +207,7 @@ mouseID <- mouseID[!duplicated(mouseID$ensembl_gene_id),]
 rownames(mouseID) <- make.names(mouseID[,1]) 
 mouseID <- mouseID[ order( rownames(mouseID)),]
 
-#subset mouseID to match cor data
+#subset mouseID to match cor data.frame
 RNA_GFR_cor$geneID <- rownames(RNA_GFR_cor)
 RNA_GFR_cor <- RNA_GFR_cor[ order( rownames(RNA_GFR_cor)),]
 mouseID_G <- mouseID[rownames(RNA_GFR_cor),]
@@ -170,12 +236,14 @@ RNA_ACR15_cor$geneID <- rownames(RNA_ACR15_cor)
 RNA_ACR15_cor <- RNA_ACR15_cor[ order( rownames(RNA_ACR15_cor)),]
 mouseID_ACR15 <- mouseID[rownames(RNA_ACR15_cor),]
 
-###NOTES: NAs are introduced in rownames because those ENS genes were removed from the data based and is no longer in the current database
-#	Examples:
+###NOTES: NAs are introduced in rownames of because those ENS genes were removed from the current ensembl database, due to lack of 
+###   additional evidence 
+#	Examples of removed ensemble ids (Look up on ensembl website for most up to date info)
 #	"ENSMUSG00000103861"
 #	"ENSMUSG00000103888"
 #	"ENSMUSG00000104003"
 
+# Append ensembl information to correlation data for human readable format.
 RNA_GFR_cor$hgnc_symbol <- mouseID_G$hgnc_symbol
 RNA_GFR_cor$mgi_symbol <- mouseID_G$mgi_symbol
 RNA_GFR_cor$chromosome <- mouseID_G$chromosome_name
@@ -218,6 +286,7 @@ RNA_ACR15_cor$chromosome <- mouseID_ACR15$chromosome_name
 RNA_ACR15_cor$start <- mouseID_ACR15$start_position
 RNA_ACR15_cor$end <- mouseID_ACR15$end_position
 
+#Order correlation in decreasing order
 RNA_GFR_cor <- RNA_GFR_cor[ order( RNA_GFR_cor$RNA_GFR_cor, decreasing = TRUE),]
 RNA_A6_cor <- RNA_A6_cor[ order( RNA_A6_cor$RNA_A6_cor, decreasing = TRUE),]
 RNA_A10_cor <- RNA_A10_cor[ order( RNA_A10_cor$RNA_A10_cor, decreasing = TRUE),]
@@ -235,6 +304,7 @@ ACR6_rank <- apply(as.matrix(RNA_ACR6_cor$RNA_ACR6_cor), 2, rankZ)
 ACR10_rank <- apply(as.matrix(RNA_ACR10_cor$RNA_ACR10_cor), 2, rankZ)
 ACR15_rank <- apply(as.matrix(RNA_ACR15_cor$RNA_ACR15_cor), 2, rankZ)
 
+# append rankz transformed data in to correlation data
 RNA_GFR_cor$rankZ <- G_rank
 RNA_A6_cor$rankZ <- A6_rank
 RNA_A10_cor$rankZ <- A10_rank
@@ -243,6 +313,7 @@ RNA_ACR6_cor$rankZ <- ACR6_rank
 RNA_ACR10_cor$rankZ <- ACR10_rank
 RNA_ACR15_cor$rankZ <- ACR15_rank
 
+# Extract only necessary columns to show. 
 RNA_GFR_cor <- RNA_GFR_cor[,c("geneID", "RNA_GFR_cor", "rankZ", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
 RNA_A6_cor <- RNA_A6_cor[,c("geneID", "RNA_A6_cor", "rankZ", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
 RNA_A10_cor <- RNA_A10_cor[,c("geneID", "RNA_A10_cor", "rankZ", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
@@ -251,7 +322,7 @@ RNA_ACR6_cor <- RNA_ACR6_cor[,c("geneID", "RNA_ACR6_cor", "rankZ", "hgnc_symbol"
 RNA_ACR10_cor <- RNA_ACR10_cor[,c("geneID", "RNA_ACR10_cor", "rankZ", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
 RNA_ACR15_cor <- RNA_ACR15_cor[,c("geneID", "RNA_ACR15_cor", "rankZ", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
 
-#
+# Export as tab sep txt files, and remove rownames because that displaces column names by one. 
 write.table(RNA_GFR_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_M_cor.txt", sep = "\t", row.names = FALSE)
 write.table(RNA_A6_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_Alb6_M_cor.txt", sep = "\t", row.names = FALSE)
 write.table(RNA_A10_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_Alb10_M_cor.txt", sep = "\t", row.names = FALSE)
@@ -260,7 +331,7 @@ write.table(RNA_ACR6_cor, file = "./GBRS_reconstruction/reconstruct/best.compile
 write.table(RNA_ACR10_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR10_M_cor.txt", sep = "\t", row.names = FALSE)
 write.table(RNA_ACR15_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor.txt", sep = "\t", row.names = FALSE)
 
-####Look at distribution
+####Look a t distribution of data to see if anyting looks off. 
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GFR_cor_M.png", width = 1500, height = 1000, res = 100)
 plot(RNA_GFR_cor$RNA_GFR_cor)
 dev.off()

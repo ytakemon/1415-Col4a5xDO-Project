@@ -1,13 +1,77 @@
-#For every gene, calculate the correlation between its phenotype value and gene expression TPMs. There will be one value for each gene. 
-#Find gene with the highest correlation 
-#Does it match the region under the peaks?
+########################################################################################################################
+## Expression correlation with phenotype 
+## Date created: 12/11/16 
+
+## OBJECTIVE
+## We want to see if there are any significant correlation between gene expression and phenotype that may suggest dysregulation
+## of certian pathways and mechanisms. As this is the first analysis using RNA-seq gene expression data, we will need to 
+## run a QC with PC analysis to make sure there aren't any obvious underlying factors that effects the global patterning of 
+## gene expression. 
+
+## sessionInfo()
+## R version 3.1.1 (2014-07-10)
+## Platform: x86_64-unknown-linux-gnu (64-bit)
+## locale:
+## [1] C
+## attached base packages:
+## [1] parallel  stats4    stats     graphics  grDevices utils     datasets
+## [8] methods   base
+## other attached packages:
+## [1] RColorBrewer_1.1-2   knitr_1.11           DOQTL_1.0.0
+## [4] AnnotationDbi_1.28.2 GenomeInfoDb_1.2.5   IRanges_2.0.1
+## [7] S4Vectors_0.4.0      Biobase_2.26.0       BiocGenerics_0.12.1
+## [10] RSQLite_1.0.0        DBI_0.3.1
+## loaded via a namespace (and not attached):
+##  [1] Biostrings_2.34.1      GenomicRanges_1.18.4   MUGAExampleData_1.0.0
+##  [4] QTLRel_0.2-14          RCurl_1.95-4.7         RUnit_0.4.30
+##  [7] Rsamtools_1.18.3       XML_3.98-1.3           XVector_0.6.0
+## [10] annotate_1.44.0        annotationTools_1.40.0 biomaRt_2.22.0
+## [13] bitops_1.0-6           corpcor_1.6.8          gdata_2.17.0
+## [16] gtools_3.5.0           hwriter_1.3.2          mclust_5.1
+## [19] org.Hs.eg.db_3.0.0     org.Mm.eg.db_3.0.0     tools_3.1.1
+## [22] xtable_1.8-0           zlibbioc_1.12.0
+
+## List of data saved from this script (time savers for reanalysis)
+## Rdata:
+## save(RNA_seq, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/RNA_seq_tpm.Rdata")
+## save(mouseID, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/EnsemblID_GRCm38.p4.Rdata")
+## Tables:
+## write.table(RNA_GFR_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_GFR_cor.txt", sep = "\t", row.names = TRUE)
+## write.table(RNA_A6_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_Alb6_cor.txt", sep = "\t", row.names = TRUE)
+## write.table(RNA_A10_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_Alb10_cor.txt", sep = "\t", row.names = TRUE)
+## write.table(RNA_A15_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_Alb15_cor.txt", sep = "\t", row.names = TRUE)
+## write.table(RNA_ACR6_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_ACR6_cor.txt", sep = "\t", row.names = TRUE)
+## write.table(RNA_ACR10_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_ACR10_cor.txt", sep = "\t", row.names = TRUE)
+## write.table(RNA_ACR15_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_ACR15_cor.txt", sep = "\t", row.names = TRUE)
+## Plots:
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/PC_percvar.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/PC_plot1.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/PC_plot1_outlier.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/PC1234_plot.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GFR_cor.png", width = 1500, height = 1000, res = 
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GFR_rank.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A6_cor.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A6_rank.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A10_cor.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A10_rank.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A15_cor.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A15_rank.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR6_cor.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR6_rank.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR10_cor.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR10_rank.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR15_cor.png", width = 1500, height = 1000, res = 100)
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR15_rank.png", width = 1500, height = 1000, res = 100)
+
+########################################################################################################################
 
 #load necasary data
 library(DOQTL)
 library(knitr)
-library(pcaMethods)
-library(RColorBrewer)
+library(pcaMethods) # for PCA analysis
+library(RColorBrewer) #in case i want pretty colours
 
+# set to working directory
 setwd("/hpcdata/ytakemon/Col4a5xDO")
 
 #load essential data
@@ -32,17 +96,18 @@ pheno$Creat15WK_log <- log(pheno$Creat15WK)
 pheno[pheno ==  -Inf] = NA
 options(na.action = 'na.pass') #leave in NAs
 #keep only interested columns
-pheno <- pheno[,c("MouseID", "Sex", "C2_log", "Alb6WK_log","Creat6WK_log","Alb10WK_log","Creat10WK_log","Alb15WK_log","Creat15WK_log")]
+pheno <- pheno[,c("MouseID", "Sex", "C2_log", "Alb6WK_log","Creat6WK_log","Alb10WK_log","Creat10WK_log","Alb15WK_log","Creat15WK_log", "ACR6WK_log", "ACR10WK_log", "ACR15WK_log")]
 
-#Create RNA_seq dataset
-civet_dir <- list.files("./civet_run/", full.names = T)
-civet_sample_list <- read.delim("./Sample_list/RNAseq_1415_sample_list.txt", header = FALSE) #formatted as civet 1415-0000
-genoprob_names <- rownames(best.genoprobs.192)
-Complete_set_names <- as.data.frame(civet_dir)
-Complete_set_names$civet_names <- civet_sample_list
-Complete_set_names$genoprob_names <- genoprob_names
-colnames(Complete_set_names) <- names(Complete_set_names)
-#sample
+#Consolidate and create RNA_seq data table 
+civet_dir <- list.files("./civet_run/", full.names = T) # Extract full paths to each alignment
+civet_sample_list <- read.delim("./Sample_list/RNAseq_1415_sample_list.txt", header = FALSE) # Get sample names formatted as civet 1415-0000
+genoprob_names <- rownames(best.genoprobs.192) # extract sample names we have genoprobs data for.
+Complete_set_names <- as.data.frame(civet_dir) # reformat as data.frame
+Complete_set_names$civet_names <- civet_sample_list # Give sample names in submitted format (1415-XXXX) for each sample path
+Complete_set_names$genoprob_names <- genoprob_names # Give more consistant names for each sampels (1415_XXXX)
+colnames(Complete_set_names) <- names(Complete_set_names) # not sure why colnames and names are out of sync, but force it in sync here. 
+
+#create temp file from tpm data from civet output so I can exract its rownames and column names to be used i lin 65 when consolidating results
 temp <- read.delim(file = paste(Complete_set_names[1, "civet_dir"],"/", "gbrs.quantified.diploid.genes.tpm", sep =""), header = TRUE, sep ="\t")
 rownames(temp) <- temp$locus
 temp$locus <- NULL
@@ -58,6 +123,8 @@ for (i in 1:192){
 	RNA_seq[i,] <- temp$total
 }
 save(RNA_seq, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/RNA_seq_tpm.Rdata")
+#The file is now saved, so I dont have to redo this again due to extensive processing time.
+
 
 #RNA_counts <- array(0, c(192, 46517), dimnames = list (Complete_set_names$genoprob_names, locus_names))
 #for (i in 1:192){
