@@ -57,7 +57,7 @@ for (i in 1:192){
 	temp <- read.delim(file = paste(Complete_set_names[i, "civet_dir"],"/", "gbrs.quantified.diploid.genes.tpm", sep =""), header = TRUE, sep ="\t")
 	RNA_seq[i,] <- temp$total
 }
-save(RNA_seq, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_tpm.Rdata")
+save(RNA_seq, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/RNA_seq_tpm.Rdata")
 
 #RNA_counts <- array(0, c(192, 46517), dimnames = list (Complete_set_names$genoprob_names, locus_names))
 #for (i in 1:192){
@@ -122,8 +122,8 @@ dev.off()
 #######
 
 #Calculate correlation between phenotype and gene expression via tpm
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_tpm.Rdata")
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_expected_counts.Rdata")
+load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/RNA_seq_tpm.Rdata")
+load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/RNA_expected_counts.Rdata")
 
 #GFR
 G.pheno <- pheno[complete.cases(pheno$C2_log),]
