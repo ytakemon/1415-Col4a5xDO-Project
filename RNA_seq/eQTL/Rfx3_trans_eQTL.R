@@ -66,6 +66,10 @@ load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/perm1000/perms.10
 load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/perm1000/Threshold.perms.1000.qtl.RNA.rankZ.tpm.Rdata")
 load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/GM_snps.Rdata")
 
+substrLeft <- function(x, n){
+  substr(x, 1, n)
+}
+
 #	Get all eQTL file paths
 All_eqtl_files_dir <- list.files("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/Complete_eQTL_Rdata", full.names = T)
 All_eqtl_files <- sub("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/RNA/Complete_eQTL_Rdata/","",All_eqtl_files_dir)
