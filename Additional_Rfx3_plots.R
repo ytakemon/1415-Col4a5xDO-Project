@@ -145,7 +145,7 @@ ggplot <- ggplot(pheno, aes(y = Rfx3, x = Dync2li1)) +
 	geom_smooth(method = lm) +
 	annotate( "text" , y = 0.7, x = 1.65, label = eq, fontface = "bold", size = 5) + 
 	scale_x_continuous( "RankZ-tranformed Dync2li1 TPM", breaks = seq(0, 2.5, by = 0.1)) +
-	scale_y_continuous( "RankZ-transformed Rfx3 TPM", breaks = seq(0, 7.5, by = 0.2)) +
+	scale_y_continuous( "RankZ-transformed Rfx3 TPM", breaks = seq(0, 0.7, by = 0.01)) +
 	labs( title = "Rfx3 TPM vs Dync2li1 TPM") +
 	theme(plot.title = element_text(hjust = 0.5))  
 
@@ -166,7 +166,7 @@ ggplot <- ggplot(pheno, aes(y = Rfx3, x = Foxj1)) +
 	geom_smooth(method = lm) +
 	annotate( "text" , y = 0.7, x = 0.6, label = eq, fontface = "bold", size = 5) + 
 	scale_x_continuous( "RankZ-tranformed Foxj1 TPM", breaks = seq(0, 2.5, by = 0.1)) +
-	scale_y_continuous( "RankZ-transformed Rfx3 TPM", breaks = seq(0, 7.5, by = 0.2)) +
+	scale_y_continuous( "RankZ-transformed Rfx3 TPM", breaks = seq(0, 0.7, by = 0.01)) +
 	labs( title = "Rfx3 TPM vs Foxj1 TPM") +
 	theme(plot.title = element_text(hjust = 0.5))  
 
@@ -187,11 +187,57 @@ ggplot <- ggplot(pheno, aes(y = Rfx3, x = Dnahc5)) +
 	geom_smooth(method = lm) +
 	annotate( "text" , y = 0.7, x = 0.5, label = eq, fontface = "bold", size = 5) + 
 	scale_x_continuous( "RankZ-tranformed Dnahc5 TPM", breaks = seq(0, 2.5, by = 0.1)) +
-	scale_y_continuous( "RankZ-transformed Rfx3 TPM", breaks = seq(0, 7.5, by = 0.2)) +
+	scale_y_continuous( "RankZ-transformed Rfx3 TPM", breaks = seq(0, 0.7, by = 0.01)) +
 	labs( title = "Rfx3 TPM vs Dnahc5 TPM") +
 	theme(plot.title = element_text(hjust = 0.5))  
 
 pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RankZ_Rfx3vDnahc5.pdf", width = 10.0, height = 7.5)
+print(ggplot)
+dev.off()
+
+# Rfx3 v. Dnahc11
+fit <- lm(Rfx3 ~ Dnahc11, pheno)
+fitsum <- summary(fit)
+intcp <- signif(coef(fit)[1], 3)
+slope <- signif(coef(fit)[2], 3)
+pval <- signif(fitsum$coefficients[2,4], 3)
+r2 <- signif(fitsum$adj.r.squared, 3)
+eq <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = ", pval, sep = "")
+ggplot <- ggplot(pheno, aes(y = Rfx3, x = Dnahc11)) +
+	geom_point(size = 2) +
+	geom_smooth(method = lm) +
+	annotate( "text" , y = 0.7, x = 0.5, label = eq, fontface = "bold", size = 5) + 
+	scale_x_continuous( "RankZ-tranformed Dnahc11 TPM", breaks = seq(0, 2.5, by = 0.1)) +
+	scale_y_continuous( "RankZ-transformed Rfx3 TPM", breaks = seq(0, 0.7, by = 0.01)) +
+	labs( title = "Rfx3 TPM vs Dnahc11 TPM") +
+	theme(plot.title = element_text(hjust = 0.5))  
+
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RankZ_Rfx3vDnahc11.pdf", width = 10.0, height = 7.5)
+print(ggplot)
+dev.off()
+
+# Rfx3 v. Dnahc9
+# There is a negative value because TPM pre transformation was 0
+# correct tom back to 0
+pheno$Dnahc9[pheno$Dnahc9 < 0] = 0
+
+fit <- lm(Rfx3 ~ Dnahc9, pheno)
+fitsum <- summary(fit)
+intcp <- signif(coef(fit)[1], 3)
+slope <- signif(coef(fit)[2], 3)
+pval <- signif(fitsum$coefficients[2,4], 3)
+r2 <- signif(fitsum$adj.r.squared, 3)
+eq <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = ", pval, sep = "")
+ggplot <- ggplot(pheno, aes(y = Rfx3, x = Dnahc9)) +
+	geom_point(size = 2) +
+	geom_smooth(method = lm) +
+	annotate( "text" , y = 0.7, x = 0.3, label = eq, fontface = "bold", size = 5) + 
+	scale_x_continuous( "RankZ-tranformed Dnahc9 TPM", breaks = seq(0, 2.5, by = 0.1)) +
+	scale_y_continuous( "RankZ-transformed Rfx3 TPM", breaks = seq(0, 0.7, by = 0.01)) +
+	labs( title = "Rfx3 TPM vs Dnahc9 TPM") +
+	theme(plot.title = element_text(hjust = 0.5))  
+
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RankZ_Rfx3vDnahc9.pdf", width = 10.0, height = 7.5)
 print(ggplot)
 dev.off()
 
@@ -200,52 +246,3 @@ dev.off()
 
 
 
-
-
-
-
-#calculate and plot correlation
-#Rfx3
-data <- RNA_pheno[ complete.cases(RNA_pheno$C2_log),]
-
-fit <- lm(Rfx3 ~ C2_log, data)
-fitsum <- summary(fit)
-intcp <- signif(coef(fit)[1], 3)
-slope <- signif(coef(fit)[2], 3)
-pval <- signif(fitsum$coefficients[2,4], 3)
-r2 <- signif(fitsum$adj.r.squared, 3)
-eq <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = ", pval, sep = "")
-eq2 <- paste(pval)
-gfr <- ggplot(data, aes(y = Rfx3, x = C2_log)) +
-	geom_smooth(method = lm) +
-	geom_point( aes(size = 2)) +
-	annotate( "text" , y = 2.6, x = 4.6, label = eq, fontface = "bold", size = 5) + 
-	scale_x_continuous( "log-transformed C2 GFR", breaks = seq(0, 2.5, by = 0.1)) +
-	scale_y_continuous( "Rfx3 tpm", breaks = seq(0, 7.5, by = 0.2)) +
-	labs( title = "Rfx3 TPM vs log C2 GFR") +
-	theme(plot.title = element_text(hjust = 0.5))  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-##
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/gfr.chr15.geno.dist.87.7.png", width = 1500, height = 1000, res = 100)
-pxg.plot(pheno = pheno, pheno.col = "C2_log", probs = best.genoprobs.192, snp.id = "UNC26053317", snps = GM_snps)
-dev.off()
