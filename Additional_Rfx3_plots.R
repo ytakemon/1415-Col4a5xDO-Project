@@ -125,7 +125,7 @@ dev.off()
 #Use rankz RNA-seq for this because we are comparing between rna-seq tpms
 RNA_seqZ <- as.data.frame(RNA_seqZ)
 
-pheno$Rfx3 <- RNA_seqZ$ENSMUSG00000040929
+pheno$Rfx3_ranked <- RNA_seqZ$ENSMUSG00000040929
 pheno$Dync2li1 <- RNA_seqZ$ENSMUSG00000024253
 pheno$Foxj1 <- RNA_seqZ$ENSMUSG00000034227
 pheno$Dnahc5 <- RNA_seqZ$ENSMUSG00000022262
@@ -250,43 +250,43 @@ pheno_F <- pheno_F[complete.cases(pheno_F$C2_log),]
 pheno_M <- pheno[pheno$Sex == "M",]
 pheno_M <- pheno_M[complete.cases(pheno_M$C2_log),]
 
-fit <- lm(C2_log ~ Rfx3_tpm, pheno_F)
+fit <- lm(C2_log ~ Rfx3_ranked, pheno_F)
 fitsum <- summary(fit)
 intcp <- signif(coef(fit)[1], 3)
 slope <- signif(coef(fit)[2], 3)
 pval <- signif(fitsum$coefficients[2,4], 3)
 r2 <- signif(fitsum$adj.r.squared, 3)
 eq <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = ", pval, sep = "")
-ggplot <- ggplot(pheno_F, aes(y = C2_log, x = Rfx3_tpm)) +
+ggplot <- ggplot(pheno_F, aes(y = C2_log, x = Rfx3_ranked)) +
 	geom_point(size = 2, aes(colour = Rfx3_allele)) +
 	geom_smooth(method = lm) +
-	annotate( "text" , y = 6.25, x = 3.5, label = eq, fontface = "bold", size = 5) + 
-	scale_x_continuous( "Rfx3 TPM", breaks = seq(0, 4.5, by = 0.5)) +
+	annotate( "text" , y = 6.25, x = 0.65, label = eq, fontface = "bold", size = 5) + 
+	scale_x_continuous( "RankZ-transformed Rfx3 TPM", breaks = seq(0, 1, by = 0.01)) +
 	scale_y_continuous( "log-transformed C2 GFR", breaks = seq(0, 6.5, by = 0.5)) +
-	labs( title = "Rfx3 TPM vs Log-transformed C2 GFR (Females)") +
+	labs( title = "RankZ-transformed Rfx3 TPM vs Log-transformed C2 GFR (Females)") +
 	theme(plot.title = element_text(hjust = 0.5))  
 
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Rfx3vC2GFR_Females.pdf", width = 10.0, height = 7.5)
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Ranked_Rfx3vC2GFR_Females.pdf", width = 10.0, height = 7.5)
 print(ggplot)
 dev.off()
 
-fit <- lm(C2_log ~ Rfx3_tpm, pheno_M)
+fit <- lm(C2_log ~ Rfx3_ranked, pheno_M)
 fitsum <- summary(fit)
 intcp <- signif(coef(fit)[1], 3)
 slope <- signif(coef(fit)[2], 3)
 pval <- signif(fitsum$coefficients[2,4], 3)
 r2 <- signif(fitsum$adj.r.squared, 3)
 eq <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = ", pval, sep = "")
-ggplot <- ggplot(pheno_M, aes(y = C2_log, x = Rfx3_tpm)) +
+ggplot <- ggplot(pheno_M, aes(y = C2_log, x = Rfx3_ranked)) +
 	geom_point(size = 2, aes(colour = Rfx3_allele)) +
 	geom_smooth(method = lm) +
-	annotate( "text" , y = 6, x = 3.5, label = eq, fontface = "bold", size = 5) + 
-	scale_x_continuous( "Rfx3 TPM", breaks = seq(0, 6.5, by = 0.5)) +
+	annotate( "text" , y = 6.25, x = 0.65, label = eq, fontface = "bold", size = 5) + 
+	scale_x_continuous( "RankZ-transformed Rfx3 TPM", breaks = seq(0, 1, by = 0.01)) +
 	scale_y_continuous( "log-transformed C2 GFR", breaks = seq(0, 7.5, by = 0.5)) +
-	labs( title = "Rfx3 TPM vs Log-transformed C2 GFR (Males)") +
+	labs( title = "RanksZ-transformed Rfx3 TPM vs Log-transformed C2 GFR (Males)") +
 	theme(plot.title = element_text(hjust = 0.5))  
 
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Rfx3vC2GFR_Males.pdf", width = 10.0, height = 7.5)
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Ranked_Rfx3vC2GFR_Males.pdf", width = 10.0, height = 7.5)
 print(ggplot)
 dev.off()
 

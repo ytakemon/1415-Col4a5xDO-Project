@@ -91,6 +91,25 @@ pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Rfx3_transcri
 print(ggplot)
 dev.off()
 
+gg_data <- Rfx3_ID_tpm
+colnames(gg_data) <- Rfx3_names
+gg_data$allele <- Gene_allele$ENSMUSG00000040929
+gg_data <- gg_data[,c(1,3,4,7:9)]
+gg_data <- melt(gg_data)
+names(gg_data) <- c("Allele", "Rfx3_transcript_ID", "Values")
+
+ggplot <- ggplot(gg_data, aes( x = Rfx3_transcript_ID, y = Values)) +
+	geom_dotplot(binaxis = "y", stackdir = "center", binwidth = 0.05) +
+	scale_x_discrete( "Rfx3 transcripts") +
+	scale_y_continuous( "transcript tpm") +
+	labs( title = "Comparison of Rfx3 transcirpts tpm") +
+	theme( plot.title = element_text(hjust = 0.5), panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Rfx3_transcript_tpm_consolidated.pdf", width = 10.0, height = 7.5)	
+print(ggplot)
+dev.off()
+
+
 ggplot <- ggplot(gg_data, aes( x = Rfx3_transcript_ID, y = Values, fill = Allele)) +
 	geom_dotplot(binaxis = "y", stackdir = "center", binwidth = 0.05, position = position_dodge(1)) +
 	scale_x_discrete( "Rfx3 transcripts") +
