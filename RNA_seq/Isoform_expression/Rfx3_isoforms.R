@@ -105,7 +105,7 @@ ggplot <- ggplot(gg_data, aes( x = Rfx3_transcript_ID, y = Values)) +
 	labs( title = "Comparison of Rfx3 transcirpts tpm") +
 	theme( plot.title = element_text(hjust = 0.5), panel.background = element_blank(), axis.line = element_line(colour = "black"))
 
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Rfx3_transcript_tpm_consolidated.pdf", width = 10.0, height = 7.5)	
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Rfx3_transcript_tpm_consolidated.pdf", width = 5.0, height = 7.0)	
 print(ggplot)
 dev.off()
 
