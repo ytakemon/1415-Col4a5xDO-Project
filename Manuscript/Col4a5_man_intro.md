@@ -3,10 +3,6 @@
 First paragraph reads too much like a list. The words are stiff and
 lacks flow
 
-**Testing:**
-
-Adding line to see tracking on github.
-
 **Title: TBD **
 
 Yuka Takemon, ^1^ Daniel M. Gatti, ^1^ Susan M. Sheehan, ^1^ Holly S.
@@ -16,34 +12,36 @@ Savage, ^1^ Gary A. Churchill, ^1^ Ron Korstanje ^1^
 
 Alport Syndrome (AS) is a hereditary disease affecting 1 in 5,000 births
 in the United States^1^. Children and young adults with AS suffer from
-hearing loss, vision abnormalities, and most commonly kidney disease^2^.
+hearing loss, vision abnormalities, and most notably kidney disease^2^.
 AS patients with kidney disease are diagnosed with glomerulonephritis,
 and present with symptoms of hematuria and proteinuria. Inevitably,
-their kidney functions deteriorate as the disease progresses and leads
-to End-Stage Renal Failure (ESRF) ^2^. It is well studied that ESRF due
-to AS is caused by genetic mutations in *Col4a3, Col4a4, and Col4a5*,
-which encode for the α3-5 chains of collagen IV proteins found in the
-glomerular basement membrane (GBM) of the kidney^3^. Of these three
-genes, mutations in *Col4a5*, located on the X chromosome, is
-responsible for 80% of AS. X-linked AS patients do not all present the
-disease in a similar manner, in fact AS is known be highly variable in
-their in age of onset and severity^4^. Additionally due to its
-X-linkage, the disease disproportionally affects males. Studies have
-observed that X-linked AS in males have an earlier onset and increase
-severity of the disease, with 50% of patients requiring dialysis or
-kidney transplants due to ESRF by the age of 25, 90% by the age of 40,
-and 100% by the age of 60^4^. On the other hand females that are
-heterozygous for this X-linked AS have relatively later onset with only
-12% developing ESRF by the age of 40, however the rate of ESRF increases
-to 30% at the age of 60, and 40% at the age of 80 years^5^.
+their kidney functions progressively deteriorate and lead to End-Stage
+Renal Failure (ESRF) ^2^. It is well studied that ESRF in AS is caused
+by genetic mutations in the α3, α4, and α5 chains of type IV collagen,
+which are encoded by *COL4A3, COL4A4, and COL4A5*. In the kidney, the
+three type IV collagen proteins form heterotrimers and are exclusively
+found in the glomerular basement membrane (GBM)^3^. The lack of type IV
+collagen proteins causes the GBM to weaken and distend, and podocytes
+foot process effacement is also observed (REFERENCE). COL4A5 is the only
+type IV collagen protein encoded on the X chromosome, and is responsible
+for 80% of AS diagnosis. As the X-linkage suggests, males that are
+hemizygous to the *COL4A5* mutation are disproportionally affected
+compared to females. Males have an earlier onset and increased severity
+of the disease, with 50% of patients requiring dialysis or kidney
+transplants due to ESRF by the age of 25 and 100% by the age of 60^4^.
+On the other hand females that are heterozygous for this X-linked AS
+have relatively later onset with only 12% developing ESRF by the age of
+40 and 40% at the age of 80 years^5^. However, patients do not all
+present the disease in a similar manner, and studies have observed their
+age of onset and severity to be highly variable^4^.
 
 In the 2015 International Workshop on AS, clinicians and researchers
 highlighted the need for an effective cure for AS^6^. Currently the only
-treatment option for AS patients are Angiotensin-converting-enzyme
+treatment option for AS patients is Angiotensin-converting-enzyme
 inhibitors (ACE-inhibitors), which is primarily used as treatment for
 hypertension^4^. Treatment with ACE-inhibitors are able to alleviate the
-mechanical pressure applied to the vulnerable GMB of AS patients and
-delay onset of ESRF, however treatment efficacy is highly dependent on
+mechanical pressures applied to the fragile GMB of AS patients and delay
+onset of ESRF, however treatment efficacy is highly dependent on
 timing^6,7^. In addition to the lack of treatment options, we still do
 not have a target for therapeutic interventions. Although *Col4a5* is
 known to cause AS, it is a poor therapeutic target as the disease
