@@ -1,3 +1,18 @@
+##########################################################################################################################################################
+## Additional plots for Rfx3																															##
+## Contributor: Yuka Takemon 																															##
+## Created: 01/24/17																																	##
+##																																						##
+## OBJECTIVE:																																			##
+##	Allele effect plot of Rfx3 expression at Rfx3 locus 																								##
+##	Allele effect plot of GFR at Rfx3 locus 																											##
+##	Correlation between Rfx3 exp vs .....Dync2li1, Foxj1, Dnahc5, Dnahc11, RankZ_Rfx3vDnahc9 															##
+##	Coefficeint plot of Rfx3 narrower focus on LOD score peak																							##
+## 																																						##
+## RESULTS:																																				##
+##																																						##
+##########################################################################################################################################################
+
 ###############################################################################################################################
 ## Additional plots for Rfx3
 #	Name of file will probably change 
@@ -388,86 +403,4 @@ qtl$coef$A <- coefA
 pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/coef.GFR.chr19.focused.RFX3.pdf", width = 7, height = 7)
 coefplot(qtl, chr = 19, main = "Chr 19 log-transformed C2 GFR Allele Effect Plot")
 dev.off()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#############################REFERENCE
-## Plotting narrower allele effect Alb 10wk
-#	subset qtl object to region of interest
-# LOD
-lodA <- qtl$lod$A
-lodA <- lodA[lodA$chr == 2,]
-lodA <- lodA[lodA$pos > 101.7, ]
-lodA <- lodA[lodA$pos < 113.7, ]
-# Coef
-coefA <- qtl$coef$A #matrix
-coefA <- as.data.frame(coefA)
-coefA <- coefA[rownames(lodA),]
-# replace 
-qtl$lod$A <- lodA
-qtl$coef$A <- coefA
-#	plot allele effect 
-qtl$coef$A[abs(qtl$coef$A) > 2 ] = 0 
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/coef.Alb10.chr2.bayesian.int.pdf", width = 10.0, height = 7.5)
-coefplot(qtl, chr = 2, main = "Chr 2 Alb10WK_log Allele Effect Plot @ bayesian interval")
-dev.off()
-
-## Ploting average founder effect of each strain
-#	subset out coefficent data
-data <- qtl$coef$A
-colnames(data)[1] <- "A"
-data$sex <- NULL
-data$creat10wk <- NULL
-#	Center the coefficent values
-data[,2:ncol(data)] <- data[,2:ncol(data)] + data[,1]
-data <- data - rowMeans(data)
-#	reshpe melt dataframe for ggplot
-Founder_names <- c("A", "B", "C","D","E","F","G","H")
-ggdata <- melt(data, variable.name = "Founders", value.name = "Effect")
-#	Get standard error
-ggdata_SE <- summarySEwithin(ggdata, measurevar = "Effect", withinvars = "Founders")
-
-ggplot(ggdata, aes(Founders, Effect)) +
-		geom_point()+
-		geom_errorbar(aes(ymin = Effecct - se, ymax = Effect + se), width = 0.5)
-
-
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Avg_founder_effect_QTLAlb6wk_BayInt_Chr2.pdf", width = 10.0, height = 7.5)
-ggplot(ggdata_SE, aes(Founders, Effect)) +
-	geom_point()+
-	geom_errorbar(aes(ymin = Effect - se, ymax = Effect + se), width = 0.5) +
-	labs( title = "Average founder effect within bayesian interval of Alb10wk QTL Chr 2", x = "DO Founders", y = "Founder Effect") +
-	theme( plot.title = element_text(hjust = 0.5))
-dev.off()
-
-
-
-
-
 
