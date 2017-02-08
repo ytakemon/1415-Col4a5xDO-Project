@@ -1,3 +1,5 @@
+**SUPPLEMENT**
+
 **COMPLETE METHODS**
 
 **Animals**
@@ -28,11 +30,71 @@ wild-derived strains (CAST/EiJ, PWK/PhJ and WSB/EiJ). Thus at a given
 locus each F1 animal will have a C57BL6/J allele, and one of eight
 founder strain allele.
 
-**Genotyping and quality control**
+**DNA isolation**
 
-All 200 mice were fully genotyped for 143,259 SNPs by Neogen Genomics
-using the Giga Mouse Universal Genotyping Array (GigaMUGA) built on an
-Illumina Infinium platform.
+The DNA isolation protocol did not contain phenol-choloroform to obtain
+higher quality samples, than compared to standard lab practices. Tail
+tips were collected at wean (4 weeks) and digested using proteinase K
+overnight. Samples were cools to room temperature before protein
+precipitation solution containing 5M ammonium acetate was added,
+vortexed, and incubated on ice for 30mins. The samples were spun at
+14,000 rpm (applies to the rest of this protocol), and supernatants were
+pipetted into a clean tube. Isopropanol was used to precipitate DNA, and
+solution was centrifuged to a pellet. Then 70% ethanol was used to
+further desalt and precipitate DNA once more and centrifuged. The
+ethanol was discarded leaving a pellet of DNA. The samples were left on
+a bench top covered with a paper towl to dry. Once no liquid is visible,
+DNA was re-suspended in 100ul of ddH20 and incubated at 65C for 5 mins.
+DNA concentrations and purity were measured using NanoDrop (Thermo
+Scientific, model number). Samples for genotyping met stringent quality
+standards of A260/280 ratio between 1.7 and 2.1. A minimul aliquot of
+20ul at 20ng/ul concentrations were sent for genotyping.
+
+**Genotyping with GigaMuga**
+
+All 200 mice were fully genotyped for 143,259 SNPs by GeenSeek (Lincoln,
+NE) using the Giga Mouse Universal Genotyping Array (GigaMUGA) built on
+an Illumina Infinium platform. Genotype calls of A, B, H, or N were
+generated using Illumina’s BeadStudio algorithm, whereby A represents
+homozygous reference allele, B represents homogygous for the alternate
+allele, H represents heterozygosity, and N represents “no call”.
+
+**RNA extraction and library prep **
+
+Right kidneys were collected at 15weeks after last urine collection, and
+the renal capsule containing perinephritic adipose tissue was removed
+before it was immediately flash frozen in liquid nitrogen. Each kidney
+was ground using a ceramic mortal and pestle on dry ice into frozen
+homogenates, and separated into 3 aliquots one of which was sent for
+RNA-extraction.
+
+Bcl2fastq tool to convert to fastq
+
+**Allele specific expression analysis**
+
+EMASE
+
+**Haplotype reconstruction using RNA-seq**
+
+GBRS
+
+**Haplotype reconstruction using GigaMUGA**
+
+Each chromosome pair of a B6.Cg-*Col4a5^tm1Yseq^*/J and a J:DO F1 animal
+is composed of a C57BL/6J haploid and a haploid containing unique mosaic
+of founder haplotypes. Here we refer to the haplotype at a given locus
+as a diplotype. In the F1 mouse model there are 8 possible diplotypes –
+1 homozygous and 7 heterozygous diplotypes. Gatti et al., has developed
+a hidden Markov model to reconstruct the diplotypes by generating a
+probabilistic estimate of the diplotype state at each NSP makrer locus
+for all 200 animals (reference).
+
+**Albumin quantification**
+
+**Glomerular filtration rate analysis**
+
+**\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\# References to
+use **
 
 (need Dan’s input here about genome probability construction)
 
@@ -55,6 +117,10 @@ missing samples using RNA-seq reconstruction, however the 8 samples that
 did not have RNA-seq data were removed from the study, as we could not
 verify their integrity. Through these stringent processes, we were able
 to confirm 192 quality samples for our analysis.
+
+Albumin quantification
+
+GFR calculation
 
 GFR from Far2 paper
 
