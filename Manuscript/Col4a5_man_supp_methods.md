@@ -76,7 +76,7 @@ EMASE
 
 **Haplotype reconstruction using RNA-seq**
 
-GBRS
+GBRS-Genotyping By Rna Seq
 
 **Haplotype reconstruction using GigaMUGA**
 
