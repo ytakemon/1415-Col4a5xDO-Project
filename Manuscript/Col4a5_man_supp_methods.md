@@ -45,19 +45,20 @@ further desalt and precipitate DNA once more and centrifuged. The
 ethanol was discarded leaving a pellet of DNA. The samples were left on
 a bench top covered with a paper towl to dry. Once no liquid is visible,
 DNA was re-suspended in 100ul of ddH20 and incubated at 65C for 5 mins.
-DNA concentrations and purity were measured using NanoDrop (Thermo
-Scientific, model number). Samples for genotyping met stringent quality
-standards of A260/280 ratio between 1.7 and 2.1. A minimul aliquot of
-20ul at 20ng/ul concentrations were sent for genotyping.
+DNA concentrations and purity were measured using NanoDrop 2000 (Thermo
+Scientific). Samples for genotyping met stringent quality standards of
+A260/280 ratio between 1.7 and 2.1. A minimum aliquot of 20ul at 20ng/ul
+concentrations were sent for genotyping.
 
 **Genotyping with GigaMuga**
 
-All 200 mice were fully genotyped for 143,259 SNPs by GeenSeek (Lincoln,
-NE) using the Giga Mouse Universal Genotyping Array (GigaMUGA) built on
-an Illumina Infinium platform. Genotype calls of A, B, H, or N were
-generated using Illumina’s BeadStudio algorithm, whereby A represents
-homozygous reference allele, B represents homogygous for the alternate
-allele, H represents heterozygosity, and N represents “no call”.
+All 200 mice were fully genotyped for 143,259 SNPs by GeenSeek (Neogen
+Genomics) using the Giga Mouse Universal Genotyping Array (GigaMUGA)
+built on an Illumina Infinium platform. Genotype calls of A, B, H, or N
+were generated using Illumina’s BeadStudio algorithm, whereby A
+represents homozygous reference allele, B represents homogygous for the
+alternate allele, H represents heterozygosity, and N represents “no
+call”.
 
 **RNA extraction and library prep **
 
@@ -65,20 +66,39 @@ Right kidneys were collected at 15weeks after last urine collection, and
 the renal capsule containing perinephritic adipose tissue was removed
 before it was immediately flash frozen in liquid nitrogen. Each kidney
 was ground using a ceramic mortal and pestle on dry ice into frozen
-homogenates, and separated into 3 aliquots one of which was sent for
+homogenate and separated into 3 aliquots one of which was sent for
 RNA-extraction.
 
-Bcl2fastq tool to convert to fastq
+-   RNA extraction kit
 
-**Allele specific expression analysis**
+-   RNA quality QC
 
-EMASE
+-   cDNA synthesis and library prep
 
-**Haplotype reconstruction using RNA-seq**
+-   Bcl2fastq tool to convert to fastq
 
-GBRS-Genotyping By Rna Seq
+**Allele specific expression analysis and whole-genome diplotype
+reconstruction using RNA-seq**
 
-**Haplotype reconstruction using GigaMUGA**
+Both calculations for the allele specific expression analysis and
+whole-genome diplotype reconstruction were performed using a combination
+of Expectation-Maximization algorithm for Allele Specific Expression
+(EMASE) and Genotyping By RNA-Seq (GBRS) software respectively. EMAS was
+used to align multi-parent allele-specific expression and gene
+expression simultaneously from RNA-seq data, and the diploid BAM files
+were used as input in GBRS. GBRS was used to quantify multiway allele
+specificity taking into account DO generation and sex. The quantified
+multiway gene transcript per million (TPM) count was used to reconstruct
+genome probabilities, along with an established reference transcriptome
+probability file that corresponds to the samples DO generation and sex.
+
+In order to accurately compare and use the reconstructed genome
+probabilities with that of the genome probabilities from GeneSeek, we
+interpolated the output file using GBRS interpolate tool to interpolate
+the probability ton a decently-spaced gird used for GeneSeek consisting
+of 143,259 SNP markers.
+
+**Whole-genome diplotype reconstruction using GigaMUGA**
 
 Each chromosome pair of a B6.Cg-*Col4a5^tm1Yseq^*/J and a J:DO F1 animal
 is composed of a C57BL/6J haploid and a haploid containing unique mosaic
@@ -93,8 +113,8 @@ for all 200 animals (reference).
 
 **Glomerular filtration rate analysis**
 
-**\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\# References to
-use **
+**\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\# Reference
+materials below **
 
 (need Dan’s input here about genome probability construction)
 
