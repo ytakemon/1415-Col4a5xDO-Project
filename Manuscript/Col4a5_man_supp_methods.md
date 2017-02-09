@@ -94,20 +94,32 @@ probability file that corresponds to the samples DO generation and sex.
 
 In order to accurately compare and use the reconstructed genome
 probabilities with that of the genome probabilities from GeneSeek, we
-interpolated the output file using GBRS interpolate tool to interpolate
-the probability ton a decently-spaced gird used for GeneSeek consisting
-of 143,259 SNP markers.
+interpolated the output file in a 64k SNP grid to a suitably spaced-grid
+used for GeneSeek using GBRS’s interpolate tool.
 
-**Whole-genome diplotype reconstruction using GigaMUGA**
+**Whole-genome diplotype probability construction using GigaMUGA**
 
 Each chromosome pair of a B6.Cg-*Col4a5^tm1Yseq^*/J and a J:DO F1 animal
 is composed of a C57BL/6J haploid and a haploid containing unique mosaic
 of founder haplotypes. Here we refer to the haplotype at a given locus
-as a diplotype. In the F1 mouse model there are 8 possible diplotypes –
-1 homozygous and 7 heterozygous diplotypes. Gatti et al., has developed
-a hidden Markov model to reconstruct the diplotypes by generating a
-probabilistic estimate of the diplotype state at each NSP makrer locus
+as a diplotype, where each diplotype consists of a haplotype from each
+parent. In the F1 mouse model there are 8 possible diplotypes – 1
+homozygous and 7 heterozygous diplotypes. Gatti et al., has developed a
+hidden Markov model to reconstruct the diplotypes by generating a
+probabilistic estimate of the diplotype state at each SNP marker locus
 for all 200 animals (reference).
+
+**Improving accuracy of whole-genome diplotype probability
+construction**
+
+Cross-comparisons between each whole-genome diplotype probability of 192
+out of the 200 animals that had both RNA-Seq and GigaMUGA data were
+performed. Initial steps were taken using the DOQTL R package
+(reference) to create kinship probability plots of each set of genome
+probability construction, GigaMuga and RNA-Seq, to visualize and confirm
+heterogeneity of the F1 samples. The expectation is to see heterogeneity
+of kinship, as DO sire contributing to the F1 is genetically unique from
+one another.
 
 **Albumin quantification**
 
