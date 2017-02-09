@@ -12,7 +12,7 @@ load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/kinship/k.best.pr
 probs <- K.probs[[1]]
 probs <- melt(probs)
 names(probs)[3] <- "Correlation"
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Col4a5_fig3_kinship.pdf", width = 7, height = 7)
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Figure3.1_kinship_heterogen_postcleanup.pdf", width = 7, height = 7)
 	qplot(x=Var1, y=Var2, data=probs, fill=Correlation, geom="tile") +
 	scale_x_discrete("Col4a5 x D0 F1 samples") +
 	scale_y_discrete("Col4a5 x D0 F1 samples") +
