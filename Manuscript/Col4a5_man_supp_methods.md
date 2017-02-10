@@ -162,7 +162,25 @@ GFR calculation were made using a 2 compartment model (y = A\*exp(-B\*x)
 initial fluorescent intensity, which was measured using a time 0 serum
 with added FITC-inulin corrected for dilution factor, divided by the
 area under the curve. We have developed a tool to automate this
-calculation, which can be found at https://github.com/simecek/GFRcalc.
+calculation, which can be found at <https://github.com/simecek/GFRcalc>.
+
+**Quantitative trait loci analysis**
+
+Unlike simple inbred cross designs, quantitative trait loci (QTL)
+mapping for a F1 model with DO background requires the use of a
+mixed-linear regression model accounting for kinship (reference). DOQTL
+R package was sued to perform additive and full QTL models for both
+haplotypes and SNP calls. Haplotypes QTL models compute allelic dosage
+of founders at a given haplotype block associated to a founder to
+determine founder effects at a given locus. Used in conjunction with
+haplotype models, SNP call models compute the probabilistic imputation
+of the genotype at every known SNP locus genome-wide, 143,259 SNPs,
+similar to that of human genome wide association studies (GWAS).
+Performing both prior mentioned QTL models allows for high resolution
+mapping to narrow down candidate modifier genes. All QTL analyses were
+performed for GFR and ACR at all time points. Codes to all figures and
+analysis can be found at
+<https://github.com/TheJacksonLaboratory/1415-Col4a5xDO-Project>.
 
 All animal experiments were performed in accordance with the National
 Institutes of Health Guide for the Care and Use of Laboratory Animals
