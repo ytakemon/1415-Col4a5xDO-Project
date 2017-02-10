@@ -107,65 +107,58 @@ parent. In the F1 mouse model there are 8 possible diplotypes – 1
 homozygous and 7 heterozygous diplotypes. Gatti et al., has developed a
 hidden Markov model to reconstruct the diplotypes by generating a
 probabilistic estimate of the diplotype state at each SNP marker locus
-for all 200 animals (reference).
+for all 200 animals (reference). To ensure quality of construction, 182
+samples with call rates of 90% and over were kept.
 
 **Improving accuracy of whole-genome diplotype probability
 construction**
 
-Cross-comparisons between each whole-genome diplotype probability of 192
-out of the 200 animals that had both RNA-Seq and GigaMUGA data were
-performed. Initial steps were taken using the DOQTL R package
-(reference) to create kinship probability plots of each set of genome
-probability construction, GigaMuga and RNA-Seq, to visualize and confirm
-heterogeneity of the F1 samples. The expectation is to see heterogeneity
-of kinship, as DO sire contributing to the F1 is genetically unique from
-one another.
+Initial steps were taken using the DOQTL R package (reference) to create
+kinship probability plots of the GigaMUGA genome probability
+construction to visualize and confirm heterogeneity of the F1 samples
+(n=182). The expectation is to see complete heterogeneity of kinship, as
+DO sire contributing to the F1 is genetically unique from one another.
+We were able to confirm 13 samples that were closely related to each
+other, 11 of which was due to sample switching with another Neogen
+Genomics customer and 2 samples that were duplicates.
+
+Secondary steps were taken by cross-comparing each GigaMuga genome
+construction to their RNA-Seq reconstruction. Through this we found 12
+samples that did not correlate with each other. All 25 samples that were
+identified to be problematic GigaMUGA constructs were replaced with
+RNA-seq reconstructions and additional samples that did not have
+sufficient GigaMUGA call rates were also replaced, giving a total of 192
+samples for downstream analysis.
 
 **Albumin quantification**
 
 **Glomerular filtration rate analysis**
 
+Glomerular filtration rate (GFR) was measured at 14 weeks of age. Mice
+were weighed one week prior to testing to establish dosage of
+FITC-inulin. A 5% FITC-inulin (Sigma, F3272) in 0.85% NaCl was prepared
+and dialyzed using a dialysis membrane (Spectrum labs, MWCO 1KD 132636)
+for 24 hours protected from light, and filtered using a 0.2 uM syringe
+filter (VWR, 28145-477).
+
 **\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\# Reference
 materials below **
 
-(need Dan’s input here about genome probability construction)
-
-Only 182 samples passed quality control (QC) from genome probability
-reconstruction.
-
-Simultaneously we reconstructed the genome for the 192 mice we had RNA
-sequencing (RNA-seq) data for using the Expectation-Maximization
-algorithm for Allele Specific Expression (EMASE) software developed by
-the Churchill group (ref). EMASE algorithm takes diploid transcript tom
-alignment and estimates the expression abundance for each allele. The
-seemingly redundant effort was essential for our rigorous quality
-control for sample switching, deviation in allele frequency, and sample
-recover of the GigaMUGA data. Our comparison between the 182 mice with
-both GigaMUGA and RNA-seq data confirmed correct genotyping for 157
-GigaMUGA and 24 samples that could not be confirmed. Upon further
-investigation revealed 11 of the 24 unconfirmed samples to be swapped
-with another Neogen Genomic customer. We were able to replace some
-missing samples using RNA-seq reconstruction, however the 8 samples that
-did not have RNA-seq data were removed from the study, as we could not
-verify their integrity. Through these stringent processes, we were able
-to confirm 192 quality samples for our analysis.
-
-Albumin quantification
-
-GFR calculation
-
 GFR from Far2 paper
 
-MME and glomerular filtration rate (GFR) were compared between knockout
-and wildtype mice at 6, 12, and 18 months of age (Figure 1C). At 6
-months of age both groups had a low MME score (wildtype: 66%, knockout:
-72%) and there was no significant difference between the two groups.
-However, at 12 months the MME score in the wildtype animals increased
-significantly, while this did not happen in the knockout animals
-(wildtype: 89%, knockout 68%, P=1.27x10^-6^). At 18 months, the knockout
-animals showed the same high amount (89%) of MME as the wildtype animals
-(88%). A significant difference (P=0.0118) was observed for GFR is at 6
-months, with higher GFR (481±64 μl/min) in the knockout animals than the
-wildtype animals (381±79 μl/min) (Figure 1D). Therefore, our data shows
-that deletion of *Far2* leads to a delay in MME and an improvement of
-renal function at a young age.
+For each time point (6, 12, and 18 months), mice were weighed one week
+prior to testing. A 5% FITC-inulin (Sigma, F3272) in 0.85% NaCl was
+prepared and dialyzed using a dialysis membrane (Spectrum labs, MWCO 1KD
+132636) for 24 hours protected from light. The FITC-inulin solution was
+then filtered using a 0.2 μM syringe filter (VWR, 28145-477). Animals
+were anesthetized with isoflurane prior to a retro-orbital injection.
+ FITC-inulin was injected at a dose of 3.74 μl x body weight (g) rounded
+to the nearest 10 μl. Serial blood samples were taken at precise time
+points (0, 3, 5, 7, 10, 15, 35, 56 and 75 minutes post injection). Blood
+was collected from a nick in the tail for repeated tail tip bleeds; all
+blood was collected for a max duration of one minute and a maximum
+quantity of 25 μl. For all samples, 5 μl was aliquoted in triplicate
+into a 384 well plate and read on a fluorescent plate reader with
+emission at 484 nm and excitation at 535 nm (Molecular devices,
+Spectramax i3). Triplicate readings were then taken and assessed for
+technical precision using a 10% CV cut off.
