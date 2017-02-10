@@ -130,7 +130,13 @@ RNA-seq reconstructions and additional samples that did not have
 sufficient GigaMUGA call rates were also replaced, giving a total of 192
 samples for downstream analysis.
 
-**Albumin quantification**
+**Albuminuria analysis**
+
+Spot urine was collected at 6, 10, and 15 weeks of age for urinary
+albumin and creatinine measurements. Both urinary albumin and creatinine
+concentrations were determined using Synchron CX5 Chemistry Analyzer
+(Beckman Coulter), and the amount of albuminuria was determined with
+albumin to creatinine ratio (mg/g).
 
 **Glomerular filtration rate analysis**
 
@@ -157,3 +163,8 @@ initial fluorescent intensity, which was measured using a time 0 serum
 with added FITC-inulin corrected for dilution factor, divided by the
 area under the curve. We have developed a tool to automate this
 calculation, which can be found at https://github.com/simecek/GFRcalc.
+
+All animal experiments were performed in accordance with the National
+Institutes of Health Guide for the Care and Use of Laboratory Animals
+(National Research Council) and were approved by The Jackson
+Laboratory’s Animal Care and Use Committee.
