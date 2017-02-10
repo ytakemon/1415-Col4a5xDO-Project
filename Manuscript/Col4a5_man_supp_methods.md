@@ -139,26 +139,21 @@ were weighed one week prior to testing to establish dosage of
 FITC-inulin. A 5% FITC-inulin (Sigma, F3272) in 0.85% NaCl was prepared
 and dialyzed using a dialysis membrane (Spectrum labs, MWCO 1KD 132636)
 for 24 hours protected from light, and filtered using a 0.2 uM syringe
-filter (VWR, 28145-477).
+filter (VWR, 28145-477). Animals were anesthetized with isoflurane prior
+to retro-orbital injection with FITC-inulin at a dose of 3.74ul x body
+weight (g) rounded to the nearest 10ul. Serial blood samples were taken
+at precise time points (0, 3, 5, 7, 10, 15, 35, 56, and 75 minutes post
+injection) from a nick in the tail tip. All blood was collected for a
+maximum during of one minute with a maximum quantity of 25ul. Blood
+samples were spun down and 5ul of serum was aliquoted in triplicates
+into a 384 well plate and read on a Spectramax i3 fluorescent plate
+reader (Molecular devices) with emission and excitation wavelengths set
+at 484nm and 535nm respectively. Triplicate readings were taken and
+assessed for technical precision using a 10% CV cutoff.
 
-**\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\# Reference
-materials below **
-
-GFR from Far2 paper
-
-For each time point (6, 12, and 18 months), mice were weighed one week
-prior to testing. A 5% FITC-inulin (Sigma, F3272) in 0.85% NaCl was
-prepared and dialyzed using a dialysis membrane (Spectrum labs, MWCO 1KD
-132636) for 24 hours protected from light. The FITC-inulin solution was
-then filtered using a 0.2 μM syringe filter (VWR, 28145-477). Animals
-were anesthetized with isoflurane prior to a retro-orbital injection.
- FITC-inulin was injected at a dose of 3.74 μl x body weight (g) rounded
-to the nearest 10 μl. Serial blood samples were taken at precise time
-points (0, 3, 5, 7, 10, 15, 35, 56 and 75 minutes post injection). Blood
-was collected from a nick in the tail for repeated tail tip bleeds; all
-blood was collected for a max duration of one minute and a maximum
-quantity of 25 μl. For all samples, 5 μl was aliquoted in triplicate
-into a 384 well plate and read on a fluorescent plate reader with
-emission at 484 nm and excitation at 535 nm (Molecular devices,
-Spectramax i3). Triplicate readings were then taken and assessed for
-technical precision using a 10% CV cut off.
+GFR calculation were made using a 2 compartment model (y = A\*exp(-B\*x)
++ C\*exp(-D\*x) + noise) (reference). GFR was determined using the
+initial fluorescent intensity, which was measured using a time 0 serum
+with added FITC-inulin corrected for dilution factor, divided by the
+area under the curve. We have developed a tool to automate this
+calculation, which can be found at https://github.com/simecek/GFRcalc.
