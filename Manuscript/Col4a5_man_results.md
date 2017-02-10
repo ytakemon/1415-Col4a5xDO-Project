@@ -16,3 +16,5 @@ R\^2=0.048,0.4111, p value?**
 **Figure 4.3 Albumin qtl 10wks**
 
 **Figure 4.4 Albumin qtl 15wks**
+
+**Figure 5 Xce allele**

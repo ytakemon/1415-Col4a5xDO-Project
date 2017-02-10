@@ -30,7 +30,7 @@ wild-derived strains (CAST/EiJ, PWK/PhJ and WSB/EiJ). Thus at a given
 locus each F1 animal will have a C57BL6/J allele, and one of eight
 founder strain allele.
 
-**DNA isolation**
+**DNA isolation and genotyping**
 
 The DNA isolation protocol did not contain phenol-choloroform to obtain
 higher quality samples, than compared to standard lab practices. Tail
@@ -46,9 +46,19 @@ ethanol was discarded leaving a pellet of DNA. The samples were left on
 a bench top covered with a paper towl to dry. Once no liquid is visible,
 DNA was re-suspended in 100ul of ddH20 and incubated at 65C for 5 mins.
 DNA concentrations and purity were measured using NanoDrop 2000 (Thermo
-Scientific). Samples for genotyping met stringent quality standards of
+Scientific). Samples were genotyped for Col4a5 mutation using forward
+primer 5’GCATAACCGGGACACTCACT3’ and reverse primer
+5’GAGGACTTACCGCAGCCTCT3’ to capture construct knockin located in exon 1.
+Samples for GigaMUGA genotyping met stringent quality standards of
 A260/280 ratio between 1.7 and 2.1. A minimum aliquot of 20ul at 20ng/ul
-concentrations were sent for genotyping.
+concentrations were sent for genotyping for GigaMUGA.
+
+**X controlling element determination**
+
+See wiki…..
+
+-   DXMit16 Forward: 5’/FAM/CTGCAATGCCTGCTGTTTTA3’ DXMit16 Reverse: 5’
+    CCGGAGTACAAAGGGAGTCA3’
 
 **Genotyping with GigaMuga**
 
