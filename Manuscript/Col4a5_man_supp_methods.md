@@ -57,8 +57,8 @@ Genomics) using the Giga Mouse Universal Genotyping Array (GigaMUGA)
 built on an Illumina Infinium platform. Genotype calls of A, B, H, or N
 were generated using Illumina’s BeadStudio algorithm, whereby A
 represents homozygous reference allele, B represents homogygous for the
-alternate allele, H represents heterozygosity, and N represents “no
-call”.
+alternate allele, H represents heterozygous genotype, and N represents
+“no call” at marker.
 
 **RNA extraction and library prep **
 
@@ -176,10 +176,11 @@ determine founder effects at a given locus. Used in conjunction with
 haplotype models, SNP call models compute the probabilistic imputation
 of the genotype at every known SNP locus genome-wide, 143,259 SNPs,
 similar to that of human genome wide association studies (GWAS).
-Performing both prior mentioned QTL models allows for high resolution
-mapping to narrow down candidate modifier genes. All QTL analyses were
-performed for GFR and ACR at all time points. Codes to all figures and
-analysis can be found at
+Analyzing both prior mentioned QTL models allows for high resolution
+mapping to narrow down candidate genes. All QTLs analyzed for GFR and
+Albumin at all time points accounted for sex as a covariate, and
+additionally creatinine in Albumin analyses. Codes to all figures and
+analyses can be found at
 <https://github.com/TheJacksonLaboratory/1415-Col4a5xDO-Project>.
 
 All animal experiments were performed in accordance with the National

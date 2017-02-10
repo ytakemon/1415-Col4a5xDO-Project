@@ -1,8 +1,3 @@
-**Comments:**
-
-First paragraph reads too much like a list. The words are stiff and
-lacks flow
-
 **Title: TBD **
 
 Yuka Takemon, ^1^ Daniel M. Gatti, ^1^ Susan M. Sheehan, ^1^ Holly S.
@@ -31,42 +26,43 @@ of the disease, with 50% of patients requiring dialysis or kidney
 transplants due to ESRF by the age of 25 and 100% by the age of 60^4^.
 On the other hand females that are heterozygous for this X-linked AS
 have relatively later onset with only 12% developing ESRF by the age of
-40 and 40% at the age of 80 years^5^. However, patients do not all
-present the disease in a similar manner, and studies have observed their
-age of onset and severity to be highly variable^4^.
+40 and 40% at the age of 80 years^5^. Curiously, patients with similar
+genetic mutations do not all present the disease in a similar manner,
+and studies have observed their age of onset and severity to be highly
+variable^4^.
 
 In the 2015 International Workshop on AS, clinicians and researchers
 highlighted the need for an effective cure for AS^6^. Currently the only
 treatment option for AS patients is Angiotensin-converting-enzyme
-inhibitors (ACE-inhibitors), which is primarily used as treatment for
+inhibitors (ACE-inhibitors), which are primarily used as treatment for
 hypertension^4^. Treatment with ACE-inhibitors are able to alleviate the
 mechanical pressures applied to the fragile GMB of AS patients and delay
 onset of ESRF, however treatment efficacy is highly dependent on
 timing^6,7^. In addition to the lack of treatment options, we still do
-not have a target for therapeutic interventions. Although *Col4a5* is
-known to cause AS, it is a poor therapeutic target as the disease
-progression vary dramatically. The varying age of onset and severity of
-AS suggests possibilities of other underlying mechanisms that are able
-to modify disease progression caused by the *Col4a5*
-mutation. Identifying these mechanisms and the genes involved may lead
-to the development of precise and novel therapeutic targets.
+not have a specific target for therapeutic interventions. Although
+*Col4a5* is known to cause AS, it is a poor therapeutic target as
+patients with this mutation vary dramatically in disease progression. It
+is widely accepted that the varying age of onset and severity of AS is
+in part due to underlying mechanisms that are able to modify disease
+progression. However, small samples sizes and other confounding factors
+preclude the ability to study such modifier in humans.
 
 To our knowledge there has only been one study conducted to identify
-modifier genes that lead to the variability in age of onset and severity
-of AS^8^. They observed variation between *Col4a3* knock out mice in
-129X1/SvJ and C57BL/6J backgrounds, and identified 2 quantitative trail
-loci (QTL) on chromosome 9 and 16, however the intervals were not narrow
-enough to confidently identify probable candidate genes^8^.
+modifier genes in AS^8^. They observed variation between *Col4a3* knock
+out mice in 129X1/SvJ and C57BL/6J backgrounds, and identified 2
+quantitative trail loci (QTL) on chromosome 9 and 16, however the
+intervals were not narrow enough to confidently identify candidate
+genes^8^.
 
-In this study we aimed to identify modifier genes of X-linked AS by
-introducing the *Col4a5* mutation into a diverse genetic background
-using the Diversity Outbred (DO) mice ^9-11^. DO mice are derived from
-eight inbred founder strains (A/J, C57BL/6J, 129S1/SvImJ, NOD/LtJ,
+In this study we aimed to effectively identify modifier genes of
+X-linked AS by introducing the *Col4a5* mutation into a diverse genetic
+background using the Diversity Outbred (DO) mice. DO mice are derived
+from eight inbred founder strains (A/J, C57BL/6J, 129S1/SvImJ, NOD/LtJ,
 NZO/HlLtJ, CAST/EiJ, PWK/PhJ, and WSB/EiJ), which captured nearly 90% of
-the known genetic variation present in laboratory mice^12^. This
-heterogeneity observed in the DO population is currently the best model
-that reflects the genetic diversity in the human population. (Ending
-pending results)
+the known genetic variation present in laboratory mice^12^. The
+heterogeneity observed in the DO population allows for high resolution
+mapping and with a sufficient sample size this model is ideal for
+mapping modifier genes in X-linked AS ^9-11^.
 
 1\. Thomassen M, Flinter F. Clinical utility gene card for: Alport
 syndrome. *Eur J Hum Genet*. 2012;20(6):–. doi:10.1038/ejhg.2011.237.
