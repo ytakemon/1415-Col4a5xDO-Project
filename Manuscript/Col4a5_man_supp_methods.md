@@ -57,11 +57,11 @@ reader (Molecular devices) with emission and excitation wavelengths set
 at 484nm and 535nm respectively. Triplicate readings were taken and
 assessed for technical precision using a 10% CV cutoff. We used a 2
 compartment model (y = A\*exp(-B\*x) + C\*exp(-D\*x) + noise) for GFR
-quantification{Hall:1977vx}. GFR was determined using the initial
-fluorescent intensity, which was measured using a time 0 serum with
-added FITC-inulin corrected for dilution factor, divided by the area
-under the curve. A tool has been developed to automate this calculation,
-which can be found at <https://github.com/simecek/GFRcalc>.
+quantification^1^. GFR was determined using the initial fluorescent
+intensity, which was measured using a time 0 serum with added
+FITC-inulin corrected for dilution factor, divided by the area under the
+curve. A tool has been developed to automate this calculation, which can
+be found at <https://github.com/simecek/GFRcalc>.
 
 **Kidney collection **
 
@@ -114,8 +114,8 @@ parent. In the F1 mouse model there are 8 possible diplotypes, 1
 homozygous and 7 heterozygous diplotypes. Gatti et al., has developed a
 hidden Markov model to reconstruct the diplotypes by generating a
 probabilistic estimate of the diplotype state at each SNP marker locus
-for all 200 animals{Gatti:2014ko}. To ensure quality of construction,
-182 samples with call rates of 90% and over were kept.
+for all 200 animals^2^. To ensure quality of construction, 182 samples
+with call rates of 90% and over were kept.
 
 **RNA extraction and quality control**
 
@@ -165,14 +165,14 @@ used for GeneSeek using GBRS’s interpolate tool.
 **Improving accuracy of whole-genome diplotype probability
 construction**
 
-Initial steps were taken using the DOQTL R package{Gatti:2014ko} to
-create kinship probability plots of the GigaMUGA genome probability
-construction to visualize and confirm heterogeneity of the F1 samples.
-The expectation is to see complete heterogeneity of kinship, as DO sire
-contributing to the F1 is genetically unique from one another. We were
-able to confirm 13 samples that were closely related to each other, 11
-of which was due to sample switching with another Neogen Genomics
-customer and 2 samples that were duplicates.
+Initial steps were taken using the DOQTL R package^2^ to create kinship
+probability plots of the GigaMUGA genome probability construction to
+visualize and confirm heterogeneity of the F1 samples. The expectation
+is to see complete heterogeneity of kinship, as DO sire contributing to
+the F1 is genetically unique from one another. We were able to confirm
+13 samples that were closely related to each other, 11 of which was due
+to sample switching with another Neogen Genomics customer and 2 samples
+that were duplicates.
 
 Secondary steps were taken by cross-comparing each GigaMuga genome
 construction to their RNA-Seq reconstruction. Through this we found 12
@@ -186,23 +186,23 @@ samples for downstream analysis.
 
 Unlike simple inbred cross designs, quantitative trait loci (QTL)
 mapping for a F1 model with DO background requires the use of a
-mixed-linear regression model accounting for kinship{Gatti:2014ko}.
-DOQTL R package was used to perform additive and full QTL models for
-both haplotypes and SNP calls. Haplotypes QTL models compute allelic
-dosage of founders at a given haplotype block associated to a founder to
-determine founder effects at a given locus. Haplotype QTL was used to
-create QTL maps showing LOD scores for each autosomal chromosome,
-founder effect plots, as well as calculation of Bayesian intervals. Used
-in conjunction with haplotype QTL models, SNP call models compute the
-probabilistic imputation of the genotype at every known SNP locus
-genome-wide, total of 143,259 SNPs, similar to that of genome wide
-association studies (GWAS) well established in human studies. SNP call
-models were used to identify LOD scores of individual SNPs within a
-Bayesian interval. Analyzing both prior mentioned QTL models allows for
-high resolution mapping to narrow down candidate genes. All QTL modelss
-analyzed for GFR and Albumin at all time points accounted for sex as an
-additive covariate, and creatinine was also accounted for in Albumin
-QTLs for normalization.
+mixed-linear regression model accounting for kinship^2^. DOQTL R package
+was used to perform additive and full QTL models for both haplotypes and
+SNP calls. Haplotypes QTL models compute allelic dosage of founders at a
+given haplotype block associated to a founder to determine founder
+effects at a given locus. Haplotype QTL was used to create QTL maps
+showing LOD scores for each autosomal chromosome, founder effect plots,
+as well as calculation of Bayesian intervals. Used in conjunction with
+haplotype QTL models, SNP call models compute the probabilistic
+imputation of the genotype at every known SNP locus genome-wide, total
+of 143,259 SNPs, similar to that of genome wide association studies
+(GWAS) well established in human studies. SNP call models were used to
+identify LOD scores of individual SNPs within a Bayesian interval.
+Analyzing both prior mentioned QTL models allows for high resolution
+mapping to narrow down candidate genes. All QTL modelss analyzed for GFR
+and Albumin at all time points accounted for sex as an additive
+covariate, and creatinine was also accounted for in Albumin QTLs for
+normalization.
 
 **Additional materials**
 
@@ -214,3 +214,11 @@ All animal experiments were performed in accordance with the National
 Institutes of Health Guide for the Care and Use of Laboratory Animals
 (National Research Council) and were approved by The Jackson
 Laboratory’s Animal Care and Use Committee.
+
+1\. Hall JE, Guyton AC, Farr BM: A single-injection method for measuring
+glomerular filtration rate. *Am. J. Physiol.* 232: F72–6, 1977
+
+2\. Gatti DM, Svenson KL, Shabalin A, Wu L-Y, Valdar W, Simecek P,
+Goodwin N, Cheng R, Pomp D, Palmer A, Chesler EJ, Broman KW, Churchill
+GA: Quantitative trait locus mapping methods for diversity outbred mice.
+*G3 (Bethesda)* 4: 1623–1633, 2014
