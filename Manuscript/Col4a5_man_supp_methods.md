@@ -32,7 +32,7 @@ founder strain allele.
 
 **DNA isolation and genotyping**
 
-The DNA isolation protocol did not contain phenol-choloroform to obtain
+A non-phenol-chlorofrom based DNA isolation protocol was used to obtain
 higher quality samples, than compared to standard lab practices. Tail
 tips were collected at wean (4 weeks) and digested using proteinase K
 overnight. Samples were cools to room temperature before protein
@@ -53,13 +53,6 @@ Samples for GigaMUGA genotyping met stringent quality standards of
 A260/280 ratio between 1.7 and 2.1. A minimum aliquot of 20ul at 20ng/ul
 concentrations were sent for genotyping for GigaMUGA.
 
-**X controlling element determination**
-
-See wiki…..
-
--   DXMit16 Forward: 5’/FAM/CTGCAATGCCTGCTGTTTTA3’ DXMit16 Reverse: 5’
-    CCGGAGTACAAAGGGAGTCA3’
-
 **Genotyping with GigaMuga**
 
 All 200 mice were fully genotyped for 143,259 SNPs by GeenSeek (Neogen
@@ -70,22 +63,34 @@ represents homozygous reference allele, B represents homogygous for the
 alternate allele, H represents heterozygous genotype, and N represents
 “no call” at marker.
 
-**RNA extraction and library prep **
+**Kidney collection **
 
 Right kidneys were collected at 15weeks after last urine collection, and
 the renal capsule containing perinephritic adipose tissue was removed
 before it was immediately flash frozen in liquid nitrogen. Each kidney
 was ground using a ceramic mortal and pestle on dry ice into frozen
-homogenate and separated into 3 aliquots one of which was sent for
-RNA-extraction.
+homogenate and separated into 3 aliquots for downstream analysis.
 
--   RNA extraction kit
+**RNA extraction and quality control**
 
--   RNA quality QC
+One homogenized kidney aliquot was sent to Genome Technologies, a
+scientific research service available at the Jackson Laboratory, for RNA
+extraction and library prep. Kidney samples were further lysed and
+homogenized in TRIzol Reagent (Ambion), and total RNA was extracted
+using miRNeasy Mini Kit (Qiagen), according to manufacturer’s protocols,
+including the optional DNase digest step. Sample concentration and
+quality were accessed using Nanodrop 2000 spectrophotometer (Thermo
+Scientific) and the RNA 6000 Nano LabChip assay (Agilent Technologies)
+respectively. RNA quality criteria for library construction and RNA-seq
+were RIN of ≥ 8.0 and a 260/280 ratio of ≥ 1.7.
 
--   cDNA synthesis and library prep
+**Library construction and RNA sequencing**
 
--   Bcl2fastq tool to convert to fastq
+Poly(A) RNA-seq libraries were constructed using TruSeq RNA Library Prep
+Kit v2 (Illumina), including the addition of unique barcode sequencing,
+and were quantified using quantitative PCR (Kapa Biosystems). Libraries
+were pooled and sequenced at 100bp single-end on the HiSeq 2500
+(Illumina) using TruSeq SBS Kit v4 at the New York Genome Center.
 
 **Allele specific expression analysis and whole-genome diplotype
 reconstruction using RNA-seq**
@@ -179,19 +184,26 @@ calculation, which can be found at <https://github.com/simecek/GFRcalc>.
 Unlike simple inbred cross designs, quantitative trait loci (QTL)
 mapping for a F1 model with DO background requires the use of a
 mixed-linear regression model accounting for kinship (reference). DOQTL
-R package was sued to perform additive and full QTL models for both
+R package was used to perform additive and full QTL models for both
 haplotypes and SNP calls. Haplotypes QTL models compute allelic dosage
 of founders at a given haplotype block associated to a founder to
-determine founder effects at a given locus. Used in conjunction with
-haplotype models, SNP call models compute the probabilistic imputation
-of the genotype at every known SNP locus genome-wide, 143,259 SNPs,
-similar to that of human genome wide association studies (GWAS).
+determine founder effects at a given locus. Haplotype QTL was used to
+create shown QTL and founder effect plots as well as calculation of
+Bayesian intervals. Used in conjunction with haplotype models, SNP call
+models compute the probabilistic imputation of the genotype at every
+known SNP locus genome-wide, total of 143,259 SNPs, similar to that of
+human genome wide association studies (GWAS). SNP call models were used
+to identify LOD scores of individual SNPs within a Bayesian interval.
 Analyzing both prior mentioned QTL models allows for high resolution
 mapping to narrow down candidate genes. All QTLs analyzed for GFR and
-Albumin at all time points accounted for sex as a covariate, and
-additionally creatinine in Albumin analyses. Codes to all figures and
-analyses can be found at
-<https://github.com/TheJacksonLaboratory/1415-Col4a5xDO-Project>.
+Albumin at all time points accounted for sex as an additive covariate,
+and cretinine was added in Albumin QTLs for normalization.
+
+**Additional materials**
+
+Codes to all figures and analyses can be found at
+<https://github.com/TheJacksonLaboratory/1415-Col4a5xDO-Project>. (Will
+have to clean up repo or create a new one for public).
 
 All animal experiments were performed in accordance with the National
 Institutes of Health Guide for the Care and Use of Laboratory Animals
