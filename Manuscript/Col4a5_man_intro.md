@@ -7,112 +7,140 @@ Savage, ^1^ Gary A. Churchill, ^1^ Ron Korstanje ^1^
 
 Alport Syndrome (AS) is a hereditary disease affecting 1 in 5,000 births
 in the United States^1^. Children and young adults with AS suffer from
-hearing loss, vision abnormalities, and most notably kidney disease^2^.
-AS patients with kidney disease are diagnosed with glomerulonephritis,
-and present with symptoms of hematuria and proteinuria. Inevitably,
-their kidney functions progressively deteriorate and lead to End-Stage
-Renal Failure (ESRF) ^2^. It is well studied that ESRF in AS is caused
-by genetic mutations in the α3, α4, and α5 chains of type IV collagen,
-which are encoded by *COL4A3, COL4A4, and COL4A5*. In the kidney, the
-three type IV collagen proteins form heterotrimers and are exclusively
-found in the glomerular basement membrane (GBM)^3^. The lack of type IV
-collagen proteins causes the GBM to weaken and distend, and podocytes
-foot process effacement is also observed (REFERENCE). COL4A5 is the only
-type IV collagen protein encoded on the X chromosome, and is responsible
-for 80% of AS diagnosis. As the X-linkage suggests, males that are
-hemizygous to the *COL4A5* mutation are disproportionally affected
-compared to females. Males have an earlier onset and increased severity
-of the disease, with 50% of patients requiring dialysis or kidney
-transplants due to ESRF by the age of 25 and 100% by the age of 60^4^.
-On the other hand females that are heterozygous for this X-linked AS
-have relatively later onset with only 12% developing ESRF by the age of
-40 and 40% at the age of 80 years^5^. Curiously, patients with similar
-genetic mutations do not all present the disease in a similar manner,
-and studies have observed their age of onset and severity to be highly
-variable^4^.
+hearing loss, vision abnormalities, and most notably kidney
+disease^2,3^. AS patients with kidney disease are diagnosed with
+glomerulonephritis, and present with symptoms of hematuria and
+proteinuria. Inevitably, their kidney functions progressively
+deteriorate and lead to End-Stage Renal Failure (ESRF) ^3-5^. It is well
+studied that ESRF in AS is caused by genetic mutations in the α3, α4,
+and α5 chains of type IV collagen, which are encoded by *COL4A3, COL4A4,
+and COL4A5*. In the kidney, the three type IV collagen proteins form
+heterotrimers and are exclusively found in the glomerular basement
+membrane (GBM) ^6,7^. A dysfunction in any one of the type IV collagen
+proteins causes the GBM to weaken and distend, and podocytes foot
+process effacement to occur^5^. COL4A5 is the only type IV collagen
+protein encoded on the X chromosome, and is responsible for 80% of AS
+diagnosis. As the X-linkage suggests, males that are hemizygous to the
+*COL4A5* mutation are disproportionally affected compared to females.
+Males have an earlier onset and increased severity of the disease, with
+50% of patients requiring dialysis or kidney transplants due to ESRF by
+the age of 25 and 100% by the age of 60^8^. On the other hand females
+that are heterozygous for this X-linked AS have relatively later onset
+with 12% developing ESRF by the age of 40 and 40% at the age of 80
+years^9^. Curiously, patients with similar genetic mutations do not all
+present the disease in a similar manner, and studies have observed their
+age of onset and severity to be highly variable^8^.
 
 In the 2015 International Workshop on AS, clinicians and researchers
-highlighted the need for an effective cure for AS^6^. Currently the only
-treatment option for AS patients is Angiotensin-converting-enzyme
-inhibitors (ACE-inhibitors), which are primarily used as treatment for
-hypertension^4^. Treatment with ACE-inhibitors are able to alleviate the
-mechanical pressures applied to the fragile GMB of AS patients and delay
-onset of ESRF, however treatment efficacy is highly dependent on
-timing^6,7^. In addition to the lack of treatment options, we still do
-not have a specific target for therapeutic interventions. Although
-*Col4a5* is known to cause AS, it is a poor therapeutic target as
-patients with this mutation vary dramatically in disease progression. It
-is widely accepted that the varying age of onset and severity of AS is
-in part due to underlying mechanisms that are able to modify disease
-progression. However, small samples sizes and other confounding factors
-preclude the ability to study such modifier in humans.
+highlighted the need for an effective cure for AS^10^. Currently the
+only available treatment options for AS patients are
+Angiotensin-converting-enzyme inhibitors (ACE-inhibitors) or
+angitotensin receptor blockers (ARBs), which are primarily used as
+treatment for hypertension^2,8^. Treatment with ACE-inhibitors are able
+to alleviate the mechanical pressures applied to the fragile GMB of AS
+patients and delay onset of ESRF, however treatment efficacy is highly
+dependent on timing^10,11^. In addition to the lack of treatment
+options, we still do not have a specific target for therapeutic
+interventions. Although *Col4a5* is known to cause AS, it is a poor
+therapeutic target as patients with this mutation vary dramatically in
+disease progression. It is widely accepted that the varying age of onset
+and severity of AS is in part due to underlying mechanisms that are able
+to modify disease progression^10,12,13^. However, small samples sizes
+and other confounding factors preclude the ability to study such
+modifier in humans.
 
 To our knowledge there has only been one study conducted to identify
-modifier genes in AS^8^. They observed variation between *Col4a3* knock
-out mice in 129X1/SvJ and C57BL/6J backgrounds, and identified 2
-quantitative trail loci (QTL) on chromosome 9 and 16, however the
-intervals were not narrow enough to confidently identify candidate
-genes^8^.
+modifier genes in AS models^12^. They observed variation between
+*Col4a3* knock out mice in 129X1/SvJ and C57BL/6J backgrounds, and
+identified 2 quantitative trail loci (QTL) on chromosome 9 and 16,
+however the intervals were not narrow enough to confidently identify
+candidate genes^12^.
 
 In this study we aimed to effectively identify modifier genes of
-X-linked AS by introducing the *Col4a5* mutation into a diverse genetic
-background using the Diversity Outbred (DO) mice. DO mice are derived
-from eight inbred founder strains (A/J, C57BL/6J, 129S1/SvImJ, NOD/LtJ,
-NZO/HlLtJ, CAST/EiJ, PWK/PhJ, and WSB/EiJ), which captured nearly 90% of
-the known genetic variation present in laboratory mice^12^. The
-heterogeneity observed in the DO population allows for high resolution
-mapping and with a sufficient sample size this model is ideal for
-mapping modifier genes in X-linked AS ^9-11^.
+X-linked AS by introducing the *Col4a5* mutation into a diverse
+geneti­­­c background using the Diversity Outbred (DO) mice. DO mice are
+derived from eight inbred founder strains (A/J, C57BL/6J, 129S1/SvImJ,
+NOD/LtJ, NZO/HlLtJ, CAST/EiJ, PWK/PhJ, and WSB/EiJ), which captured
+nearly 90% of the known genetic variation present in laboratory
+mice^14-17^. The heterogeneity observed in the DO population allows for
+high-resolution mapping and with a sufficient sample size this model is
+ideal for mapping modifier genes in X-linked AS.
 
-1\. Thomassen M, Flinter F. Clinical utility gene card for: Alport
-syndrome. *Eur J Hum Genet*. 2012;20(6):–. doi:10.1038/ejhg.2011.237.
+1\. Hertz JM, Thomassen M, Storey H, Flinter F: Clinical utility gene
+card for: Alport syndrome. *European Journal of Human Genetics* 20: 2012
 
-2\. Savige J, Gregory M, Gross O, Kashtan C, Ding J, Flinter F. Expert
+2\. Kruegel J, Rubel D, Gross O: Alport syndrome--insights from basic and
+clinical research. *Nat Rev Nephrol* 9: 170–178, 2013
+
+3\. Savige J, Gregory M, Gross O, Kashtan C, Ding J, Flinter F: Expert
 guidelines for the management of Alport syndrome and thin basement
-membrane nephropathy. *J Am Soc Nephrol*. 2013;24(3):364-375.
-doi:10.1681/ASN.2012020148.
+membrane nephropathy. *J. Am. Soc. Nephrol.* 24: 364–375, 2013
 
-3\. Hudson BG, Tryggvason K, Sundaramoorthy M, Neilson EG. Alport“s
-syndrome, Goodpasture”s syndrome, and type IV collagen. *N Engl J Med*.
-2003;348(25):2543-2556. doi:10.1056/NEJMra022296.
+4\. Kelly YP, Patil A, Wallis L, Murray S, Kant S, Kaballo MA, Casserly
+L, Doyle B, Dorman A, O'Kelly P, Conlon PJ: Outcomes of kidney
+transplantation in Alport syndrome compared with other forms of renal
+disease. *Ren Fail* 1–4, 2016
 
-4\. Kashtan CE, Rheault M. Clinical practice recommendations for the
-treatment of Alport syndrome: a statement of the Alport Syndrome
-Research Collaborative. *Pediatr Nephrol*. 2013;28(1):5-11.
-doi:10.1007/s00467-012-2138-4.
+5\. Cosgrove D, Liu S: Collagen IV diseases: A focus on the glomerular
+basement membrane in Alport syndrome. *Matrix Biology* 1–10, 2016
 
-5\. Jais JP, Knebelmann B, Giatras I, et al. X-linked Alport syndrome:
-natural history and genotype-phenotype correlations in girls and women
-belonging to 195 families: a “European Community Alport Syndrome
-Concerted Action” study. *Journal of the American Society of
-Nephrology*. 2003;14(10):2603-2610.
-doi:10.1097/01.ASN.0000090034.71205.74.
+6\. Heidet L, Cai Y, Guicharnaud L, Antignac C, Gubler MC: Glomerular
+expression of type IV collagen chains in normal and X-linked Alport
+syndrome kidneys. *Am. J. Pathol.* 156: 1901–1910, 2000
 
-6\. Flinter F, Savige J, Savva I, et al. Advances and unmet needs in
-genetic, basic and clinical science in Alport syndrome: report from the
-2015 International Workshop on Alport Syndrome. *Nephrol Dial
-Transplant*. May 2016:gfw095. doi:10.1093/ndt/gfw095.
+7\. Hudson BG, Hudson BG, Tryggvason K, Tryggvason K, Sundaramoorthy M,
+Neilson EG: Alport“s syndrome, Goodpasture”s syndrome, and type IV
+collagen. *N. Engl. J. Med.* 348: 2543–2556, 2003
 
-7\. Gross O, Licht C, Anders HJ, et al. Early angiotensin-converting
-enzyme inhibition in Alport syndrome delays renal failure and improves
-life expectancy. *Kidney International*. 2012;81(5):494-501.
-doi:10.1038/ki.2011.407.
+8\. Kashtan CE, Ding J, Gregory M, Gross O, Heidet L, Knebelmann B,
+Rheault M, Licht C: Clinical practice recommendations for the treatment
+of Alport syndrome: a statement of the Alport Syndrome Research
+Collaborative. *Pediatr Nephrol* 28: 5–11, 2013
 
-8\. Andrews KL, Mudd JL, Li C, Miner JH. Quantitative trait loci
+9\. Jais JP, Knebelmann B, Giatras I, De Marchi M, Rizzoni G, Renieri A,
+Weber M, Gross O, Netzer K-O, Flinter F, Pirson Y, Dahan K, Wieslander
+J, Persson U, Tryggvason K, Martin P, Hertz JM, Schröder C, Sanak M,
+Carvalho MF, Saus J, Antignac C, Smeets H, Gubler MC: X-linked Alport
+syndrome: natural history and genotype-phenotype correlations in girls
+and women belonging to 195 families: a “European Community Alport
+Syndrome Concerted Action” study. *Journal of the American Society of
+Nephrology* 14: 2603–2610, 2003
+
+10\. Flinter F, Savige J, Savva I, Renieri A, Knebelman B, Ding J, Zhang
+Y, Gale DP, Schachter AD, Morton LCG, Huang M, Schifter J, Skelding J,
+Friede T, Lennon R: Advances and unmet needs in genetic, basic and
+clinical science in Alport syndrome: report from the 2015 International
+Workshop on Alport Syndrome. *Nephrol. Dial. Transplant.* gfw095, 2016
+
+11\. Gross O, Licht C, Anders HJ, Hoppe B, Beck B, Tönshoff B, Höcker B,
+Wygoda S, Ehrich JHH, Pape L, Konrad M, Rascher W, Dötsch J,
+Müller-Wiefel DE, Hoyer P, Study Group Members of the Gesellschaft für
+Pädiatrische Nephrologie, Knebelmann B, Pirson Y, Grunfeld J-P, Niaudet
+P, Cochat P, Heidet L, Lebbah S, Torra R, Friede T, Lange K, Müller GA,
+Weber M: Early angiotensin-converting enzyme inhibition in Alport
+syndrome delays renal failure and improves life expectancy. *Kidney
+International* 81: 494–501, 2012
+
+12\. Andrews KL, Mudd JL, Li C, Miner JH: Quantitative trait loci
 influence renal disease progression in a mouse model of Alport syndrome.
-*Am J Pathol*. 2002;160(2):721-730. doi:10.1016/S0002-9440(10)64892-4.
+*Am. J. Pathol.* 160: 721–730, 2002
 
-9\. Churchill GA, Gatti DM, Munger SC, Svenson KL. The Diversity Outbred
-mouse population. *Mamm Genome*. 2012;23(9-10):713-718.
-doi:10.1007/s00335-012-9414-2.
+13\. Korstanje R, Caputo CR, Doty RA, Cook SA, Bronson RT, Davisson MT,
+Miner JH: A mouse Col4a4 mutation causing Alport glomerulosclerosis with
+abnormal collagen α3α4α5(IV) trimers. *Kidney International* 85:
+1461–1468, 2014
 
-10\. Bogue MA, Churchill GA, Chesler EJ. Collaborative Cross and
+14\. Churchill GA, Gatti DM, Munger SC, Svenson KL: The Diversity Outbred
+mouse population. *Mamm Genome* 23: 713–718, 2012
+
+15\. Bogue MA, Churchill GA, Chesler EJ: Collaborative Cross and
 Diversity Outbred data resources in the Mouse Phenome Database. *Mamm
-Genome*. 2015;26(9-10):511-520. doi:10.1007/s00335-015-9595-6.
+Genome* 26: 511–520, 2015
 
-11\. Gatti DM, Svenson KL, Shabalin A, et al. Quantitative trait locus
-mapping methods for diversity outbred mice. *G3 (Bethesda)*.
-2014;4(9):1623-1633. doi:10.1534/g3.114.013748.
+16\. Gatti DM, Svenson KL, Shabalin A, Wu L-Y, Valdar W, Simecek P,
+Goodwin N, Cheng R, Pomp D, Palmer A, Chesler EJ, Broman KW, Churchill
+GA: Quantitative trait locus mapping methods for diversity outbred mice.
+*G3 (Bethesda)* 4: 1623–1633, 2014
 
-12\. Threadgill DW, Churchill GA. Ten years of the collaborative cross.
-*G3 (Bethesda)*. 2012;2(2):153-156. doi:10.1534/g3.111.001891.
+17\. Threadgill DW, Churchill GA: Ten years of the collaborative cross.
+*G3 (Bethesda)* 2: 153–156, 2012
