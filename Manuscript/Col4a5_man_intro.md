@@ -50,21 +50,39 @@ and other confounding factors preclude the ability to study such
 modifier in humans.
 
 To our knowledge there has only been one study conducted to identify
-modifier genes in AS models^12^. They observed variation between
+modifier genes in AS models^12^. They observed variations between
 *Col4a3* knock out mice in 129X1/SvJ and C57BL/6J backgrounds, and
 identified 2 quantitative trail loci (QTL) on chromosome 9 and 16,
 however the intervals were not narrow enough to confidently identify
-candidate genes^12^.
+candidate genes^12^. Since 2002, when the prior mentioned study was
+conduction, there have been major technological advancements and
+recourses to allow for high-resolution mapping. The Diversity Outbred
+(DO) mouse population, first published in 2012, is a genetically
+heterogeneous model derived from multi-parent crosses consisting of 5
+classical inbred models (A/J, C57BL/6J, 129S1/SvImJ, NOD/ShiLtJ, and
+NZO/HlLtJ) and 3 wild-derived models (CAST/EiJ, PWK/PhJ, and
+WSB/EiJ)^14^. Each individual mouse in a DO population is a genetically
+unique combination of the 8 founder strains, and best reflects the
+diversity seen in human populations^14,15^. Furthermore, the development
+of the third generation of the Mouse Universal Genome Array series,
+GigaMUGA, allow for high-resolution mapping at 143,259 SNPs, and the
+ability to detect parental origin haplotypes in a DO population^16^.
+Utilizing these aforementioned recourses with enough sample size would
+be ideal for mapping modifier genes in AS.
 
-In this study we aimed to effectively identify modifier genes of
+In this study we aimed to effectively identify modifier genes in
 X-linked AS by introducing the *Col4a5* mutation into a diverse
-geneti­­­c background using the Diversity Outbred (DO) mice. DO mice are
-derived from eight inbred founder strains (A/J, C57BL/6J, 129S1/SvImJ,
-NOD/LtJ, NZO/HlLtJ, CAST/EiJ, PWK/PhJ, and WSB/EiJ), which captured
-nearly 90% of the known genetic variation present in laboratory
-mice^14-17^. The heterogeneity observed in the DO population allows for
-high-resolution mapping and with a sufficient sample size this model is
-ideal for mapping modifier genes in X-linked AS.
+geneti­­­c background using the DO mouse model. The founder strains that
+make up DO mice contribute 90% of known genetic variations found in
+laboratory mice, and the captured genetic variations are randomly
+distributed across the genome^17,18^. Each F1 mouse with an X-linked AS
+mutation influenced by a unique combination of heterogeneous genetic
+background will present a range of renal phenotypes representative of
+the human AS population. With a sufficient samples size through this
+method, we will have the ability for high-resolution mapping, and
+identify modifier genes in X-linked AS. The identification of modifier
+genes will allow for the design of targeted therapeutics, an
+intervention urgently needed in for AS patients around the world.
 
 1\. Hertz JM, Thomassen M, Storey H, Flinter F: Clinical utility gene
 card for: Alport syndrome. *European Journal of Human Genetics* 20: 2012
@@ -137,10 +155,17 @@ mouse population. *Mamm Genome* 23: 713–718, 2012
 Diversity Outbred data resources in the Mouse Phenome Database. *Mamm
 Genome* 26: 511–520, 2015
 
-16\. Gatti DM, Svenson KL, Shabalin A, Wu L-Y, Valdar W, Simecek P,
-Goodwin N, Cheng R, Pomp D, Palmer A, Chesler EJ, Broman KW, Churchill
-GA: Quantitative trait locus mapping methods for diversity outbred mice.
-*G3 (Bethesda)* 4: 1623–1633, 2014
+16\. Morgan AP, Fu C-P, Kao C-Y, Welsh CE, Didion JP, Yadgary L, Hyacinth
+L, Ferris MT, Bell TA, Miller DR, Giusti-Rodriguez P, Nonneman RJ, Cook
+KD, Whitmire JK, Gralinski LE, Keller M, Attie AD, Churchill GA, Petkov
+P, Sullivan PF, Brennan JR, McMillan L, Pardo-Manuel de Villena F: The
+Mouse Universal Genotyping Array: From Substrains to Subspecies. *G3
+(Bethesda)* 6: 263–279, 2015
 
-17\. Threadgill DW, Churchill GA: Ten years of the collaborative cross.
+17\. Roberts A, Pardo-Manuel de Villena F, Wang W, McMillan L, Threadgill
+DW: The polymorphism architecture of mouse genetic resources elucidated
+using genome-wide resequencing data: implications for QTL discovery and
+systems genetics. *Mamm Genome* 18: 473–481, 2007
+
+18\. Threadgill DW, Churchill GA: Ten years of the collaborative cross.
 *G3 (Bethesda)* 2: 153–156, 2012
