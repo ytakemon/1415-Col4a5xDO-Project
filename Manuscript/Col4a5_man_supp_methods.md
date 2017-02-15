@@ -147,7 +147,7 @@ Both calculations for the allele specific expression analysis and
 whole-genome diplotype reconstruction were performed using a combination
 of Expectation-Maximization algorithm for Allele Specific Expression
 (EMASE) and Genotyping By RNA-Seq (GBRS) software respectively
-(manuscript in preperation). EMASE was used to align multi-parent
+(manuscript in preparation). EMASE was used to align multi-parent
 allele-specific expression and gene expression simultaneously from
 RNA-seq data, and the diploid BAM files were used as input for GBRS.
 GBRS was used to quantify multiway allele specificity taking into
@@ -199,7 +199,7 @@ of 143,259 SNPs, similar to that of genome wide association studies
 (GWAS) well established in human studies. SNP call models were used to
 identify LOD scores of individual SNPs within a Bayesian interval.
 Analyzing both prior mentioned QTL models allows for high resolution
-mapping to narrow down candidate genes. All QTL modelss analyzed for GFR
+mapping to narrow down candidate genes. All QTL models analyzed for GFR
 and Albumin at all time points accounted for sex as an additive
 covariate, and creatinine was also accounted for in Albumin QTLs for
 normalization.
