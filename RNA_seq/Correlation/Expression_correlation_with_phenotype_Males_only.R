@@ -67,6 +67,7 @@ setwd("/hpcdata/ytakemon/Col4a5xDO")
 
 #Calculate correlation between phenotype and gene expression via tpm
 load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/RNA_seq_tpm.Rdata")
+RNA_seq <- as.data.frame(RNA_seq)
 pheno <- read.delim("./Phenotype/1415_master_pheno.txt", sep = "\t", header = TRUE)
 #clean data
 rownames(pheno) <- make.names(pheno[,1]) #move sample ID to row names
@@ -90,6 +91,23 @@ options(na.action = 'na.pass') #leave in NAs
 pheno <- pheno[,c("MouseID", "Sex", "C2_log", "Alb6WK_log","Creat6WK_log","Alb10WK_log","Creat10WK_log","Alb15WK_log","Creat15WK_log", "ACR6WK_log", "ACR10WK_log", "ACR15WK_log")]
 
 # Subset out males
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 pheno_M <- pheno[pheno$Sex == "M",] #95x9
 
 # Phenotpe data has samples where pheotype measurements were not obtained due to QC or other technical errors.
