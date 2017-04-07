@@ -67,6 +67,7 @@ setwd("/hpcdata/ytakemon/Col4a5xDO")
 
 #Calculate correlation between phenotype and gene expression via tpm
 load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/RNA_seq_tpm.Rdata")
+load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/genoprobs/best.genoprobs.192.Rdata")
 RNA_seq <- as.data.frame(RNA_seq)
 pheno <- read.delim("./Phenotype/1415_master_pheno.txt", sep = "\t", header = TRUE)
 #clean data
@@ -89,26 +90,8 @@ pheno[pheno ==  -Inf] = NA
 options(na.action = 'na.pass') #leave in NAs
 #keep only interested columns
 pheno <- pheno[,c("MouseID", "Sex", "C2_log", "Alb6WK_log","Creat6WK_log","Alb10WK_log","Creat10WK_log","Alb15WK_log","Creat15WK_log", "ACR6WK_log", "ACR10WK_log", "ACR15WK_log")]
-
 # Subset out males
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-pheno_M <- pheno[pheno$Sex == "M",] #95x9
+pheno_M <- pheno[pheno$Sex == "M",] #95x12
 
 # Phenotpe data has samples where pheotype measurements were not obtained due to QC or other technical errors.
 # In order to successfully run cor(), we must remove sampels with NA in phenotype data
@@ -116,7 +99,7 @@ pheno_M <- pheno[pheno$Sex == "M",] #95x9
 
 #GFR
 G_pheno <- pheno_M[complete.cases(pheno_M$C2_log),] #remove NAs
-G_RNA_seq <- RNA_seq[rownames(G_pheno),] #Extract genes that 
+G_RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(G_pheno),]
 RNA_GFR_cor <- array(0, c(length(colnames(G_RNA_seq)),1), dimnames = list (colnames(G_RNA_seq), "GFR_corelation"))
 
 for (i in 1 : length(colnames(G_RNA_seq))){
@@ -127,7 +110,7 @@ RNA_GFR_cor <- RNA_GFR_cor[complete.cases(RNA_GFR_cor),] #removes NAs that occur
 
 #Alb6
 A6_pheno <- pheno_M[complete.cases(pheno_M$Alb6WK_log),]
-A6.RNA_seq <- RNA_seq[rownames(A6_pheno),]
+A6.RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(A6_pheno),]
 RNA_A6_cor <- array(0, c(length(colnames(A6.RNA_seq)),1), dimnames = list (colnames(A6.RNA_seq), "A6_corelation"))
 for (i in 1 : length(colnames(A6.RNA_seq))){
 	temp <- cor(A6_pheno$Alb6WK_log, A6.RNA_seq[,i])
@@ -137,7 +120,7 @@ RNA_A6_cor <- RNA_A6_cor[complete.cases(RNA_A6_cor),] #removes NAs that occured 
 
 #ACR6
 ACR6_pheno <- pheno_M[complete.cases(pheno_M$ACR6WK_log),]
-ACR6.RNA_seq <- RNA_seq[rownames(ACR6_pheno),]
+ACR6.RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(ACR6_pheno),]
 RNA_ACR6_cor <- array(0, c(length(colnames(ACR6.RNA_seq)),1), dimnames = list (colnames(ACR6.RNA_seq), "ACR6_corelation"))
 for (i in 1 : length(colnames(ACR6.RNA_seq))){
 	temp <- cor(ACR6_pheno$ACR6WK_log, ACR6.RNA_seq[,i])
@@ -147,7 +130,7 @@ RNA_ACR6_cor <- RNA_ACR6_cor[complete.cases(RNA_ACR6_cor),] #removes NAs that oc
 
 #Alb10
 A10_pheno <- pheno_M[complete.cases(pheno_M$Alb10WK_log),]
-A10.RNA_seq <- RNA_seq[rownames(A10_pheno),]
+A10.RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(A10_pheno),]
 RNA_A10_cor <- array(0, c(length(colnames(A10.RNA_seq)),1), dimnames = list (colnames(A10.RNA_seq), "A10_corelation"))
 for (i in 1 : length(colnames(A10.RNA_seq))){
 	temp <- cor(A10_pheno$Alb10WK_log, A10.RNA_seq[,i])
@@ -157,7 +140,7 @@ RNA_A10_cor <- RNA_A10_cor[complete.cases(RNA_A10_cor),] #removes NAs that occur
 
 #ACR10
 ACR10_pheno <- pheno_M[complete.cases(pheno_M$ACR10WK_log),]
-ACR10.RNA_seq <- RNA_seq[rownames(ACR10_pheno),]
+ACR10.RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(ACR10_pheno),]
 RNA_ACR10_cor <- array(0, c(length(colnames(ACR10.RNA_seq)),1), dimnames = list (colnames(ACR10.RNA_seq), "ACR10_corelation"))
 for (i in 1 : length(colnames(ACR10.RNA_seq))){
 	temp <- cor(ACR10_pheno$ACR10WK_log, ACR10.RNA_seq[,i])
@@ -167,7 +150,7 @@ RNA_ACR10_cor <- RNA_ACR10_cor[complete.cases(RNA_ACR10_cor),] #removes NAs that
 
 #Alb15
 A15_pheno <- pheno_M[complete.cases(pheno_M$Alb15WK_log),]
-A15.RNA_seq <- RNA_seq[rownames(A15_pheno),]
+A15.RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(A15_pheno),]
 RNA_A15_cor <- array(0, c(length(colnames(A15.RNA_seq)),1), dimnames = list (colnames(A15.RNA_seq), "A15_corelation"))
 for (i in 1 : length(colnames(A15.RNA_seq))){
 	temp <- cor(A15_pheno$Alb15WK_log, A15.RNA_seq[,i])
@@ -177,7 +160,7 @@ RNA_A15_cor <- RNA_A15_cor[complete.cases(RNA_A15_cor),] #removes NAs that occur
 
 #ACR15
 ACR15_pheno <- pheno_M[complete.cases(pheno_M$ACR15WK_log),]
-ACR15.RNA_seq <- RNA_seq[rownames(ACR15_pheno),]
+ACR15.RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(ACR15_pheno),]
 RNA_ACR15_cor <- array(0, c(length(colnames(ACR15.RNA_seq)),1), dimnames = list (colnames(ACR15.RNA_seq), "ACR15_corelation"))
 for (i in 1 : length(colnames(ACR15.RNA_seq))){
 	temp <- cor(ACR15_pheno$ACR15WK_log, ACR15.RNA_seq[,i])
@@ -349,7 +332,7 @@ write.table(RNA_ACR6_cor, file = "./GBRS_reconstruction/reconstruct/best.compile
 write.table(RNA_ACR10_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR10_M_cor.txt", sep = "\t", row.names = FALSE)
 write.table(RNA_ACR15_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor.txt", sep = "\t", row.names = FALSE)
 
-####Look a t distribution of data to see if anyting looks off. 
+####Look at distribution of data to see if anyting looks off. 
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GFR_cor_M.png", width = 1500, height = 1000, res = 100)
 plot(RNA_GFR_cor$RNA_GFR_cor)
 dev.off()
@@ -399,6 +382,42 @@ png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR15_rank_M.
 plot(RNA_ACR15_cor$rankZ)
 dev.off()
 
+##################
+#load data
+gfr <- read.delim("/hpcdata/ytakemon/Col4a5xDO/GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_M_cor.txt", 
+					sep = "\t", header = TRUE)
+
+acr15 <- read.delim("/hpcdata/ytakemon/Col4a5xDO/GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor.txt", 
+					sep = "\t", header = TRUE)
+#subset data
+rownames(acr15) <- acr15$geneID
+rownames(gfr) <- gfr$geneID
+
+#> dim(acr15)
+#[1] 35332     8
+#> dim(gfr)
+#[1] 34565     8
+
+#subset out genes that are presetn in both acr15 and gfr
+sub_acr <- acr15[acr15$geneID %in% rownames(gfr),]
+sub_acr <- sub_acr[ order(rownames(sub_acr)),]
+
+sub_gfr <- gfr[gfr$geneID %in% rownames(sub_acr),]
+sub_gfr <- sub_gfr[ order(rownames(sub_gfr)),]
+#> dim(sub_acr)
+#[1] 34396     8
+#> dim(sub_gfr)
+#[1] 34396     8
+
+data <- sub_acr
+data$RNA_GFR_cor <- sub_gfr$RNA_GFR_cor
+data <- data[,c("geneID", "RNA_ACR15_cor", "RNA_GFR_cor", "mgi_symbol", "chromosome", "start", "end")]
+
+write.table(data, "/hpcdata/ytakemon/Col4a5xDO/GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_ACR_M_merge_cor.txt", sep = "\t")
+
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_GFR_ACR_M_merge.pdf", width = 10.0, height = 7.5)
+plot(data$RNA_GFR_cor, data$RNA_ACR15_cor)
+dev.off()
 
 
 
