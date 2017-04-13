@@ -203,13 +203,16 @@ RNA_ACR15_cor <- RNA_ACR15_cor[,c("geneID", "ACR15_correlation", "df", "pval", "
 RNA_ACR15_cor_sig <- RNA_ACR15_cor[RNA_ACR15_cor$pval < 0.05,]
 
 # Export as tab sep txt files, and remove rownames because that displaces column names by one.
-write.table(RNA_GFR_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_M_cor.txt", sep = "\t", row.names = FALSE)
-write.table(RNA_A6_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_Alb6_M_cor.txt", sep = "\t", row.names = FALSE)
-write.table(RNA_A10_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_Alb10_M_cor.txt", sep = "\t", row.names = FALSE)
-write.table(RNA_A15_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_Alb15_M_cor.txt", sep = "\t", row.names = FALSE)
-write.table(RNA_ACR6_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR6_M_cor.txt", sep = "\t", row.names = FALSE)
-write.table(RNA_ACR10_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR10_M_cor.txt", sep = "\t", row.names = FALSE)
-write.table(RNA_ACR15_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor.txt", sep = "\t", row.names = FALSE)
+write.table(RNA_GFR_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_M_cor_pval.txt", sep = "\t", row.names = FALSE)
+write.table(RNA_ACR6_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR6_M_cor_pval.txt", sep = "\t", row.names = FALSE)
+write.table(RNA_ACR10_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR10_M_cor_pval.txt", sep = "\t", row.names = FALSE)
+write.table(RNA_ACR15_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor_pval.txt", sep = "\t", row.names = FALSE)
+
+write.table(RNA_GFR_cor_sig, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_M_cor_pval_sig.txt", sep = "\t", row.names = FALSE)
+write.table(RNA_ACR6_cor_sig, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR6_M_cor_pval_sig.txt", sep = "\t", row.names = FALSE)
+write.table(RNA_ACR10_cor_sig, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR10_M_cor_pval_sig.txt", sep = "\t", row.names = FALSE)
+write.table(RNA_ACR15_cor_sig, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor_pval_sig.txt", sep = "\t", row.names = FALSE)
+
 
 ##################
 #MAKE SCATTER PLOT OF ACR AT 15WK AND GFR FOR MALES
