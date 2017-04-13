@@ -1,12 +1,12 @@
 ########################################################################################################################
-## Expression correlation with phenotype 
-## Date created: 12/11/16 
+## Expression correlation with phenotype
+## Date created: 12/11/16
 
 ## OBJECTIVE
 ## We want to see if there are any significant correlation between gene expression and phenotype that may suggest dysregulation
-## of certian pathways and mechanisms. As this is the first analysis using RNA-seq gene expression data, we will need to 
-## run a QC with PC analysis to make sure there aren't any obvious underlying factors that effects the global patterning of 
-## gene expression. 
+## of certian pathways and mechanisms. As this is the first analysis using RNA-seq gene expression data, we will need to
+## run a QC with PC analysis to make sure there aren't any obvious underlying factors that effects the global patterning of
+## gene expression.
 
 ## sessionInfo()
 ## R version 3.1.1 (2014-07-10)
@@ -48,7 +48,7 @@
 ## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/PC_plot1.png", width = 1500, height = 1000, res = 100)
 ## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/PC_plot1_outlier.png", width = 1500, height = 1000, res = 100)
 ## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/PC1234_plot.png", width = 1500, height = 1000, res = 100)
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GFR_cor.png", width = 1500, height = 1000, res = 
+## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GFR_cor.png", width = 1500, height = 1000, res =
 ## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GFR_rank.png", width = 1500, height = 1000, res = 100)
 ## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A6_cor.png", width = 1500, height = 1000, res = 100)
 ## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A6_rank.png", width = 1500, height = 1000, res = 100)
@@ -82,7 +82,7 @@ pheno <- pheno[rownames(best.genoprobs.192),] #subset pheno to match 192 samples
 #clean up pheno and add log of ACR
 pheno[pheno < 0 ] = NA
 pheno[pheno ==  -Inf] = NA
-pheno$C2_log <- log(pheno$C2) 
+pheno$C2_log <- log(pheno$C2)
 pheno$ACR6WK_log <- log(pheno$ACR6WK)
 pheno$ACR10WK_log <- log(pheno$ACR10WK)
 pheno$ACR15WK_log <- log(pheno$ACR15WK)
@@ -95,30 +95,42 @@ pheno$Creat15WK_log <- log(pheno$Creat15WK)
 pheno[pheno ==  -Inf] = NA
 options(na.action = 'na.pass') #leave in NAs
 #keep only interested columns
-pheno <- pheno[,c("MouseID", "Sex", "C2_log", "Alb6WK_log","Creat6WK_log","Alb10WK_log","Creat10WK_log","Alb15WK_log","Creat15WK_log", "ACR6WK_log", "ACR10WK_log", "ACR15WK_log")]
+pheno <- pheno[,c("MouseID", "Sex", "C2_log", "Alb6WK_log","Creat6WK_log","Alb10WK_log",
+									"Creat10WK_log","Alb15WK_log","Creat15WK_log",
+									"ACR6WK_log", "ACR10WK_log", "ACR15WK_log")]
 
-#Consolidate and create RNA_seq data table 
+#Consolidate and create RNA_seq data table
 civet_dir <- list.files("./civet_run/", full.names = T) # Extract full paths to each alignment
-civet_sample_list <- read.delim("./Sample_list/RNAseq_1415_sample_list.txt", header = FALSE) # Get sample names formatted as civet 1415-0000
-genoprob_names <- rownames(best.genoprobs.192) # extract sample names we have genoprobs data for.
-Complete_set_names <- as.data.frame(civet_dir) # reformat as data.frame
-Complete_set_names$civet_names <- civet_sample_list # Give sample names in submitted format (1415-XXXX) for each sample path
-Complete_set_names$genoprob_names <- genoprob_names # Give more consistant names for each sampels (1415_XXXX)
-colnames(Complete_set_names) <- names(Complete_set_names) # not sure why colnames and names are out of sync, but force it in sync here. 
+# Get sample names formatted as civet 1415-0000
+civet_sample_list <- read.delim("./Sample_list/RNAseq_1415_sample_list.txt", header = FALSE)
+# extract sample names we have genoprobs data for.
+genoprob_names <- rownames(best.genoprobs.192)
+Complete_set_names <- as.data.frame(civet_dir)
+# Give sample names in submitted format (1415-XXXX) for each sample path
+Complete_set_names$civet_names <- civet_sample_list
+# Give more consistant names for each sampels (1415_XXXX)
+Complete_set_names$genoprob_names <- genoprob_names
+ # not sure why colnames and names are out of sync, but force it in sync here.
+colnames(Complete_set_names) <- names(Complete_set_names)
 
-#create temp file from tpm data from civet output so I can exract its rownames and column names to be used i lin 65 when consolidating results
-temp <- read.delim(file = paste(Complete_set_names[1, "civet_dir"],"/", "gbrs.quantified.diploid.genes.tpm", sep =""), header = TRUE, sep ="\t")
+#create temp file from tpm data from civet output so I can exract its rownames
+#and column names to be used i lin 65 when consolidating results
+temp <- read.delim(file = paste(Complete_set_names[1, "civet_dir"],"/",
+									"gbrs.quantified.diploid.genes.tpm", sep =""),
+									header = TRUE, sep ="\t")
 rownames(temp) <- temp$locus
 temp$locus <- NULL
 col_name <- colnames(temp)
 locus_names <- rownames(temp)
 
-#all tpm files are named the samed housed under a directory named after the sample. 
+#all tpm files are named the samed housed under a directory named after the sample.
 #need to extract files and name them after the sample for distinction
 #compiling into single array like genoprobs dataset
 RNA_seq <- array(0, c(192, 46517), dimnames = list (Complete_set_names$genoprob_names, locus_names))
 for (i in 1:192){
-	temp <- read.delim(file = paste(Complete_set_names[i, "civet_dir"],"/", "gbrs.quantified.diploid.genes.tpm", sep =""), header = TRUE, sep ="\t")
+	temp <- read.delim(file = paste(Complete_set_names[i, "civet_dir"],"/",
+										"gbrs.quantified.diploid.genes.tpm", sep =""),
+										header = TRUE, sep ="\t")
 	RNA_seq[i,] <- temp$total
 }
 save(RNA_seq, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/RNA_seq_tpm.Rdata")
@@ -138,19 +150,20 @@ expr <- apply(tRNA_seq, 2, rankZ)
 pcexpr <- pca(object = t(expr), nPcs = ncol(expr))
 
 perc.var <- sDev(pcexpr)^2 / sum(sDev(pcexpr)^2) * 100
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/PC_percvar.png", width = 1500, height = 1000, res = 100)
+png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/PC_percvar.png",
+		width = 1500, height = 1000, res = 100)
 plot(perc.var, main = "Percent variaion of all PC1-192")
 dev.off()
 
 cols <- as.numeric(factor(pheno$Sex))
-pch <- 16 
+pch <- 1
 
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/PC_plot1.png", width = 1500, height = 1000, res = 100)
 plot(scores(pcexpr), col = cols, pch = pch, main = "PC1 vs PC2 (male =red, felame = black)", )
 textxy(X = scores(pcexpr)[,1], Y = scores(pcexpr)[,2], labs = rownames(scores(pcexpr)))
 dev.off()
 
-#subset to identify outlier 
+#subset to identify outlier
 tmp <- as.data.frame(scores(pcexpr))
 tmp <- tmp[tmp$PC1 > 0 ,]
 tmp <- tmp[tmp$PC2 < -3 ,]
@@ -170,7 +183,8 @@ dev.off()
 #Holly is doing a PCR to check from whole tail.
 
 cols <- as.numeric(factor(pheno$Sex))
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/PC1234_plot.png", width = 1500, height = 1000, res = 100)
+png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/PC1234_plot.png",
+		width = 1500, height = 1000, res = 100)
 layout(matrix(1:4,2,2))
 plot(scores(pcexpr)[,1:2], pch = pch, col = cols)
 plot(scores(pcexpr)[,5:4], pch = pch, col = cols)
@@ -194,70 +208,88 @@ load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/RNA
 #GFR
 G.pheno <- pheno[complete.cases(pheno$C2_log),]
 G.RNA_seq <- RNA_seq[rownames(G.pheno),]
-RNA_GFR_cor <- array(0, c(length(colnames(G.RNA_seq)),1), dimnames = list (colnames(G.RNA_seq), "GFR_corelation"))
+RNA_GFR_cor <- array(0, c(length(colnames(G.RNA_seq)),1),
+											dimnames = list (colnames(G.RNA_seq),
+											"GFR_corelation"))
 
 for (i in 1 : length(colnames(G.RNA_seq))){
 	temp <- cor(G.pheno$C2_log, G.RNA_seq[,i])
 	RNA_GFR_cor[i,1] <- temp
 }
-
-RNA_GFR_cor <- RNA_GFR_cor[complete.cases(RNA_GFR_cor),] #removes NAs that occured to 0 tpm counts
-
+#removes NAs that occured to 0 tpm counts
+RNA_GFR_cor <- RNA_GFR_cor[complete.cases(RNA_GFR_cor),]
 #Alb6
 A6.pheno <- pheno[complete.cases(pheno$Alb6WK_log),]
 A6.RNA_seq <- RNA_seq[rownames(A6.pheno),]
-RNA_A6_cor <- array(0, c(length(colnames(A6.RNA_seq)),1), dimnames = list (colnames(A6.RNA_seq), "A6_corelation"))
+RNA_A6_cor <- array(0, c(length(colnames(A6.RNA_seq)),1),
+										dimnames = list (colnames(A6.RNA_seq), "A6_corelation"))
 for (i in 1 : length(colnames(A6.RNA_seq))){
 	temp <- cor(A6.pheno$Alb6WK_log, A6.RNA_seq[,i])
 	RNA_A6_cor[i,1] <- temp
 }
-RNA_A6_cor <- RNA_A6_cor[complete.cases(RNA_A6_cor),] #removes NAs that occured to 0 tpm counts
+#removes NAs that occured to 0 tpm counts
+RNA_A6_cor <- RNA_A6_cor[complete.cases(RNA_A6_cor),]
 #ACR6
 ACR6.pheno <- pheno[complete.cases(pheno$ACR6WK_log),]
 ACR6.RNA_seq <- RNA_seq[rownames(ACR6.pheno),]
-RNA_ACR6_cor <- array(0, c(length(colnames(ACR6.RNA_seq)),1), dimnames = list (colnames(ACR6.RNA_seq), "ACR6_corelation"))
+RNA_ACR6_cor <- array(0, c(length(colnames(ACR6.RNA_seq)),1),
+									dimnames = list (colnames(ACR6.RNA_seq), "ACR6_corelation"))
+
 for (i in 1 : length(colnames(ACR6.RNA_seq))){
 	temp <- cor(ACR6.pheno$ACR6WK_log, ACR6.RNA_seq[,i])
 	RNA_ACR6_cor[i,1] <- temp
 }
-RNA_ACR6_cor <- RNA_ACR6_cor[complete.cases(RNA_ACR6_cor),] #removes NAs that occured to 0 tpm counts
+ #removes NAs that occured to 0 tpm counts
+RNA_ACR6_cor <- RNA_ACR6_cor[complete.cases(RNA_ACR6_cor),]
 
 #Alb10
 A10.pheno <- pheno[complete.cases(pheno$Alb10WK_log),]
 A10.RNA_seq <- RNA_seq[rownames(A10.pheno),]
-RNA_A10_cor <- array(0, c(length(colnames(A10.RNA_seq)),1), dimnames = list (colnames(A10.RNA_seq), "A10_corelation"))
+RNA_A10_cor <- array(0, c(length(colnames(A10.RNA_seq)),1),
+								dimnames = list (colnames(A10.RNA_seq), "A10_corelation"))
 for (i in 1 : length(colnames(A10.RNA_seq))){
 	temp <- cor(A10.pheno$Alb10WK_log, A10.RNA_seq[,i])
 	RNA_A10_cor[i,1] <- temp
 }
-RNA_A10_cor <- RNA_A10_cor[complete.cases(RNA_A10_cor),] #removes NAs that occured to 0 tpm counts
+#removes NAs that occured to 0 tpm counts
+RNA_A10_cor <- RNA_A10_cor[complete.cases(RNA_A10_cor),]
 #ACR10
 ACR10.pheno <- pheno[complete.cases(pheno$ACR10WK_log),]
 ACR10.RNA_seq <- RNA_seq[rownames(ACR10.pheno),]
-RNA_ACR10_cor <- array(0, c(length(colnames(ACR10.RNA_seq)),1), dimnames = list (colnames(ACR10.RNA_seq), "ACR10_corelation"))
+RNA_ACR10_cor <- array(0, c(length(colnames(ACR10.RNA_seq)),1),
+							dimnames = list (colnames(ACR10.RNA_seq), "ACR10_corelation"))
+
 for (i in 1 : length(colnames(ACR10.RNA_seq))){
 	temp <- cor(ACR10.pheno$ACR10WK_log, ACR10.RNA_seq[,i])
 	RNA_ACR10_cor[i,1] <- temp
 }
-RNA_ACR10_cor <- RNA_ACR10_cor[complete.cases(RNA_ACR10_cor),] #removes NAs that occured to 0 tpm counts
+#removes NAs that occured to 0 tpm counts
+RNA_ACR10_cor <- RNA_ACR10_cor[complete.cases(RNA_ACR10_cor),]
 
 #Alb15
 A15.pheno <- pheno[complete.cases(pheno$Alb15WK_log),]
 A15.RNA_seq <- RNA_seq[rownames(A15.pheno),]
-RNA_A15_cor <- array(0, c(length(colnames(A15.RNA_seq)),1), dimnames = list (colnames(A15.RNA_seq), "A15_corelation"))
+RNA_A15_cor <- array(0, c(length(colnames(A15.RNA_seq)),1),
+								dimnames = list (colnames(A15.RNA_seq), "A15_corelation"))
+
 for (i in 1 : length(colnames(A15.RNA_seq))){
 	temp <- cor(A15.pheno$Alb15WK_log, A15.RNA_seq[,i])
 	RNA_A15_cor[i,1] <- temp
 }
-RNA_A15_cor <- RNA_A15_cor[complete.cases(RNA_A15_cor),] #removes NAs that occured to 0 tpm counts
+#removes NAs that occured to 0 tpm counts
+RNA_A15_cor <- RNA_A15_cor[complete.cases(RNA_A15_cor),]
+
 #ACR15
 ACR15.pheno <- pheno[complete.cases(pheno$ACR15WK_log),]
 ACR15.RNA_seq <- RNA_seq[rownames(ACR15.pheno),]
-RNA_ACR15_cor <- array(0, c(length(colnames(ACR15.RNA_seq)),1), dimnames = list (colnames(ACR15.RNA_seq), "ACR15_corelation"))
+RNA_ACR15_cor <- array(0, c(length(colnames(ACR15.RNA_seq)),1),
+									dimnames = list (colnames(ACR15.RNA_seq), "ACR15_corelation"))
+
 for (i in 1 : length(colnames(ACR15.RNA_seq))){
 	temp <- cor(ACR15.pheno$ACR15WK_log, ACR15.RNA_seq[,i])
 	RNA_ACR15_cor[i,1] <- temp
 }
+
 RNA_ACR15_cor <- RNA_ACR15_cor[complete.cases(RNA_ACR15_cor),] #removes NAs that occured to 0 tpm counts
 
 max(RNA_GFR_cor)
@@ -269,19 +301,25 @@ max(RNA_ACR10_cor)
 max(RNA_ACR15_cor)
 
 ##BIOMART to gather ensembl id to append to RNA_correlation data
-#	This ony needs to be done onceto get the latest version of ID and correspond gene symbols that are more meaningful to us.
+#	This ony needs to be done onceto get the latest version of ID and correspond
+# gene symbols that are more meaningful to us.
 #	Will also contain data such as chromosome and start and end site of the gene.
 
 # use biomaRt to append a column with gene name
 #source("https://bioconductor.org/biocLite.R")
 #biocLite("biomaRt")
-library(biomaRt) #cannot have DOQTL package loaded for this. So either restart R environment or detach DOQTL and all of its depenednencies 
+library(biomaRt) #cannot have DOQTL package loaded for this. So either restart R
+#environment or detach DOQTL and all of its depenednencies
 #current build:mmusculus_gene_ensembl Mus musculus genes (GRCm38.p4) GRCm38.p4
 #mart <- useEnsembl("ENSEMBL_MART_ENSEMBL")
 #listDatasets(mart) #dataset to use  mmusculus_gene_ensembl,
-ensembl <- useEnsembl(biomart = "ENSEMBL_MART_ENSEMBL", dataset = "mmusculus_gene_ensembl", verbose = TRUE)
+ensembl <- useEnsembl(biomart = "ENSEMBL_MART_ENSEMBL",
+											dataset = "mmusculus_gene_ensembl",
+											verbose = TRUE)
 #head(listAttributes(ensembl)) #get list of attributes to input to getBM
-mouseID <- getBM(attributes = c("ensembl_gene_id", "hgnc_symbol", "mgi_symbol", "chromosome_name", "start_position", "end_position"), mart = ensembl)
+mouseID <- getBM(attributes = c("ensembl_gene_id", "hgnc_symbol", "mgi_symbol",
+																"chromosome_name", "start_position", "end_position"),
+																mart = ensembl)
 save(mouseID, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/EnsemblID_GRCm38.p4.Rdata")
 
 ##Combine biomart data with RNA correlation data
@@ -298,7 +336,7 @@ mouseID <- as.data.frame(mouseID)
 
 #there are duplicates in the mouseID, but chromosome name and start and end postons are the same so i am only extracting the unique sampels
 mouseID <- mouseID[!duplicated(mouseID$ensembl_gene_id),]
-rownames(mouseID) <- make.names(mouseID[,1]) 
+rownames(mouseID) <- make.names(mouseID[,1])
 mouseID <- mouseID[ order( rownames(mouseID)),]
 
 #subset mouseID to match cor data
@@ -360,7 +398,8 @@ mouseID_ACR15 <- mouseID[rownames(RNA_ACR15_cor),]
 #> dim(mouseID_ACR15)
 #[1] 36436     6
 
-###NOTES: NAs are introduced in rowname because those ENS genes were removed from the data based and is no longer in the current database
+###NOTES: NAs are introduced in rowname because those ENS genes were removed
+### from the data based and is no longer in the current database
 #	Examples:
 #	"ENSMUSG00000103861"
 #	"ENSMUSG00000103888"
@@ -497,25 +536,3 @@ dev.off()
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR15_rank.png", width = 1500, height = 1000, res = 100)
 plot(RNA_ACR15_cor$rankZ)
 dev.off()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

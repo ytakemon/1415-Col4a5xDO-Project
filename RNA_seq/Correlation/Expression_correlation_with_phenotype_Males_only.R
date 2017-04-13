@@ -4,59 +4,11 @@
 ## Date created: 01/11/17
 
 ## OBJECTIVE
-## This script is adapted from Expression_correlation_with_phenotype.R by subsetting phenotype data from both to 
-## single sex (Males). The reason why we decided to do this analysis is because Males are hemizygous to Col4a5 mutation,
-## thus disease phenotypes are not moderated by Xce allele such as the female. Due to the effect of X- inactivation in the 
-## females, the phenotype effect will not be uniform/linear and will skew correlation effects.
-
+##
 ## sessionInfo()
-## R version 3.1.1 (2014-07-10)
-## Platform: x86_64-unknown-linux-gnu (64-bit)
-## locale:
-## [1] C
-## attached base packages:
-## [1] parallel  stats4    stats     graphics  grDevices utils     datasets
-## [8] methods   base
-## other attached packages:
-## [1] RColorBrewer_1.1-2   knitr_1.11           DOQTL_1.0.0
-## [4] AnnotationDbi_1.28.2 GenomeInfoDb_1.2.5   IRanges_2.0.1
-## [7] S4Vectors_0.4.0      Biobase_2.26.0       BiocGenerics_0.12.1
-## [10] RSQLite_1.0.0        DBI_0.3.1
-## loaded via a namespace (and not attached):
-##  [1] Biostrings_2.34.1      GenomicRanges_1.18.4   MUGAExampleData_1.0.0
-##  [4] QTLRel_0.2-14          RCurl_1.95-4.7         RUnit_0.4.30
-##  [7] Rsamtools_1.18.3       XML_3.98-1.3           XVector_0.6.0
-## [10] annotate_1.44.0        annotationTools_1.40.0 biomaRt_2.22.0
-## [13] bitops_1.0-6           corpcor_1.6.8          gdata_2.17.0
-## [16] gtools_3.5.0           hwriter_1.3.2          mclust_5.1
-## [19] org.Hs.eg.db_3.0.0     org.Mm.eg.db_3.0.0     tools_3.1.1
-## [22] xtable_1.8-0           zlibbioc_1.12.0
-
+##
 ## List of data saved from this script (time savers for reanalysis)
-## Rdata:
-## Tables:
-## write.table(RNA_GFR_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_M_cor.txt", sep = "\t", row.names = FALSE)
-## write.table(RNA_A6_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_Alb6_M_cor.txt", sep = "\t", row.names = FALSE)
-## write.table(RNA_A10_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_Alb10_M_cor.txt", sep = "\t", row.names = FALSE)
-## write.table(RNA_A15_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_Alb15_M_cor.txt", sep = "\t", row.names = FALSE)
-## write.table(RNA_ACR6_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR6_M_cor.txt", sep = "\t", row.names = FALSE)
-## write.table(RNA_ACR10_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR10_M_cor.txt", sep = "\t", row.names = FALSE)
-## write.table(RNA_ACR15_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor.txt", sep = "\t", row.names = FALSE)
-## Plots:
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GFR_cor_M.png", width = 1500, height = 1000, res = 100)
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GFR_rank_M.png", width = 1500, height = 1000, res = 100)
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A6_cor_M.png", width = 1500, height = 1000, res = 100)
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A6_rank_M.png", width = 1500, height = 1000, res = 100)
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A10_cor_M.png", width = 1500, height = 1000, res = 100)
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A10_rank_M.png", width = 1500, height = 1000, res = 100)
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A15_cor_M.png", width = 1500, height = 1000, res = 100)
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A15_rank_M.png", width = 1500, height = 1000, res = 100)
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR6_cor_M.png", width = 1500, height = 1000, res = 100)
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR6_rank_M.png", width = 1500, height = 1000, res = 100)
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR10_cor_M.png", width = 1500, height = 1000, res = 100)
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR10_rank_M.png", width = 1500, height = 1000, res = 100)
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR15_cor_M.png", width = 1500, height = 1000, res = 100)
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR15_rank_M.png", width = 1500, height = 1000, res = 100)
+##
 ########################################################################################################################
 
 # Load libraries
@@ -76,7 +28,7 @@ pheno <- pheno[rownames(best.genoprobs.192),] #subset pheno to match 192 samples
 #clean up pheno and add log of ACR
 pheno[pheno < 0 ] = NA
 pheno[pheno ==  -Inf] = NA
-pheno$C2_log <- log(pheno$C2) 
+pheno$C2_log <- log(pheno$C2)
 pheno$ACR6WK_log <- log(pheno$ACR6WK)
 pheno$ACR10WK_log <- log(pheno$ACR10WK)
 pheno$ACR15WK_log <- log(pheno$ACR15WK)
@@ -168,7 +120,7 @@ for (i in 1 : length(colnames(ACR15.RNA_seq))){
 }
 RNA_ACR15_cor <- RNA_ACR15_cor[complete.cases(RNA_ACR15_cor),] #removes NAs that occured to 0 tpm counts
 
-#To quickly check max and min correlation results 
+#To quickly check max and min correlation results
 max(RNA_GFR_cor)
 max(RNA_A6_cor)
 max(RNA_A10_cor)
@@ -205,7 +157,7 @@ mouseID <- as.data.frame(Ensembl_mouseID)
 
 #there are duplicates in the mouseID, but chromosome name and start and end postons are the same so i am only extracting the unique samples
 mouseID <- mouseID[!duplicated(mouseID$ensembl_gene_id),]
-rownames(mouseID) <- make.names(mouseID[,1]) 
+rownames(mouseID) <- make.names(mouseID[,1])
 mouseID <- mouseID[ order( rownames(mouseID)),]
 
 #subset mouseID to match cor data.frame
@@ -237,8 +189,8 @@ RNA_ACR15_cor$geneID <- rownames(RNA_ACR15_cor)
 RNA_ACR15_cor <- RNA_ACR15_cor[ order( rownames(RNA_ACR15_cor)),]
 mouseID_ACR15 <- mouseID[rownames(RNA_ACR15_cor),]
 
-###NOTES: NAs are introduced in rownames of because those ENS genes were removed from the current ensembl database, due to lack of 
-###   additional evidence 
+###NOTES: NAs are introduced in rownames of because those ENS genes were removed from the current ensembl database, due to lack of
+###   additional evidence
 #	Examples of removed ensemble ids (Look up on ensembl website for most up to date info)
 #	"ENSMUSG00000103861"
 #	"ENSMUSG00000103888"
@@ -296,34 +248,16 @@ RNA_ACR6_cor <- RNA_ACR6_cor[ order( RNA_ACR6_cor$RNA_ACR6_cor, decreasing = TRU
 RNA_ACR10_cor <- RNA_ACR10_cor[ order( RNA_ACR10_cor$RNA_ACR10_cor, decreasing = TRUE),]
 RNA_ACR15_cor <- RNA_ACR15_cor[ order( RNA_ACR15_cor$RNA_ACR15_cor, decreasing = TRUE),]
 
-#rankZ transform tpm
-G_rank <- apply(as.matrix(RNA_GFR_cor$RNA_GFR_cor), 2, rankZ) #need library(DOQTL)
-A6_rank <- apply(as.matrix(RNA_A6_cor$RNA_A6_cor), 2, rankZ)
-A10_rank <- apply(as.matrix(RNA_A10_cor$RNA_A10_cor), 2, rankZ)
-A15_rank <- apply(as.matrix(RNA_A15_cor$RNA_A15_cor), 2, rankZ)
-ACR6_rank <- apply(as.matrix(RNA_ACR6_cor$RNA_ACR6_cor), 2, rankZ)
-ACR10_rank <- apply(as.matrix(RNA_ACR10_cor$RNA_ACR10_cor), 2, rankZ)
-ACR15_rank <- apply(as.matrix(RNA_ACR15_cor$RNA_ACR15_cor), 2, rankZ)
+# Extract only necessary columns to show.
+RNA_GFR_cor <- RNA_GFR_cor[,c("geneID", "RNA_GFR_cor", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
+RNA_A6_cor <- RNA_A6_cor[,c("geneID", "RNA_A6_cor", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
+RNA_A10_cor <- RNA_A10_cor[,c("geneID", "RNA_A10_cor", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
+RNA_A15_cor <- RNA_A15_cor[,c("geneID", "RNA_A15_cor", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
+RNA_ACR6_cor <- RNA_ACR6_cor[,c("geneID", "RNA_ACR6_cor", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
+RNA_ACR10_cor <- RNA_ACR10_cor[,c("geneID", "RNA_ACR10_cor", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
+RNA_ACR15_cor <- RNA_ACR15_cor[,c("geneID", "RNA_ACR15_cor", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
 
-# append rankz transformed data in to correlation data
-RNA_GFR_cor$rankZ <- G_rank
-RNA_A6_cor$rankZ <- A6_rank
-RNA_A10_cor$rankZ <- A10_rank
-RNA_A15_cor$rankZ <- A15_rank
-RNA_ACR6_cor$rankZ <- ACR6_rank
-RNA_ACR10_cor$rankZ <- ACR10_rank
-RNA_ACR15_cor$rankZ <- ACR15_rank
-
-# Extract only necessary columns to show. 
-RNA_GFR_cor <- RNA_GFR_cor[,c("geneID", "RNA_GFR_cor", "rankZ", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
-RNA_A6_cor <- RNA_A6_cor[,c("geneID", "RNA_A6_cor", "rankZ", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
-RNA_A10_cor <- RNA_A10_cor[,c("geneID", "RNA_A10_cor", "rankZ", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
-RNA_A15_cor <- RNA_A15_cor[,c("geneID", "RNA_A15_cor", "rankZ", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
-RNA_ACR6_cor <- RNA_ACR6_cor[,c("geneID", "RNA_ACR6_cor", "rankZ", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
-RNA_ACR10_cor <- RNA_ACR10_cor[,c("geneID", "RNA_ACR10_cor", "rankZ", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
-RNA_ACR15_cor <- RNA_ACR15_cor[,c("geneID", "RNA_ACR15_cor", "rankZ", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
-
-# Export as tab sep txt files, and remove rownames because that displaces column names by one. 
+# Export as tab sep txt files, and remove rownames because that displaces column names by one.
 write.table(RNA_GFR_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_M_cor.txt", sep = "\t", row.names = FALSE)
 write.table(RNA_A6_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_Alb6_M_cor.txt", sep = "\t", row.names = FALSE)
 write.table(RNA_A10_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_Alb10_M_cor.txt", sep = "\t", row.names = FALSE)
@@ -332,62 +266,13 @@ write.table(RNA_ACR6_cor, file = "./GBRS_reconstruction/reconstruct/best.compile
 write.table(RNA_ACR10_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR10_M_cor.txt", sep = "\t", row.names = FALSE)
 write.table(RNA_ACR15_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor.txt", sep = "\t", row.names = FALSE)
 
-####Look at distribution of data to see if anyting looks off. 
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GFR_cor_M.png", width = 1500, height = 1000, res = 100)
-plot(RNA_GFR_cor$RNA_GFR_cor)
-dev.off()
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GFR_rank_M.png", width = 1500, height = 1000, res = 100)
-plot(RNA_GFR_cor$rankZ)
-dev.off()
-
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A6_cor_M.png", width = 1500, height = 1000, res = 100)
-plot(RNA_A6_cor$RNA_A6_cor)
-dev.off()
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A6_rank_M.png", width = 1500, height = 1000, res = 100)
-plot(RNA_A6_cor$rankZ)
-dev.off()
-
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A10_cor_M.png", width = 1500, height = 1000, res = 100)
-plot(RNA_A10_cor$RNA_A10_cor)
-dev.off()
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A10_rank_M.png", width = 1500, height = 1000, res = 100)
-plot(RNA_A10_cor$rankZ)
-dev.off()
-
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A15_cor_M.png", width = 1500, height = 1000, res = 100)
-plot(RNA_A15_cor$RNA_A15_cor)
-dev.off()
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/A15_rank_M.png", width = 1500, height = 1000, res = 100)
-plot(RNA_A15_cor$rankZ)
-dev.off()
-
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR6_cor_M.png", width = 1500, height = 1000, res = 100)
-plot(RNA_ACR6_cor$RNA_ACR6_cor)
-dev.off()
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR6_rank_M.png", width = 1500, height = 1000, res = 100)
-plot(RNA_ACR6_cor$rankZ)
-dev.off()
-
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR10_cor_M.png", width = 1500, height = 1000, res = 100)
-plot(RNA_ACR10_cor$RNA_ACR10_cor)
-dev.off()
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR10_rank_M.png", width = 1500, height = 1000, res = 100)
-plot(RNA_ACR10_cor$rankZ)
-dev.off()
-
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR15_cor_M.png", width = 1500, height = 1000, res = 100)
-plot(RNA_ACR15_cor$RNA_ACR15_cor)
-dev.off()
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/ACR15_rank_M.png", width = 1500, height = 1000, res = 100)
-plot(RNA_ACR15_cor$rankZ)
-dev.off()
-
 ##################
+#MAKE SCATTER PLOT OF ACR AT 15WK AND GFR FOR MALES
 #load data
-gfr <- read.delim("/hpcdata/ytakemon/Col4a5xDO/GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_M_cor.txt", 
+gfr <- read.delim("/hpcdata/ytakemon/Col4a5xDO/GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_M_cor.txt",
 					sep = "\t", header = TRUE)
 
-acr15 <- read.delim("/hpcdata/ytakemon/Col4a5xDO/GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor.txt", 
+acr15 <- read.delim("/hpcdata/ytakemon/Col4a5xDO/GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor.txt",
 					sep = "\t", header = TRUE)
 #subset data
 rownames(acr15) <- acr15$geneID
@@ -418,19 +303,3 @@ write.table(data, "/hpcdata/ytakemon/Col4a5xDO/GBRS_reconstruction/reconstruct/b
 pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_GFR_ACR_M_merge.pdf", width = 10.0, height = 7.5)
 plot(data$RNA_GFR_cor, data$RNA_ACR15_cor)
 dev.off()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
