@@ -55,11 +55,11 @@ pheno_M <- pheno[pheno$Sex == "M",] #95x12
 G_pheno <- pheno_M[complete.cases(pheno_M$C2_log),] #remove NAs
 G_RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(G_pheno),]
 RNA_GFR_cor <- array(0, c(length(colnames(G_RNA_seq)),3),
-              dimnames = list (colnames(G_RNA_seq), c("GFR_corelation", "df", "pval")))
+              dimnames = list (colnames(G_RNA_seq), c("GFR_correlation", "df", "pval")))
 
 for (i in 1 : length(colnames(G_RNA_seq))){
 	temp <- cor.test(G_pheno$C2_log, G_RNA_seq[,i])
-	RNA_GFR_cor[i, "GFR_corelation"] <- temp$estimate[[1]]
+	RNA_GFR_cor[i, "GFR_correlation"] <- temp$estimate[[1]]
   RNA_GFR_cor[i, "df"] <- temp$parameter[[1]]
   RNA_GFR_cor[i, "pval"] <- temp$p.value[[1]]
 }
@@ -71,10 +71,10 @@ RNA_GFR_cor_sig <- RNA_GFR_cor[RNA_GFR_cor$pval < 0.05,]
 ACR6_pheno <- pheno_M[complete.cases(pheno_M$ACR6WK_log),]
 ACR6_RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(ACR6_pheno),]
 RNA_ACR6_cor <- array(0, c(length(colnames(ACR6_RNA_seq)),3),
-              dimnames = list (colnames(ACR6_RNA_seq), c("ACR6_corelation", "df", "pval")))
+              dimnames = list (colnames(ACR6_RNA_seq), c("ACR6_correlation", "df", "pval")))
 for (i in 1 : length(colnames(ACR6_RNA_seq))){
 	temp <- cor.test(ACR6_pheno$ACR6WK_log, ACR6_RNA_seq[,i])
-	RNA_ACR6_cor[i, "ACR6_corelation"] <- temp$estimate[[1]]
+	RNA_ACR6_cor[i, "ACR6_correlation"] <- temp$estimate[[1]]
 	RNA_ACR6_cor[i, "df"] <- temp$parameter[[1]]
   RNA_ACR6_cor[i, "pval"] <- temp$p.value[[1]]
 }
@@ -86,10 +86,10 @@ RNA_ACR6_cor_sig <- RNA_ACR6_cor[RNA_ACR6_cor$pval < 0.05,]
 ACR10_pheno <- pheno_M[complete.cases(pheno_M$ACR10WK_log),]
 ACR10_RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(ACR10_pheno),]
 RNA_ACR10_cor <- array(0, c(length(colnames(ACR10_RNA_seq)),3),
-                dimnames = list (colnames(ACR10_RNA_seq), c("ACR10_corelation", "df", "pval")))
+                dimnames = list (colnames(ACR10_RNA_seq), c("ACR10_correlation", "df", "pval")))
 for (i in 1 : length(colnames(ACR10_RNA_seq))){
   temp <- cor.test(ACR10_pheno$ACR10WK_log, ACR10_RNA_seq[,i])
-  RNA_ACR10_cor[i, "ACR10_corelation"] <- temp$estimate[[1]]
+  RNA_ACR10_cor[i, "ACR10_correlation"] <- temp$estimate[[1]]
 	RNA_ACR10_cor[i, "df"] <- temp$parameter[[1]]
   RNA_ACR10_cor[i, "pval"] <- temp$p.value[[1]]
 }
@@ -101,10 +101,10 @@ RNA_ACR10_cor_sig <- RNA_ACR10_cor[RNA_ACR10_cor$pval < 0.05,]
 ACR15_pheno <- pheno_M[complete.cases(pheno_M$ACR15WK_log),]
 ACR15_RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(ACR15_pheno),]
 RNA_ACR15_cor <- array(0, c(length(colnames(ACR15_RNA_seq)),3),
-                dimnames = list (colnames(ACR15_RNA_seq), c("ACR15_corelation", "df", "pval")))
+                dimnames = list (colnames(ACR15_RNA_seq), c("ACR15_correlation", "df", "pval")))
 for (i in 1 : length(colnames(ACR15_RNA_seq))){
 	temp <- cor.test(ACR15_pheno$ACR15WK_log, ACR15_RNA_seq[,i])
-  RNA_ACR15_cor[i, "ACR15_corelation"] <- temp$estimate[[1]]
+  RNA_ACR15_cor[i, "ACR15_correlation"] <- temp$estimate[[1]]
 	RNA_ACR15_cor[i, "df"] <- temp$parameter[[1]]
   RNA_ACR15_cor[i, "pval"] <- temp$p.value[[1]]
 }
@@ -114,17 +114,11 @@ RNA_ACR15_cor_sig <- RNA_ACR15_cor[RNA_ACR15_cor$pval < 0.05,]
 
 #To quickly check max and min correlation results
 max(RNA_GFR_cor)
-max(RNA_A6_cor)
-max(RNA_A10_cor)
-max(RNA_A15_cor)
 max(RNA_ACR6_cor)
 max(RNA_ACR10_cor)
 max(RNA_ACR15_cor)
 
 min(RNA_GFR_cor)
-min(RNA_A6_cor)
-min(RNA_A10_cor)
-min(RNA_A15_cor)
 min(RNA_ACR6_cor)
 min(RNA_ACR10_cor)
 min(RNA_ACR15_cor)
@@ -137,50 +131,28 @@ min(RNA_ACR15_cor)
 #load Ensemble ID form biomart (preivously saved on cadillac)
 load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/EnsemblID_GRCm38.p4.Rdata")
 
-#Change to data.frame for easy access
-RNA_GFR_cor <- as.data.frame(RNA_GFR_cor)
-RNA_A6_cor <- as.data.frame(RNA_A6_cor)
-RNA_A10_cor <- as.data.frame(RNA_A10_cor)
-RNA_A15_cor <- as.data.frame(RNA_A15_cor)
-RNA_ACR6_cor <- as.data.frame(RNA_ACR6_cor)
-RNA_ACR10_cor <- as.data.frame(RNA_ACR10_cor)
-RNA_ACR15_cor <- as.data.frame(RNA_ACR15_cor)
-mouseID <- as.data.frame(Ensembl_mouseID)
-
-# there are duplicates in the mouseID, but chromosome name and start and end postons 
+# there are duplicates in the Ensembl_mouseID, but chromosome name and start and end postons
 # are the same so i am only extracting the unique samples
-mouseID <- mouseID[!duplicated(mouseID$ensembl_gene_id),]
-rownames(mouseID) <- make.names(mouseID[,1])
-mouseID <- mouseID[ order( rownames(mouseID)),]
+Ensembl_mouseID <- Ensembl_mouseID[!duplicated(Ensembl_mouseID$ensembl_gene_id),]
+rownames(Ensembl_mouseID) <- make.names(Ensembl_mouseID[,1])
+Ensembl_mouseID <- Ensembl_mouseID[ order( rownames(Ensembl_mouseID)),]
 
-#subset mouseID to match cor data.frame
+#subset Ensembl_mouseID to match cor data.frame
 RNA_GFR_cor$geneID <- rownames(RNA_GFR_cor)
 RNA_GFR_cor <- RNA_GFR_cor[ order( rownames(RNA_GFR_cor)),]
-mouseID_G <- mouseID[rownames(RNA_GFR_cor),]
-
-RNA_A6_cor$geneID <- rownames(RNA_A6_cor)
-RNA_A6_cor <- RNA_A6_cor[ order( rownames(RNA_A6_cor)),]
-mouseID_A6 <- mouseID[rownames(RNA_A6_cor),]
-
-RNA_A10_cor$geneID <- rownames(RNA_A10_cor)
-RNA_A10_cor <- RNA_A10_cor[ order( rownames(RNA_A10_cor)),]
-mouseID_A10 <- mouseID[rownames(RNA_A10_cor),]
-
-RNA_A15_cor$geneID <- rownames(RNA_A15_cor)
-RNA_A15_cor <- RNA_A15_cor[ order( rownames(RNA_A15_cor)),]
-mouseID_A15 <- mouseID[rownames(RNA_A15_cor),]
+Ensembl_mouseID_G <- Ensembl_mouseID[rownames(RNA_GFR_cor),]
 
 RNA_ACR6_cor$geneID <- rownames(RNA_ACR6_cor)
 RNA_ACR6_cor <- RNA_ACR6_cor[ order( rownames(RNA_ACR6_cor)),]
-mouseID_ACR6 <- mouseID[rownames(RNA_ACR6_cor),]
+Ensembl_mouseID_ACR6 <- Ensembl_mouseID[rownames(RNA_ACR6_cor),]
 
 RNA_ACR10_cor$geneID <- rownames(RNA_ACR10_cor)
 RNA_ACR10_cor <- RNA_ACR10_cor[ order( rownames(RNA_ACR10_cor)),]
-mouseID_ACR10 <- mouseID[rownames(RNA_ACR10_cor),]
+Ensembl_mouseID_ACR10 <- Ensembl_mouseID[rownames(RNA_ACR10_cor),]
 
 RNA_ACR15_cor$geneID <- rownames(RNA_ACR15_cor)
 RNA_ACR15_cor <- RNA_ACR15_cor[ order( rownames(RNA_ACR15_cor)),]
-mouseID_ACR15 <- mouseID[rownames(RNA_ACR15_cor),]
+Ensembl_mouseID_ACR15 <- Ensembl_mouseID[rownames(RNA_ACR15_cor),]
 
 ###NOTES: NAs are introduced in rownames of because those ENS genes were removed from the current ensembl database, due to lack of
 ###   additional evidence
@@ -190,65 +162,45 @@ mouseID_ACR15 <- mouseID[rownames(RNA_ACR15_cor),]
 #	"ENSMUSG00000104003"
 
 # Append ensembl information to correlation data for human readable format.
-RNA_GFR_cor$hgnc_symbol <- mouseID_G$hgnc_symbol
-RNA_GFR_cor$mgi_symbol <- mouseID_G$mgi_symbol
-RNA_GFR_cor$chromosome <- mouseID_G$chromosome_name
-RNA_GFR_cor$start <- mouseID_G$start_position
-RNA_GFR_cor$end <- mouseID_G$end_position
+RNA_GFR_cor$hgnc_symbol <- Ensembl_mouseID_G$hgnc_symbol
+RNA_GFR_cor$mgi_symbol <- Ensembl_mouseID_G$mgi_symbol
+RNA_GFR_cor$chromosome <- Ensembl_mouseID_G$chromosome_name
+RNA_GFR_cor$start <- Ensembl_mouseID_G$start_position
+RNA_GFR_cor$end <- Ensembl_mouseID_G$end_position
 
-RNA_A6_cor$hgnc_symbol <- mouseID_A6$hgnc_symbol
-RNA_A6_cor$mgi_symbol <- mouseID_A6$mgi_symbol
-RNA_A6_cor$chromosome <- mouseID_A6$chromosome_name
-RNA_A6_cor$start <- mouseID_A6$start_position
-RNA_A6_cor$end <- mouseID_A6$end_position
+RNA_ACR6_cor$hgnc_symbol <- Ensembl_mouseID_ACR6$hgnc_symbol
+RNA_ACR6_cor$mgi_symbol <- Ensembl_mouseID_ACR6$mgi_symbol
+RNA_ACR6_cor$chromosome <- Ensembl_mouseID_ACR6$chromosome_name
+RNA_ACR6_cor$start <- Ensembl_mouseID_ACR6$start_position
+RNA_ACR6_cor$end <- Ensembl_mouseID_ACR6$end_position
 
-RNA_A10_cor$hgnc_symbol <- mouseID_A10$hgnc_symbol
-RNA_A10_cor$mgi_symbol <- mouseID_A10$mgi_symbol
-RNA_A10_cor$chromosome <- mouseID_A10$chromosome_name
-RNA_A10_cor$start <- mouseID_A10$start_position
-RNA_A10_cor$end <- mouseID_A10$end_position
+RNA_ACR10_cor$hgnc_symbol <- Ensembl_mouseID_ACR10$hgnc_symbol
+RNA_ACR10_cor$mgi_symbol <- Ensembl_mouseID_ACR10$mgi_symbol
+RNA_ACR10_cor$chromosome <- Ensembl_mouseID_ACR10$chromosome_name
+RNA_ACR10_cor$start <- Ensembl_mouseID_ACR10$start_position
+RNA_ACR10_cor$end <- Ensembl_mouseID_ACR10$end_position
 
-RNA_A15_cor$hgnc_symbol <- mouseID_A15$hgnc_symbol
-RNA_A15_cor$mgi_symbol <- mouseID_A15$mgi_symbol
-RNA_A15_cor$chromosome <- mouseID_A15$chromosome_name
-RNA_A15_cor$start <- mouseID_A15$start_position
-RNA_A15_cor$end <- mouseID_A15$end_position
-
-RNA_ACR6_cor$hgnc_symbol <- mouseID_ACR6$hgnc_symbol
-RNA_ACR6_cor$mgi_symbol <- mouseID_ACR6$mgi_symbol
-RNA_ACR6_cor$chromosome <- mouseID_ACR6$chromosome_name
-RNA_ACR6_cor$start <- mouseID_ACR6$start_position
-RNA_ACR6_cor$end <- mouseID_ACR6$end_position
-
-RNA_ACR10_cor$hgnc_symbol <- mouseID_ACR10$hgnc_symbol
-RNA_ACR10_cor$mgi_symbol <- mouseID_ACR10$mgi_symbol
-RNA_ACR10_cor$chromosome <- mouseID_ACR10$chromosome_name
-RNA_ACR10_cor$start <- mouseID_ACR10$start_position
-RNA_ACR10_cor$end <- mouseID_ACR10$end_position
-
-RNA_ACR15_cor$hgnc_symbol <- mouseID_ACR15$hgnc_symbol
-RNA_ACR15_cor$mgi_symbol <- mouseID_ACR15$mgi_symbol
-RNA_ACR15_cor$chromosome <- mouseID_ACR15$chromosome_name
-RNA_ACR15_cor$start <- mouseID_ACR15$start_position
-RNA_ACR15_cor$end <- mouseID_ACR15$end_position
+RNA_ACR15_cor$hgnc_symbol <- Ensembl_mouseID_ACR15$hgnc_symbol
+RNA_ACR15_cor$mgi_symbol <- Ensembl_mouseID_ACR15$mgi_symbol
+RNA_ACR15_cor$chromosome <- Ensembl_mouseID_ACR15$chromosome_name
+RNA_ACR15_cor$start <- Ensembl_mouseID_ACR15$start_position
+RNA_ACR15_cor$end <- Ensembl_mouseID_ACR15$end_position
 
 #Order correlation in decreasing order
-RNA_GFR_cor <- RNA_GFR_cor[ order( RNA_GFR_cor$RNA_GFR_cor, decreasing = TRUE),]
-RNA_A6_cor <- RNA_A6_cor[ order( RNA_A6_cor$RNA_A6_cor, decreasing = TRUE),]
-RNA_A10_cor <- RNA_A10_cor[ order( RNA_A10_cor$RNA_A10_cor, decreasing = TRUE),]
-RNA_A15_cor <- RNA_A15_cor[ order( RNA_A15_cor$RNA_A15_cor, decreasing = TRUE),]
-RNA_ACR6_cor <- RNA_ACR6_cor[ order( RNA_ACR6_cor$RNA_ACR6_cor, decreasing = TRUE),]
-RNA_ACR10_cor <- RNA_ACR10_cor[ order( RNA_ACR10_cor$RNA_ACR10_cor, decreasing = TRUE),]
-RNA_ACR15_cor <- RNA_ACR15_cor[ order( RNA_ACR15_cor$RNA_ACR15_cor, decreasing = TRUE),]
+RNA_GFR_cor <- RNA_GFR_cor[ order( RNA_GFR_cor$GFR_correlation, decreasing = TRUE),]
+RNA_ACR6_cor <- RNA_ACR6_cor[ order( RNA_ACR6_cor$ACR6_correlation, decreasing = TRUE),]
+RNA_ACR10_cor <- RNA_ACR10_cor[ order( RNA_ACR10_cor$ACR10_correlation, decreasing = TRUE),]
+RNA_ACR15_cor <- RNA_ACR15_cor[ order( RNA_ACR15_cor$ACR15_correlation, decreasing = TRUE),]
 
 # Extract only necessary columns to show.
-RNA_GFR_cor <- RNA_GFR_cor[,c("geneID", "RNA_GFR_cor", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
-RNA_A6_cor <- RNA_A6_cor[,c("geneID", "RNA_A6_cor", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
-RNA_A10_cor <- RNA_A10_cor[,c("geneID", "RNA_A10_cor", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
-RNA_A15_cor <- RNA_A15_cor[,c("geneID", "RNA_A15_cor", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
-RNA_ACR6_cor <- RNA_ACR6_cor[,c("geneID", "RNA_ACR6_cor", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
-RNA_ACR10_cor <- RNA_ACR10_cor[,c("geneID", "RNA_ACR10_cor", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
-RNA_ACR15_cor <- RNA_ACR15_cor[,c("geneID", "RNA_ACR15_cor", "hgnc_symbol", "mgi_symbol", "chromosome", "start", "end")]
+RNA_GFR_cor <- RNA_GFR_cor[,c("geneID", "GFR_correlation", "df", "pval", "mgi_symbol", "chromosome", "start", "end")]
+RNA_GFR_cor_sig <- RNA_GFR_cor[RNA_GFR_cor$pval < 0.05,]
+RNA_ACR6_cor <- RNA_ACR6_cor[,c("geneID", "ACR6_correlation", "df", "pval", "mgi_symbol", "chromosome", "start", "end")]
+RNA_ACR6_cor_sig <- RNA_ACR6_cor[RNA_ACR6_cor$pval < 0.05,]
+RNA_ACR10_cor <- RNA_ACR10_cor[,c("geneID", "ACR10_correlation", "df", "pval", "mgi_symbol", "chromosome", "start", "end")]
+RNA_ACR10_cor_sig <- RNA_ACR10_cor[RNA_ACR10_cor$pval < 0.05,]
+RNA_ACR15_cor <- RNA_ACR15_cor[,c("geneID", "ACR15_correlation", "df", "pval", "mgi_symbol", "chromosome", "start", "end")]
+RNA_ACR15_cor_sig <- RNA_ACR15_cor[RNA_ACR15_cor$pval < 0.05,]
 
 # Export as tab sep txt files, and remove rownames because that displaces column names by one.
 write.table(RNA_GFR_cor, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_M_cor.txt", sep = "\t", row.names = FALSE)
