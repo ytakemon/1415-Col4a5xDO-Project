@@ -223,6 +223,9 @@ write.table(RNA_ACR15_cor_sig, file = "./GBRS_reconstruction/reconstruct/best.co
 #rownames(RNA_ACR10_cor) <- RNA_ACR10_cor$geneID
 #rownames(RNA_ACR15_cor) <- RNA_ACR15_cor$geneID
 
+## FIX WITH PERMUTAITON TEST TO GET THRESHOLD X 1000
+
+
 RNA_GFR_cor$padj_bonf <- p.adjust( RNA_GFR_cor$pval, method = "bonferroni", n = length(RNA_GFR_cor$pval))
 RNA_ACR6_cor$padj_bonf <- p.adjust( RNA_ACR6_cor$pval, method = "bonferroni", n = length(RNA_ACR6_cor$pval))
 RNA_ACR10_cor$padj_bonf <- p.adjust( RNA_ACR10_cor$pval, method = "bonferroni", n = length(RNA_ACR10_cor$pval))
