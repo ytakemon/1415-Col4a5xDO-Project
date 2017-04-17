@@ -213,8 +213,55 @@ write.table(RNA_ACR6_cor_sig, file = "./GBRS_reconstruction/reconstruct/best.com
 write.table(RNA_ACR10_cor_sig, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR10_M_cor_pval_sig.txt", sep = "\t", row.names = FALSE)
 write.table(RNA_ACR15_cor_sig, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor_pval_sig.txt", sep = "\t", row.names = FALSE)
 
+# Bonferroni correction for pval
+#RNA_GFR_cor <- read.delim(file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_M_cor_pval.txt", sep = "\t")
+#RNA_ACR6_cor <- read.delim(file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR6_M_cor_pval.txt", sep = "\t")
+#RNA_ACR10_cor <-  read.delim(file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR10_M_cor_pval.txt", sep = "\t")
+#RNA_ACR15_cor <-  read.delim(file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor_pval.txt", sep = "\t")
+#rownames(RNA_GFR_cor) <- RNA_GFR_cor$geneID
+#rownames(RNA_ACR6_cor) <- RNA_ACR6_cor$geneID
+#rownames(RNA_ACR10_cor) <- RNA_ACR10_cor$geneID
+#rownames(RNA_ACR15_cor) <- RNA_ACR15_cor$geneID
 
-##################
+RNA_GFR_cor$padj_bonf <- p.adjust( RNA_GFR_cor$pval, method = "bonferroni", n = length(RNA_GFR_cor$pval))
+RNA_ACR6_cor$padj_bonf <- p.adjust( RNA_ACR6_cor$pval, method = "bonferroni", n = length(RNA_ACR6_cor$pval))
+RNA_ACR10_cor$padj_bonf <- p.adjust( RNA_ACR10_cor$pval, method = "bonferroni", n = length(RNA_ACR10_cor$pval))
+RNA_ACR15_cor$padj_bonf <- p.adjust( RNA_ACR15_cor$pval, method = "bonferroni", n = length(RNA_ACR15_cor$pval))
+
+RNA_GFR_cor_sig <- RNA_GFR_cor[RNA_GFR_cor$padj_bonf < 0.05,] #dim  9432 x 9
+RNA_ACR6_cor_sig <- RNA_ACR6_cor[RNA_ACR6_cor$padj_bonf < 0.05,]
+RNA_ACR10_cor_sig <- RNA_ACR10_cor[RNA_ACR10_cor$padj_bonf < 0.05,]
+RNA_ACR15_cor_sig <- RNA_ACR15_cor[RNA_ACR15_cor$padj_bonf < 0.05,] #dim 7729 x 9
+
+# Find intersect between significant (bonferroni) GFR and ACR15 data
+#> a <- c(1,3,5,7,9,0,10,6,2)
+#> b <- 1:3
+#> a %in% b
+#[1]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+int <- RNA_ACR15_cor_sig[rownames(RNA_ACR15_cor_sig) %in% rownames(RNA_GFR_cor_sig),] #dim 7201 x 9
+temp <- RNA_GFR_cor_sig[rownames(RNA_GFR_cor_sig) %in% rownames(int),]
+int <- int[order(rownames(int)),]
+temp <- temp[order(rownames(temp)),]
+int$GFR_correlation <- temp$GFR_correlation
+names(int)[9] <- "ACR15_padj_bonf"
+int$GFR_padj_bonf <- temp$padj_bonf
+int <- int[,c("geneID", "mgi_symbol", "chromosome", "start", "end", "ACR15_correlation", "GFR_correlation", "ACR15_padj_bonf", "GFR_padj_bonf")]
+
+int_lowGFR <- int[int$GFR_correlation < 0,] #dim 6973 x 9
+int_highGFR <- int[int$GFR_correlation > 0,] #dim 228 x 9
+
+#Make venn diagram of GFR and ACR at 15wks
+#install.packages("VennDiagram")
+library(VennDiagram)
+grid.newpage()
+draw.pairwise.venn(dim(RNA_GFR_cor_sig)[1], dim(RNA_ACR15_cor_sig)[1], dim(int)[1],
+                    category = c("RNA exp. significant with GFR at 14wks", "RNA exp. significant with ACR at 15wks"),
+                    lty = "blank", fill = c("dark blue", "light blue"), alpha = rep(0.5, 2),
+                    cat.pos = c(340, 20), cat.dist = rep(0.1,2))
+
+
+
+
 #MAKE SCATTER PLOT OF ACR AT 15WK AND GFR FOR MALES
 #load data
 gfr <- read.delim("/hpcdata/ytakemon/Col4a5xDO/GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_M_cor.txt",
