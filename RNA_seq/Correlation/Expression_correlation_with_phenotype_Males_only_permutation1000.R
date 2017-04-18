@@ -33,8 +33,6 @@ pheno_M <- pheno[pheno$Sex == "M",] #95x12
 #GFR
 G_pheno <- pheno_M[complete.cases(pheno_M$C2_log),] #remove NAs
 G_RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(G_pheno),]
-
-
 #randomize GFR
 G_RNA_perm <- data.frame(perm_count = 1:1000, stringsAsFactors = FALSE)
 G_RNA_perm$min_pval <- 0
@@ -45,20 +43,109 @@ for (i in 1:1000){
   temp_G_RNA_seq <- G_RNA_seq
   random <- sample(rownames(G_pheno)) #Take randome sampling of G_pheno's rownames
   rownames(temp_G_pheno) <- random
-  rownames(temp_G_RNA_seq) <- random
-
+  temp_G_pheno <- temp_G_pheno[order(rownames(temp_G_pheno)),]
   #setup blank dataframes to hold data
   temp_RNA_GFR_cor <- array(0, c(length(colnames(temp_G_RNA_seq)),2),
                 dimnames = list (colnames(temp_G_RNA_seq), c("GFR_correlation", "pval")))
   temp_RNA_GFR_cor <- as.data.frame(temp_RNA_GFR_cor)
-
   #calculate correlation for random set of data
   for (n in 1:length(colnames(temp_G_RNA_seq))){
     temp <- cor.test(temp_G_pheno$C2_log, temp_G_RNA_seq[,n])
     temp_RNA_GFR_cor[n, "GFR_correlation"] <- temp$estimate[[1]]
     temp_RNA_GFR_cor[n, "pval"] <- temp$p.value[[1]]
   }
-
   #find smallest pvalue for random set i
   G_RNA_perm[i, "min_pval"] <- min(temp_RNA_GFR_cor$pval, na.rm = TRUE)
+  print(paste0("done with perm ", i, "."))
 }
+save(G_RNA_perm, file = "GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/G_RNA_perm.Rdata")
+
+#ACR6
+ACR6_pheno <- pheno_M[complete.cases(pheno_M$ACR6WK_log),] #remove NAs
+ACR6_RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(ACR6_pheno),]
+#randomize GFR
+ACR6_RNA_perm <- data.frame(perm_count = 1:1000, stringsAsFactors = FALSE)
+ACR6_RNA_perm$min_pval <- 0
+
+for (i in 1:1000){
+  #create temporary random data
+  temp_ACR6_pheno <- ACR6_pheno
+  temp_ACR6_RNA_seq <- ACR6_RNA_seq
+  random <- sample(rownames(ACR6_pheno)) #Take randome sampling of ACR6_pheno's rownames
+  rownames(temp_ACR6_pheno) <- random
+  temp_ACR6_pheno <- temp_ACR6_pheno[order(rownames(temp_ACR6_pheno)),]
+  #setup blank dataframes to hold data
+  temp_RNA_ACR6_cor <- array(0, c(length(colnames(temp_ACR6_RNA_seq)),2),
+                dimnames = list (colnames(temp_ACR6_RNA_seq), c("ACR6_correlation", "pval")))
+  temp_RNA_ACR6_cor <- as.data.frame(temp_RNA_ACR6_cor)
+  #calculate correlation for random set of data
+  for (n in 1:length(colnames(temp_ACR6_RNA_seq))){
+    temp <- cor.test(temp_ACR6_pheno$ACR6WK_log, temp_ACR6_RNA_seq[,n])
+    temp_RNA_ACR6_cor[n, "ACR6_correlation"] <- temp$estimate[[1]]
+    temp_RNA_ACR6_cor[n, "pval"] <- temp$p.value[[1]]
+  }
+  #find smallest pvalue for random set i
+  ACR6_RNA_perm[i, "min_pval"] <- min(temp_RNA_ACR6_cor$pval, na.rm = TRUE)
+  print(paste0("done with perm ", i, "."))
+}
+save(ACR6_RNA_perm, file = "GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/ACR6_RNA_perm.Rdata")
+
+#ACR10
+ACR10_pheno <- pheno_M[complete.cases(pheno_M$ACR10WK_log),] #remove NAs
+ACR10_RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(ACR10_pheno),]
+#randomize GFR
+ACR10_RNA_perm <- data.frame(perm_count = 1:1000, stringsAsFactors = FALSE)
+ACR10_RNA_perm$min_pval <- 0
+
+for (i in 1:1000){
+  #create temporary random data
+  temp_ACR10_pheno <- ACR10_pheno
+  temp_ACR10_RNA_seq <- ACR10_RNA_seq
+  random <- sample(rownames(ACR10_pheno)) #Take randome sampling of ACR10_pheno's rownames
+  rownames(temp_ACR10_pheno) <- random
+  temp_ACR10_pheno <- temp_ACR10_pheno[order(rownames(temp_ACR10_pheno)),]
+  #setup blank dataframes to hold data
+  temp_RNA_ACR10_cor <- array(0, c(length(colnames(temp_ACR10_RNA_seq)),2),
+                dimnames = list (colnames(temp_ACR10_RNA_seq), c("ACR10_correlation", "pval")))
+  temp_RNA_ACR10_cor <- as.data.frame(temp_RNA_ACR10_cor)
+  #calculate correlation for random set of data
+  for (n in 1:length(colnames(temp_ACR10_RNA_seq))){
+    temp <- cor.test(temp_ACR10_pheno$ACR10WK_log, temp_ACR10_RNA_seq[,n])
+    temp_RNA_ACR10_cor[n, "ACR10_correlation"] <- temp$estimate[[1]]
+    temp_RNA_ACR10_cor[n, "pval"] <- temp$p.value[[1]]
+  }
+  #find smallest pvalue for random set i
+  ACR10_RNA_perm[i, "min_pval"] <- min(temp_RNA_ACR10_cor$pval, na.rm = TRUE)
+  print(paste0("done with perm ", i, "."))
+}
+save(ACR10_RNA_perm, file = "GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/ACR10_RNA_perm.Rdata")
+
+#ACR15
+ACR15_pheno <- pheno_M[complete.cases(pheno_M$ACR15WK_log),] #remove NAs
+ACR15_RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(ACR15_pheno),]
+#randomize GFR
+ACR15_RNA_perm <- data.frame(perm_count = 1:1000, stringsAsFactors = FALSE)
+ACR15_RNA_perm$min_pval <- 0
+
+for (i in 1:1000){
+  #create temporary random data
+  temp_ACR15_pheno <- ACR15_pheno
+  temp_ACR15_RNA_seq <- ACR15_RNA_seq
+  random <- sample(rownames(ACR15_pheno)) #Take randome sampling of ACR15_pheno's rownames
+  rownames(temp_ACR15_pheno) <- random
+  temp_ACR15_pheno <- temp_ACR15_pheno[order(rownames(temp_ACR15_pheno)),]
+  #setup blank dataframes to hold data
+  temp_RNA_ACR15_cor <- array(0, c(length(colnames(temp_ACR15_RNA_seq)),2),
+                dimnames = list (colnames(temp_ACR15_RNA_seq), c("ACR15_correlation", "pval")))
+  temp_RNA_ACR15_cor <- as.data.frame(temp_RNA_ACR15_cor)
+  #calculate correlation for random set of data
+  for (n in 1:length(colnames(temp_ACR15_RNA_seq))){
+    temp <- cor.test(temp_ACR15_pheno$ACR15WK_log, temp_ACR15_RNA_seq[,n])
+    temp_RNA_ACR15_cor[n, "ACR15_correlation"] <- temp$estimate[[1]]
+    temp_RNA_ACR15_cor[n, "pval"] <- temp$p.value[[1]]
+  }
+  #find smallest pvalue for random set i
+  ACR15_RNA_perm[i, "min_pval"] <- min(temp_RNA_ACR15_cor$pval, na.rm = TRUE)
+  print(paste0("done with perm ", i, "."))
+}
+save(ACR15_RNA_perm, file = "GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/ACR15_RNA_perm.Rdata")
