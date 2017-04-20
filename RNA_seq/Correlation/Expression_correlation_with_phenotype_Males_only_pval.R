@@ -32,18 +32,15 @@ pheno$C2_log <- log(pheno$C2)
 pheno$ACR6WK_log <- log(pheno$ACR6WK)
 pheno$ACR10WK_log <- log(pheno$ACR10WK)
 pheno$ACR15WK_log <- log(pheno$ACR15WK)
-pheno$Alb6WK_log <- log(pheno$Alb6WK)
-pheno$Alb10WK_log <- log(pheno$Alb10WK)
-pheno$Alb15WK_log <- log(pheno$Alb15WK)
-pheno$Creat6WK_log <- log(pheno$Creat6WK)
-pheno$Creat10WK_log <- log(pheno$Creat10WK)
-pheno$Creat15WK_log <- log(pheno$Creat15WK)
+pheno$delta_ACR15_6 <- pheno$ACR15WK - pheno$ACR6WK
+pheno$delta_ACR15_6_log <- log(pheno$delta_ACR15_6)
 pheno[pheno ==  -Inf] = NA
 options(na.action = 'na.pass') #leave in NAs
 #keep only interested columns
-pheno <- pheno[,c("MouseID", "Sex", "C2_log", "Alb6WK_log","Creat6WK_log",
-                  "Alb10WK_log","Creat10WK_log","Alb15WK_log","Creat15WK_log",
-                  "ACR6WK_log", "ACR10WK_log", "ACR15WK_log")]
+pheno <- pheno[,c("MouseID", "Sex", "C2_log",
+                  "ACR6WK_log", "ACR10WK_log", "ACR15WK_log",
+                  "ACR6WK", "ACR10WK", "ACR15WK",
+                  "delta_ACR15_6", "delta_ACR15_6_log")]
 # Subset out males
 pheno_M <- pheno[pheno$Sex == "M",] #95x12
 
@@ -62,6 +59,7 @@ for (i in 1 : length(colnames(G_RNA_seq))){
 	RNA_GFR_cor[i, "GFR_correlation"] <- temp$estimate[[1]]
   RNA_GFR_cor[i, "df"] <- temp$parameter[[1]]
   RNA_GFR_cor[i, "pval"] <- temp$p.value[[1]]
+  print(paste0("done with gene ", i, "."))
 }
 #removes NAs that occured to 0 tpm counts
 RNA_GFR_cor <- as.data.frame(RNA_GFR_cor[complete.cases(RNA_GFR_cor),])
@@ -77,6 +75,7 @@ for (i in 1 : length(colnames(ACR6_RNA_seq))){
 	RNA_ACR6_cor[i, "ACR6_correlation"] <- temp$estimate[[1]]
 	RNA_ACR6_cor[i, "df"] <- temp$parameter[[1]]
   RNA_ACR6_cor[i, "pval"] <- temp$p.value[[1]]
+  print(paste0("done with gene ", i, "."))
 }
 #removes NAs that occured to 0 tpm counts
 RNA_ACR6_cor <- as.data.frame(RNA_ACR6_cor[complete.cases(RNA_ACR6_cor),])
@@ -92,6 +91,7 @@ for (i in 1 : length(colnames(ACR10_RNA_seq))){
   RNA_ACR10_cor[i, "ACR10_correlation"] <- temp$estimate[[1]]
 	RNA_ACR10_cor[i, "df"] <- temp$parameter[[1]]
   RNA_ACR10_cor[i, "pval"] <- temp$p.value[[1]]
+  print(paste0("done with gene ", i, "."))
 }
 #removes NAs that occured to 0 tpm counts
 RNA_ACR10_cor <- as.data.frame(RNA_ACR10_cor[complete.cases(RNA_ACR10_cor),])
@@ -107,10 +107,28 @@ for (i in 1 : length(colnames(ACR15_RNA_seq))){
   RNA_ACR15_cor[i, "ACR15_correlation"] <- temp$estimate[[1]]
 	RNA_ACR15_cor[i, "df"] <- temp$parameter[[1]]
   RNA_ACR15_cor[i, "pval"] <- temp$p.value[[1]]
+  print(paste0("done with gene ", i, "."))
 }
 #removes NAs that occured to 0 tpm counts
 RNA_ACR15_cor <- as.data.frame(RNA_ACR15_cor[complete.cases(RNA_ACR15_cor),])
 RNA_ACR15_cor_sig <- RNA_ACR15_cor[RNA_ACR15_cor$pval < 0.05,]
+
+#delta_ACR15_6
+delta_ACR15_6_pheno <- pheno_M[complete.cases(pheno_M$delta_ACR15_6),]
+delta_ACR15_6_RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(delta_ACR15_6_pheno),]
+RNA_delta_ACR15_6_cor <- array(0, c(length(colnames(delta_ACR15_6_RNA_seq)),3),
+                dimnames = list (colnames(delta_ACR15_6_RNA_seq), c("delta_ACR15_6_correlation", "df", "pval")))
+for (i in 1 : length(colnames(delta_ACR15_6_RNA_seq))){
+	temp <- cor.test(delta_ACR15_6_pheno$delta_ACR15_6, delta_ACR15_6_RNA_seq[,i])
+  RNA_delta_ACR15_6_cor[i, "delta_ACR15_6_correlation"] <- temp$estimate[[1]]
+	RNA_delta_ACR15_6_cor[i, "df"] <- temp$parameter[[1]]
+  RNA_delta_ACR15_6_cor[i, "pval"] <- temp$p.value[[1]]
+  print(paste0("done with gene ", i, "."))
+}
+#removes NAs that occured to 0 tpm counts
+RNA_delta_ACR15_6_cor <- as.data.frame(RNA_delta_ACR15_6_cor[complete.cases(RNA_delta_ACR15_6_cor),])
+max(RNA_delta_ACR15_6_cor$delta_ACR15_6_correlation)
+min(RNA_delta_ACR15_6_cor$delta_ACR15_6_correlation)
 
 #To quickly check max and min correlation results
 max(RNA_GFR_cor)
