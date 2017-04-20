@@ -1,0 +1,14 @@
+#Plotting QTL of the delta between ACR at 15 and 6WKs.
+library(DOQTL)
+setwd("/hpcdata/ytakemon/Col4a5xDO")
+
+#load data
+load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/genoprobs/best.genoprobs.192.Rdata")
+pheno <- read.delim("./Phenotype/1415_master_pheno.txt", sep = "\t", header = TRUE)
+#clean data
+rownames(pheno) <- make.names(pheno[,1]) #move sample ID to row names
+pheno <- pheno[rownames(best.genoprobs.192),] #subset pheno to match 192 samples
+pheno$delta_ACR15_6 <- pheno$ACR15WK - pheno$ACR6WK
+pheno[pheno ==  -Inf] = NA
+options(na.action = "na.pass")
+pheno <- pheno[,c("MouseID", "Sex", "ACR6WK", "ACR15WK", "delta_ACR15_6")]
