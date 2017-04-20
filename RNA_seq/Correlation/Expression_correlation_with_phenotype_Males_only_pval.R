@@ -213,17 +213,59 @@ write.table(RNA_ACR6_cor_sig, file = "./GBRS_reconstruction/reconstruct/best.com
 write.table(RNA_ACR10_cor_sig, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR10_M_cor_pval_sig.txt", sep = "\t", row.names = FALSE)
 write.table(RNA_ACR15_cor_sig, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor_pval_sig.txt", sep = "\t", row.names = FALSE)
 
-# Bonferroni correction for pval
-#RNA_GFR_cor <- read.delim(file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_M_cor_pval.txt", sep = "\t")
-#RNA_ACR6_cor <- read.delim(file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR6_M_cor_pval.txt", sep = "\t")
-#RNA_ACR10_cor <-  read.delim(file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR10_M_cor_pval.txt", sep = "\t")
-#RNA_ACR15_cor <-  read.delim(file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor_pval.txt", sep = "\t")
-#rownames(RNA_GFR_cor) <- RNA_GFR_cor$geneID
-#rownames(RNA_ACR6_cor) <- RNA_ACR6_cor$geneID
-#rownames(RNA_ACR10_cor) <- RNA_ACR10_cor$geneID
-#rownames(RNA_ACR15_cor) <- RNA_ACR15_cor$geneID
+# Calculate significance threshold with permutaiton test.
+# Permuation was calculated in: ./Expression_correlation_with_phenotype_males_only_permuation1000.R
+RNA_GFR_cor <- read.delim(file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_GFR_M_cor_pval.txt", sep = "\t")
+RNA_ACR6_cor <- read.delim(file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR6_M_cor_pval.txt", sep = "\t")
+RNA_ACR10_cor <-  read.delim(file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR10_M_cor_pval.txt", sep = "\t")
+RNA_ACR15_cor <-  read.delim(file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_pheno_data/males/RNA_ACR15_M_cor_pval.txt", sep = "\t")
+rownames(RNA_GFR_cor) <- RNA_GFR_cor$geneID
+rownames(RNA_ACR6_cor) <- RNA_ACR6_cor$geneID
+rownames(RNA_ACR10_cor) <- RNA_ACR10_cor$geneID
+rownames(RNA_ACR15_cor) <- RNA_ACR15_cor$geneID
 
-## FIX WITH PERMUTAITON TEST TO GET THRESHOLD X 1000 !!!!!!
+# Get threshold of the 1000 permutation test with quantile thresholding
+load("GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/G_RNA_perm.Rdata")
+load("GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/ACR6_RNA_perm.Rdata")
+load("GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/ACR10_RNA_perm.Rdata")
+load("GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/ACR15_RNA_perm.Rdata")
+# Thresholding for 5% an 1%
+G_thr <- quantile(G_RNA_perm$min_pval, probs = c(0.5, 0.2 ,0.1, 0.05, 0.01), na.rm = TRUE)
+ACR6_thr <- quantile(ACR6_RNA_perm$min_pval, probs = c(0.5, 0.2 ,0.1, 0.05, 0.01), na.rm = TRUE)
+ACR10_thr <- quantile(ACR10_RNA_perm$min_pval, probs = c(0.5, 0.2 ,0.1, 0.05, 0.01), na.rm = TRUE)
+ACR15_thr <- quantile(ACR15_RNA_perm$min_pval, probs = c(0.5, 0.2 ,0.1, 0.05, 0.01), na.rm = TRUE)
+
+# > ACR6_thr
+#          50%          20%          10%           5%           1%
+# 8.713783e-05 2.753565e-05 1.256886e-05 7.102238e-06 1.296146e-06
+# > min(RNA_ACR6_cor$pval)
+# [1] 1.492283e-18
+#
+# > ACR10_thr
+#          50%          20%          10%           5%           1%
+# 2.248290e-05 4.821483e-06 1.911959e-06 9.291604e-07 9.438017e-08
+# > min(RNA_ACR10_cor$pval)
+# [1] 2.036024e-18
+#
+# > ACR15_thr #histogram looks off...
+#          50%          20%          10%           5%           1%
+# 3.881138e-12 3.181522e-15 1.646989e-16 4.373387e-17 5.541753e-18
+# > min(RNA_ACR15_cor$pval)
+# [1] 2.767572e-14
+#
+# > G_thr
+#          50%          20%          10%           5%           1%
+# 6.437151e-05 2.097676e-05 1.066718e-05 5.919089e-06 1.432339e-06
+# > min(RNA_GFR_cor$pval)
+# [1] 2.458461e-15
+
+
+
+
+
+
+
+
 
 
 RNA_GFR_cor$padj_bonf <- p.adjust( RNA_GFR_cor$pval, method = "bonferroni", n = length(RNA_GFR_cor$pval))
