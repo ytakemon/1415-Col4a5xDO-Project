@@ -149,3 +149,34 @@ for (i in 1:1000){
   print(paste0("done with perm ", i, "."))
 }
 save(ACR15_RNA_perm, file = "GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/ACR15_RNA_perm.Rdata")
+
+#delta_ACR15_6
+delta_ACR15_6_pheno <- pheno_M[complete.cases(pheno_M$delta_ACR15_6),]
+delta_ACR15_6_RNA_seq <- RNA_seq[rownames(RNA_seq) %in% rownames(delta_ACR15_6_pheno),]
+#randomize GFR
+delta_ACR15_6_RNA_perm <- data.frame(perm_count = 1:1000, stringsAsFactors = FALSE)
+delta_ACR15_6_RNA_perm$min_pval <- 0
+
+for (i in 1:1000){
+  #create temporary random data
+  temp_delta_ACR15_6_pheno <- delta_ACR15_6_pheno
+  temp_delta_ACR15_6_RNA_seq <- delta_ACR15_6_RNA_seq
+  random <- sample(rownames(delta_ACR15_6_pheno)) #Take randome sampling of delta_ACR15_6_pheno's rownames
+  rownames(temp_delta_ACR15_6_pheno) <- random
+  temp_delta_ACR15_6_pheno <- temp_delta_ACR15_6_pheno[order(rownames(temp_delta_ACR15_6_pheno)),]
+  #setup blank dataframes to hold data
+  temp_RNA_delta_ACR15_6_cor <- array(0, c(length(colnames(temp_delta_ACR15_6_RNA_seq)),2),
+                dimnames = list (colnames(temp_delta_ACR15_6_RNA_seq), c("delta_ACR15_6_correlation", "pval")))
+  temp_RNA_delta_ACR15_6_cor <- as.data.frame(temp_RNA_delta_ACR15_6_cor)
+  #calculate correlation for random set of data
+  for (n in 1:length(colnames(temp_delta_ACR15_6_RNA_seq))){
+    temp <- cor.test(temp_delta_ACR15_6_pheno$delta_ACR15_6, temp_delta_ACR15_6_RNA_seq[,n])
+    temp_RNA_delta_ACR15_6_cor[n, "delta_ACR15_6_correlation"] <- temp$estimate[[1]]
+    temp_RNA_delta_ACR15_6_cor[n, "pval"] <- temp$p.value[[1]]
+    print(paste0("done with ", i, " of ", n, "."))
+  }
+  #find smallest pvalue for random set i
+  delta_ACR15_6_RNA_perm[i, "min_pval"] <- min(temp_RNA_delta_ACR15_6_cor$pval, na.rm = TRUE)
+  print(paste0("done with perm ", i, "."))
+}
+save(delta_ACR15_6_RNA_perm, file = "GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/delta_ACR15_6_RNA_perm.Rdata")
