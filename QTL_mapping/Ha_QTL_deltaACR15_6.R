@@ -24,7 +24,16 @@ sex.covar <- as.data.frame(sex.covar)
 colnames(sex.covar)[1] <- "sex"
 
 #run QTL
-qlt <- scanone( pheno = pheno, pheno.col = "delta_ACR15_6",
-                probs = best.genoprobs.192, K = K_GS,
-                addcovar = sex.covar, snps = GM_snps)
-save(qtl, file = "GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl_delta_ACR15_6.192.Rdata")
+#qtl <- scanone( pheno = pheno, pheno.col = "delta_ACR15_6",
+#                probs = best.genoprobs.192, K = K_GS,
+#                addcovar = sex.covar, snps = GM_snps)
+#save(qtl, file = "GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl_delta_ACR15_6.192.Rdata")
+
+#permutations are run via Ha_QTL_deltaACR15_6_perms.R
+load("GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl_delta_ACR15_6.192.Rdata")
+
+
+
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Ha_QTL_deltaACR15_6_perms.pdf", width = 10.0, height = 7.5)
+plot(qtl, main = "Col4a5xDO 192 genoprob delta_ACR15_6")
+dev.off()
