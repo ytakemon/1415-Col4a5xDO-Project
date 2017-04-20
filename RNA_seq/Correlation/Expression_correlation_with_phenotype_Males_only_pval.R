@@ -17,7 +17,7 @@ library(DOQTL)
 # set to working directory on cadillac
 setwd("/hpcdata/ytakemon/Col4a5xDO")
 
-#Calculate correlation between phenotype and gene expression via tpm
+#Calculate correclation between phenotype and gene expression via tpm
 load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/RNA_seq_tpm.Rdata")
 load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/genoprobs/best.genoprobs.192.Rdata")
 RNA_seq <- as.data.frame(RNA_seq)
