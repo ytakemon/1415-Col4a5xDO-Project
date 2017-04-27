@@ -27,4 +27,5 @@ colnames(sex.covar)[1] <- "sex"
 perms <- scanone.perm(pheno = pheno, pheno.col = "delta_ACR15_6",
                       probs = best.genoprobs.192, addcovar = sex.covar,
                       snps = GM_snps, nperm = 1000)
-save(perms, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/perm1000/perms.1000.qtl.delta_ACR15_6.192.Rdata")
+perms.1000.qtl.deltaACR15_6.192 <- perms
+save(perms.1000.qtl.deltaACR15_6.192, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/perm1000/perms.1000.qtl.delta_ACR15_6.192.Rdata")

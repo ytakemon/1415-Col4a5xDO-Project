@@ -27,13 +27,15 @@ colnames(sex.covar)[1] <- "sex"
 #qtl <- scanone( pheno = pheno, pheno.col = "delta_ACR15_6",
 #                probs = best.genoprobs.192, K = K_GS,
 #                addcovar = sex.covar, snps = GM_snps)
-#save(qtl, file = "GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl_delta_ACR15_6.192.Rdata")
+#qtl.deltaACR15_6.192 <- qtl
+#save(qtl.deltaACR15_6.192 , file = "GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl_delta_ACR15_6.192.Rdata")
 
 #permutations are run via Ha_QTL_deltaACR15_6_perms.R
 load("GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl_delta_ACR15_6.192.Rdata")
+load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/perm1000/perms.1000.qtl.delta_ACR15_6.192.Rdata")
 
+thr <- get.sig.thr(perms.1000.qtl.deltaACR15_6.192[,,1], alpha = c(0.05, 0.1, 0.63), Xchr  = FALSE)
 
-
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Ha_QTL_deltaACR15_6_perms.pdf", width = 10.0, height = 7.5)
-plot(qtl, main = "Col4a5xDO 192 genoprob delta_ACR15_6")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Ha_QTL_deltaACR15_6_1000perms.pdf", width = 10.0, height = 7.5)
+plot(qtl.deltaACR15_6.192, sig.thr = thr, sig.col = c("red", "orange", "chartreuse"),main = "Col4a5xDO 192 genoprob delta_ACR15_6 w/ 1000 perms")
 dev.off()

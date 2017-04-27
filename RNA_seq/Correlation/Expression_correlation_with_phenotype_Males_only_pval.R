@@ -23,7 +23,8 @@ load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/genoprobs/best.ge
 RNA_seq <- as.data.frame(RNA_seq)
 pheno <- read.delim("./Phenotype/1415_master_pheno.txt", sep = "\t", header = TRUE)
 #clean data
-rownames(pheno) <- make.names(pheno[,1]) #move sample ID to row names
+rownames(pheno) <- make.names(pheno[,1]) #move sample ID to row nam
+es
 pheno <- pheno[rownames(best.genoprobs.192),] #subset pheno to match 192 samples
 #clean up pheno and add log of ACR
 pheno[pheno < 0 ] = NA
