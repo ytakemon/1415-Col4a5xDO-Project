@@ -40,6 +40,7 @@ pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GWAS_delta_AC
 plot(gwas_delta_ACR15_6, main = "Col4a5xDO delta ACR15_6wk GWAS map")
 dev.off()
 
+#####################################################################################################################
 ##Coefficient plots using QTL Rdata
 load("GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl_delta_ACR15_6.192.Rdata")
 
@@ -96,3 +97,103 @@ qtl <- qtl.deltaACR15_6.192
 pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/coef_delta_ACR15_6_chr19.pdf", width = 12, height = 6)
 coefplot(qtl, chr = 19, main = "Allele Effect for delta_ACR15_6 @ Chr 19")
 dev.off()
+
+#####################################################################################################################
+# Candidate genes
+#Chr1 candidate gene
+chr <- 1
+genes <- assoc.map(	pheno = pheno,
+										pheno.col = "delta_ACR15_6",
+										probs = best.genoprobs.192,
+										K = K_GS[[chr]],
+										addcovar = sex.covar,
+										snps = GM_snps,
+										chr = chr,
+										start = 35,
+										end = 45,
+										output = "p-value")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr1.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 3, show.sdps = TRUE)
+dev.off()
+
+#Chr2 candidate gene
+chr <- 2
+genes <- assoc.map(	pheno = pheno,
+										pheno.col = "delta_ACR15_6",
+										probs = best.genoprobs.192,
+										K = K_GS[[chr]],
+										addcovar = sex.covar,
+										snps = GM_snps,
+										chr = chr,
+										start = 78,
+										end = 92,
+										output = "p-value")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr2.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 5, show.sdps = TRUE)
+dev.off()
+
+#Chr5 candidate gene
+chr <- 5
+genes <- assoc.map(	pheno = pheno,
+										pheno.col = "delta_ACR15_6",
+										probs = best.genoprobs.192,
+										K = K_GS[[chr]],
+										addcovar = sex.covar,
+										snps = GM_snps,
+										chr = chr,
+										start = 64,
+										end = 75,
+										output = "p-value")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr5.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 5, show.sdps = TRUE)
+dev.off()
+
+#Chr8 candidate gene
+chr <- 8
+genes <- assoc.map(	pheno = pheno,
+										pheno.col = "delta_ACR15_6",
+										probs = best.genoprobs.192,
+										K = K_GS[[chr]],
+										addcovar = sex.covar,
+										snps = GM_snps,
+										chr = chr,
+										start = 66,
+										end = 72,
+										output = "p-value")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr8.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 3.5, show.sdps = TRUE)
+dev.off()
+
+#Chr13 candidate gene
+chr <- 13
+genes <- assoc.map(	pheno = pheno,
+										pheno.col = "delta_ACR15_6",
+										probs = best.genoprobs.192,
+										K = K_GS[[chr]],
+										addcovar = sex.covar,
+										snps = GM_snps,
+										chr = chr,
+										start = 38,
+										end = 42,
+										output = "p-value")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr13.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 3.5, show.sdps = TRUE)
+dev.off()
+
+#Chr14 candidate gene
+chr <- 14
+genes <- assoc.map(	pheno = pheno,
+										pheno.col = "delta_ACR15_6",
+										probs = best.genoprobs.192,
+										K = K_GS[[chr]],
+										addcovar = sex.covar,
+										snps = GM_snps,
+										chr = chr,
+										start = 80,
+										end = 90,
+										output = "p-value")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr14.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 5, show.sdps = TRUE)
+dev.off()
+#Chr17 candidate gene
+#Chr19 candidate gene
