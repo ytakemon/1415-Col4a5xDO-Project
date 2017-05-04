@@ -43,15 +43,56 @@ dev.off()
 ##Coefficient plots using QTL Rdata
 load("GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl_delta_ACR15_6.192.Rdata")
 
+#Chr1 coef plot
+qtl <- qtl.deltaACR15_6.192
+qtl$coef$A[abs(qtl$coef$A) > 5000] = 0
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/coef_delta_ACR15_6_chr1.pdf", width = 12, height = 6)
+coefplot(qtl, chr = 1, main = "Allele Effect for delta_ACR15_6 @ Chr 1")
+dev.off()
 
+#Chr2 coef plot
+qtl <- qtl.deltaACR15_6.192
+qtl$coef$A[abs(qtl$coef$A) > 2000] = 0
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/coef_delta_ACR15_6_chr2.pdf", width = 12, height = 6)
+coefplot(qtl, chr = 2, main = "Allele Effect for delta_ACR15_6 @ Chr 2")
+dev.off()
 
+#Chr5 coef plot
+qtl <- qtl.deltaACR15_6.192
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/coef_delta_ACR15_6_chr5.pdf", width = 12, height = 6)
+coefplot(qtl, chr = 5, main = "Allele Effect for delta_ACR15_6 @ Chr 5")
+dev.off()
 
+#Chr8 coef plot
+qtl <- qtl.deltaACR15_6.192
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/coef_delta_ACR15_6_chr8.pdf", width = 12, height = 6)
+coefplot(qtl, chr = 8, main = "Allele Effect for delta_ACR15_6 @ Chr 8")
+dev.off()
 
+#Chr13 coef plot
+qtl <- qtl.deltaACR15_6.192
+qtl$coef$A[abs(qtl$coef$A) > 3000] = 0
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/coef_delta_ACR15_6_chr13.pdf", width = 12, height = 6)
+coefplot(qtl, chr = 13, main = "Allele Effect for delta_ACR15_6 @ Chr 13")
+dev.off()
 
+#Chr14 coef plot
+qtl <- qtl.deltaACR15_6.192
+#qtl$coef$A[abs(qtl$coef$A) > 3000] = 0
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/coef_delta_ACR15_6_chr14.pdf", width = 12, height = 6)
+coefplot(qtl, chr = 14, main = "Allele Effect for delta_ACR15_6 @ Chr 14")
+dev.off()
 
-#ACR
-ACR_qtl <- qtl.log.ACR6WK.192
-ACR_qtl$coef$A[abs(ACR_qtl$coef$A) > 2 ] = 0
-png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/coef.ACR6.chr2.png", width = 1500, height = 1000, res = 100)
-coefplot(ACR_qtl , chr = 2, main = "Chr 2 ACR6WK_log")
+#Chr17 coef plot
+qtl <- qtl.deltaACR15_6.192
+qtl$coef$A[abs(qtl$coef$A) > 1500] = 0
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/coef_delta_ACR15_6_chr17.pdf", width = 12, height = 6)
+coefplot(qtl, chr = 17, main = "Allele Effect for delta_ACR15_6 @ Chr 17")
+dev.off()
+
+#Chr19 coef plot
+qtl <- qtl.deltaACR15_6.192
+#qtl$coef$A[abs(qtl$coef$A) > 1500] = 0
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/coef_delta_ACR15_6_chr19.pdf", width = 12, height = 6)
+coefplot(qtl, chr = 19, main = "Allele Effect for delta_ACR15_6 @ Chr 19")
 dev.off()
