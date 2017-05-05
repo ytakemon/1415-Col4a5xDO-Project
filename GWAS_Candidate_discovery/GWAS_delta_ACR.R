@@ -100,7 +100,7 @@ dev.off()
 
 #####################################################################################################################
 # Candidate genes
-#Chr1 candidate gene
+#Chr1 candidate gene proximal
 chr <- 1
 genes <- assoc.map(	pheno = pheno,
 										pheno.col = "delta_ACR15_6",
@@ -112,11 +112,43 @@ genes <- assoc.map(	pheno = pheno,
 										start = 35,
 										end = 45,
 										output = "p-value")
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr1.pdf", width = 12, height = 6)
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr1_proximal.pdf", width = 12, height = 6)
 assoc.plot(genes, thr = 3, show.sdps = TRUE)
 dev.off()
 
-#Chr2 candidate gene
+#Chr1 candidate gene distal
+chr <- 1
+genes <- assoc.map(	pheno = pheno,
+										pheno.col = "delta_ACR15_6",
+										probs = best.genoprobs.192,
+										K = K_GS[[chr]],
+										addcovar = sex.covar,
+										snps = GM_snps,
+										chr = chr,
+										start = 65,
+										end = 75,
+										output = "p-value")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr1_distal.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 3, show.sdps = TRUE)
+dev.off()
+
+#Chr2 candidate gene proximal
+chr <- 2
+genes <- assoc.map(	pheno = pheno,
+										pheno.col = "delta_ACR15_6",
+										probs = best.genoprobs.192,
+										K = K_GS[[chr]],
+										addcovar = sex.covar,
+										snps = GM_snps,
+										chr = chr,
+										start = 30,
+										end = 45,
+										output = "p-value")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr2_proximal.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 3.8, show.sdps = TRUE)
+dev.off()
+
+#Chr2 candidate gene distal
 chr <- 2
 genes <- assoc.map(	pheno = pheno,
 										pheno.col = "delta_ACR15_6",
@@ -128,11 +160,27 @@ genes <- assoc.map(	pheno = pheno,
 										start = 78,
 										end = 92,
 										output = "p-value")
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr2.pdf", width = 12, height = 6)
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr2_distal.pdf", width = 12, height = 6)
 assoc.plot(genes, thr = 5, show.sdps = TRUE)
 dev.off()
 
-#Chr5 candidate gene
+#Chr5 candidate gene proximal
+chr <- 5
+genes <- assoc.map(	pheno = pheno,
+										pheno.col = "delta_ACR15_6",
+										probs = best.genoprobs.192,
+										K = K_GS[[chr]],
+										addcovar = sex.covar,
+										snps = GM_snps,
+										chr = chr,
+										start = 45,
+										end = 55,
+										output = "p-value")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr5_proximal.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 3, show.sdps = TRUE)
+dev.off()
+
+#Chr5 candidate gene distal
 chr <- 5
 genes <- assoc.map(	pheno = pheno,
 										pheno.col = "delta_ACR15_6",
@@ -144,7 +192,7 @@ genes <- assoc.map(	pheno = pheno,
 										start = 64,
 										end = 75,
 										output = "p-value")
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr5.pdf", width = 12, height = 6)
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr5_distal.pdf", width = 12, height = 6)
 assoc.plot(genes, thr = 5, show.sdps = TRUE)
 dev.off()
 
@@ -180,7 +228,7 @@ pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_del
 assoc.plot(genes, thr = 3.5, show.sdps = TRUE)
 dev.off()
 
-#Chr14 candidate gene
+#Chr14 candidate gene proximal
 chr <- 14
 genes <- assoc.map(	pheno = pheno,
 										pheno.col = "delta_ACR15_6",
@@ -189,11 +237,105 @@ genes <- assoc.map(	pheno = pheno,
 										addcovar = sex.covar,
 										snps = GM_snps,
 										chr = chr,
-										start = 80,
+										start = 50,
+										end = 60,
+										output = "p-value")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr14_proximal.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 3, show.sdps = TRUE)
+dev.off()
+
+#Chr14 candidate gene medial
+chr <- 14
+genes <- assoc.map(	pheno = pheno,
+										pheno.col = "delta_ACR15_6",
+										probs = best.genoprobs.192,
+										K = K_GS[[chr]],
+										addcovar = sex.covar,
+										snps = GM_snps,
+										chr = chr,
+										start = 65,
+										end = 75,
+										output = "p-value")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr14_medial.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 3, show.sdps = TRUE)
+dev.off()
+
+#Chr14 candidate gene distal
+chr <- 14
+genes <- assoc.map(	pheno = pheno,
+										pheno.col = "delta_ACR15_6",
+										probs = best.genoprobs.192,
+										K = K_GS[[chr]],
+										addcovar = sex.covar,
+										snps = GM_snps,
+										chr = chr,
+										start = 75,
 										end = 90,
 										output = "p-value")
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr14.pdf", width = 12, height = 6)
-assoc.plot(genes, thr = 5, show.sdps = TRUE)
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr14_distal.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 3, show.sdps = TRUE)
 dev.off()
-#Chr17 candidate gene
-#Chr19 candidate gene
+
+#Chr17 candidate gene poximal
+chr <- 17
+genes <- assoc.map(	pheno = pheno,
+										pheno.col = "delta_ACR15_6",
+										probs = best.genoprobs.192,
+										K = K_GS[[chr]],
+										addcovar = sex.covar,
+										snps = GM_snps,
+										chr = chr,
+										start = 24,
+										end = 30,
+										output = "p-value")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr17_poximal.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 4, show.sdps = TRUE)
+dev.off()
+
+#Chr17 candidate gene distal
+chr <- 17
+genes <- assoc.map(	pheno = pheno,
+										pheno.col = "delta_ACR15_6",
+										probs = best.genoprobs.192,
+										K = K_GS[[chr]],
+										addcovar = sex.covar,
+										snps = GM_snps,
+										chr = chr,
+										start = 65,
+										end = 75,
+										output = "p-value")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr17_distal.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 4, show.sdps = TRUE)
+dev.off()
+
+#Chr19 candidate gene proximal
+chr <- 19
+genes <- assoc.map(	pheno = pheno,
+										pheno.col = "delta_ACR15_6",
+										probs = best.genoprobs.192,
+										K = K_GS[[chr]],
+										addcovar = sex.covar,
+										snps = GM_snps,
+										chr = chr,
+										start = 20,
+										end = 30,
+										output = "p-value")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr19_proximal.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 3, show.sdps = TRUE)
+dev.off()
+
+#Chr19 candidate gene distal
+chr <- 19
+genes <- assoc.map(	pheno = pheno,
+										pheno.col = "delta_ACR15_6",
+										probs = best.genoprobs.192,
+										K = K_GS[[chr]],
+										addcovar = sex.covar,
+										snps = GM_snps,
+										chr = chr,
+										start = 45,
+										end = 55,
+										output = "p-value")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Candidate_delta_ACR15_6_chr19_distal.pdf", width = 12, height = 6)
+assoc.plot(genes, thr = 3, show.sdps = TRUE)
+dev.off()
