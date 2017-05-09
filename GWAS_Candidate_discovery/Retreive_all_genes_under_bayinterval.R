@@ -418,3 +418,8 @@ Alb6WK_genes <- as.character(Alb6WK_gene_list$Gene_name)
 Alb10WK_genes <- as.character(Alb10WK_gene_list$Gene_name)
 Alb15WK_genes <- as.character(Alb15WK_gene_list$Gene_name)
 delta_ACR15_6_genes <- as.character(delta_ACR15_6_gene_list$Gene_name)
+
+intersect(GFR_genes, Alb6WK_genes)
+intersect(GFR_genes, Alb10WK_genes)
+intersect(GFR_genes, Alb15WK_genes)
+intersect(GFR_genes, delta_ACR15_6_genes)
