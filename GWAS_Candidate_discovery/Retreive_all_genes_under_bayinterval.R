@@ -412,14 +412,43 @@ delta_ACR15_6_gene_list <- rbind(delta_ACR15_6_gene_list, sub_UCSC_list)
 rownames(delta_ACR15_6_gene_list) <- NULL
 write.table(delta_ACR15_6_gene_list, "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/compiled_gene_list/delta_ACR15_6_gene_list.txt", sep = "\t")
 
-####
+# load gene list files again
+GFR_gene_list <- read.delim("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/compiled_gene_list/GFR_gene_list.txt",
+                            sep = "\t", header = TRUE)
+Alb6WK_gene_list <- read.delim("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/compiled_gene_list/Alb6WK_log_gene_list.txt",
+                            sep = "\t", header = TRUE)
+Alb10WK_gene_list <- read.delim("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/compiled_gene_list/Alb10WK_log_gene_list.txt",
+                            sep = "\t", header = TRUE)
+Alb15WK_gene_list <- read.delim("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/compiled_gene_list/Alb15WK_log_gene_list.txt",
+                            sep = "\t", header = TRUE)
+delta_ACR15_6_gene_list <- read.delim("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/compiled_gene_list/delta_ACR15_6_gene_list.txt",
+                            sep = "\t", header = TRUE)
+# Get gene name only
 GFR_genes <- as.character(GFR_gene_list$Gene_name)
 Alb6WK_genes <- as.character(Alb6WK_gene_list$Gene_name)
 Alb10WK_genes <- as.character(Alb10WK_gene_list$Gene_name)
 Alb15WK_genes <- as.character(Alb15WK_gene_list$Gene_name)
 delta_ACR15_6_genes <- as.character(delta_ACR15_6_gene_list$Gene_name)
 
-intersect(GFR_genes, Alb6WK_genes)
-intersect(GFR_genes, Alb10WK_genes)
-intersect(GFR_genes, Alb15WK_genes)
-intersect(GFR_genes, delta_ACR15_6_genes)
+#Get intersect
+GFR_Alb6WK_intersect <- intersect(GFR_genes, Alb6WK_genes)
+GFR_Alb10WK_intersect <- intersect(GFR_genes, Alb10WK_genes)
+GFR_Alb15WK_intersect <- intersect(GFR_genes, Alb15WK_genes)
+GFR_delta_ACR15_6_intersect <- intersect(GFR_genes, delta_ACR15_6_genes)
+
+Alb6WK_Alb10WK_intersect <- intersect(Alb6WK_genes, Alb10WK_genes)
+Alb6WK_Alb15WK_intersect <- intersect(Alb6WK_genes, Alb15WK_genes)
+Alb6WK_delta_ACR15_6_intersect <- intersect(Alb6WK_genes, delta_ACR15_6_genes)
+
+Alb10WK_Alb15WK_intersect <- intersect(Alb10WK_genes, Alb15WK_genes)
+Alb10WK_delta_ACR15_6_intersect <- intersect(Alb10WK_genes, delta_ACR15_6_genes)
+
+Alb15WK_delta_ACR15_6_intersect <- intersect(Alb15WK_genes, delta_ACR15_6_genes)
+
+# Apend all into one list
+list <- list(GFR_Alb6WK_intersect = GFR_Alb6WK_intersect, GFR_Alb10WK_intersect = GFR_Alb10WK_intersect, GFR_Alb15WK_intersect = GFR_Alb15WK_intersect, GFR_delta_ACR15_6_intersect =GFR_delta_ACR15_6_intersect,
+            Alb6WK_Alb10WK_intersect = Alb6WK_Alb10WK_intersect, Alb6WK_Alb15WK_intersect = Alb6WK_Alb15WK_intersect, Alb6WK_delta_ACR15_6_intersect = Alb6WK_delta_ACR15_6_intersect,
+            Alb10WK_Alb15WK_intersect = Alb10WK_Alb15WK_intersect, Alb10WK_delta_ACR15_6_intersect = Alb10WK_delta_ACR15_6_intersect,
+            Alb15WK_delta_ACR15_6_intersect = Alb15WK_delta_ACR15_6_intersect)
+
+lapply(list, function(x) write.table( data.frame(x), './GBRS_reconstruction/reconstruct/best.compiled.genoprob/compiled_gene_list/All_intersect_genes.txt'  , append= TRUE, sep='\t' ))
