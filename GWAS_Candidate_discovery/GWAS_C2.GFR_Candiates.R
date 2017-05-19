@@ -17,7 +17,7 @@ pheno <- pheno[rownames(best.genoprobs.192),] #subset pheno to match 192
 pheno[pheno < 0 ] = NA
 pheno$C2[76] = NA #over sigma 650000 cut off
 pheno$C2[138] = NA #over sigma 650000 cut off
-pheno$C2_log <- log(pheno$C2) 
+pheno$C2_log <- log(pheno$C2)
 pheno$X2xC1_log <- log(pheno$X2xC1)
 pheno$C1_log <- log(pheno$C1)
 pheno$PL_log <- log(pheno$PL)
@@ -66,21 +66,21 @@ save(K_GS.M, file ="./GBRS_reconstruction/reconstruct/best.compiled.genoprob/kin
 #males.perm <- sample( rownames( pheno)[males])
 #females.perm <- sample( rownames(pheno)[females])
 
-#rownames(pheno)[males] <- males.perm 
-#rownames(pheno)[females] <- females.perm 
+#rownames(pheno)[males] <- males.perm
+#rownames(pheno)[females] <- females.perm
 
 #rownames(sex.covar)[males] <- males.perm
 #rownames(sex.covar)[females] <- females.perm
 
 sex.covar <- as.matrix(sex.covar)
 GWAS.log.C2 <- scanone.assoc(
-	pheno = pheno, 
-	pheno.col = "C2_log", 
-	probs = best.genoprobs.192, 
-	K = K_GS, 
-	addcovar = sex.covar, 
-	markers = GM_snps, 
-	sdp.file = "./GBRS_reconstruction/reconstruct/resources/DO_Sanger_SDPs.txt.bgz", 
+	pheno = pheno,
+	pheno.col = "C2_log",
+	probs = best.genoprobs.192,
+	K = K_GS,
+	addcovar = sex.covar,
+	markers = GM_snps,
+	sdp.file = "./GBRS_reconstruction/reconstruct/resources/DO_Sanger_SDPs.txt.bgz",
 	ncl = 6)
 save(GWAS.log.C2, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/gwas/gwas.log.C2.Rdata")
 
@@ -118,7 +118,7 @@ load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.GFR.log.C
 load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/kinship/K_GS.Rdata") # K_GS
 qtl <- qtl.GFR.log.C2.192
 
-qtl$coef$A[abs(qtl$coef$A) > 5 ] = 0 
+qtl$coef$A[abs(qtl$coef$A) > 5 ] = 0
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/coef.log.C2.GFR.chr2.png", width = 1500, height = 1000, res = 100)
 coefplot(qtl , chr = 2, main = "Chr 2 log.C2.GFR")
 dev.off()
@@ -166,15 +166,15 @@ knitr::kable(interval)
 interval = bayesint(qtl, chr = 2)
 chr <- 2
 chr2.genes <- assoc.map(
-	pheno = pheno, 
-	pheno.col ="C2_log", 
-	probs = best.genoprobs.192, 
+	pheno = pheno,
+	pheno.col ="C2_log",
+	probs = best.genoprobs.192,
 	K = K_GS[[chr]],
-	addcovar = sex.covar, 
-	snps = GM_snps, 
-	chr = chr, 
+	addcovar = sex.covar,
+	snps = GM_snps,
+	chr = chr,
 	start = 20,
-	end = 40, 
+	end = 40,
 	output = "p-value")
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Chr2.narrow.20.40.candiates.png", width = 1500, height = 1000, res = 100)
 assoc.plot(chr2.genes, thr = 10, show.sdps = TRUE)
@@ -183,15 +183,15 @@ dev.off()
 interval = bayesint(qtl, chr = 2)
 chr <- 2
 chr2.genes <- assoc.map(
-	pheno = pheno, 
-	pheno.col ="C2_log", 
-	probs = best.genoprobs.192, 
+	pheno = pheno,
+	pheno.col ="C2_log",
+	probs = best.genoprobs.192,
 	K = K_GS[[chr]],
-	addcovar = sex.covar, 
-	snps = GM_snps, 
-	chr = chr, 
+	addcovar = sex.covar,
+	snps = GM_snps,
+	chr = chr,
 	start = 55,
-	end = 65, 
+	end = 65,
 	output = "p-value")
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Chr2.narrow.55.65.candiates.png", width = 1500, height = 1000, res = 100)
 assoc.plot(chr2.genes, thr = 10, show.sdps = TRUE)
@@ -207,15 +207,15 @@ dev.off()
 interval = bayesint(qtl, chr = 4)
 chr <- 4
 chr4.genes <- assoc.map(
-	pheno = pheno, 
-	pheno.col ="C2_log", 
-	probs = best.genoprobs.192, 
+	pheno = pheno,
+	pheno.col ="C2_log",
+	probs = best.genoprobs.192,
 	K = K_GS[[chr]],
-	addcovar = sex.covar, 
-	snps = GM_snps, 
-	chr = chr, 
+	addcovar = sex.covar,
+	snps = GM_snps,
+	chr = chr,
 	start = 0,
-	end = 10, 
+	end = 10,
 	output = "p-value")
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Chr4.narrow.candiates.png", width = 1500, height = 1000, res = 100)
 assoc.plot(chr4.genes, thr = 4, show.sdps = TRUE)
@@ -231,15 +231,15 @@ dev.off()
 interval = bayesint(qtl, chr = 7)
 chr <- 7
 chr7.genes <- assoc.map(
-	pheno = pheno, 
-	pheno.col ="C2_log", 
-	probs = best.genoprobs.192, 
+	pheno = pheno,
+	pheno.col ="C2_log",
+	probs = best.genoprobs.192,
 	K = K_GS[[chr]],
-	addcovar = sex.covar, 
-	snps = GM_snps, 
-	chr = 7, 
+	addcovar = sex.covar,
+	snps = GM_snps,
+	chr = 7,
 	start = 120,
-	end = 126, 
+	end = 126,
 	output = "p-value")
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Chr7.candiates.narrow.png", width = 1500, height = 1000, res = 100)
 assoc.plot(chr7.genes, thr = 1.85, show.sdps = TRUE)
@@ -255,15 +255,15 @@ dev.off()
 interval = bayesint(qtl, chr = 9)
 chr <- 9
 chr9.genes <- assoc.map(
-	pheno = pheno, 
-	pheno.col ="C2_log", 
-	probs = best.genoprobs.192, 
+	pheno = pheno,
+	pheno.col ="C2_log",
+	probs = best.genoprobs.192,
 	K = K_GS[[chr]],
-	addcovar = sex.covar, 
-	snps = GM_snps, 
-	chr = 9, 
+	addcovar = sex.covar,
+	snps = GM_snps,
+	chr = 9,
 	start = 30,
-	end = 40, 
+	end = 40,
 	output = "p-value")
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Chr9.narrow.candiates.png", width = 1500, height = 1000, res = 100)
 assoc.plot(chr9.genes, thr = 1.85, show.sdps = TRUE)
@@ -279,15 +279,15 @@ dev.off()
 interval = bayesint(qtl, chr = 10)
 chr <- 10
 chr10.genes <- assoc.map(
-	pheno = pheno, 
-	pheno.col ="C2_log", 
-	probs = best.genoprobs.192, 
+	pheno = pheno,
+	pheno.col ="C2_log",
+	probs = best.genoprobs.192,
 	K = K_GS[[chr]],
-	addcovar = sex.covar, 
-	snps = GM_snps, 
-	chr = 10, 
+	addcovar = sex.covar,
+	snps = GM_snps,
+	chr = 10,
 	start = 88,
-	end = 98, 
+	end = 98,
 	output = "p-value")
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Chr10.narrow.candiates.png", width = 1500, height = 1000, res = 100)
 assoc.plot(chr10.genes, thr = 3, show.sdps = TRUE)
@@ -304,15 +304,15 @@ knitr::kable(interval)
 #pt1
 chr <- 15
 chr15.genes <- assoc.map(
-	pheno = pheno, 
-	pheno.col ="C2_log", 
-	probs = best.genoprobs.192, 
+	pheno = pheno,
+	pheno.col ="C2_log",
+	probs = best.genoprobs.192,
 	K = K_GS[[chr]],
-	addcovar = sex.covar, 
-	snps = GM_snps, 
-	chr = 15, 
+	addcovar = sex.covar,
+	snps = GM_snps,
+	chr = 15,
 	start = 50,
-	end = 55, 
+	end = 55,
 	output = "p-value")
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/gfr.chr15.pt1.candiates.png", width = 1500, height = 1000, res = 100)
 assoc.plot(chr15.genes, thr = 10, show.sdps = TRUE)
@@ -320,39 +320,39 @@ dev.off()
 #pt2
 chr <- 15
 chr15.genes <- assoc.map(
-	pheno = pheno, 
-	pheno.col ="C2_log", 
-	probs = best.genoprobs.192, 
+	pheno = pheno,
+	pheno.col ="C2_log",
+	probs = best.genoprobs.192,
 	K = K_GS[[chr]],
-	addcovar = sex.covar, 
-	snps = GM_snps, 
-	chr = 15, 
+	addcovar = sex.covar,
+	snps = GM_snps,
+	chr = 15,
 	start = 85,
-	end = 90, 
+	end = 90,
 	output = "p-value")
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/gfr.chr15.pt2.candiates.png", width = 1500, height = 1000, res = 100)
 assoc.plot(chr15.genes, thr = 10, show.sdps = TRUE)
 dev.off()
 
-#chr15 
-#|            |marker      |chr |       pos|       cM| perc.var|      lrs|      lod|         p| neg.log10.p|
-#|:-----------|:-----------|:---|---------:|--------:|--------:|--------:|--------:|---------:|-----------:|
-#|UNC25475383 |UNC25475383 |15  |  43.98596| 13.89354|  9.66417| 12.60287| 2.736677| 0.0823963|    1.084092|
-#|UNC25582381 |UNC25582381 |15  |  51.66936| 16.94894| 18.05776| 24.69529| 5.362513| 0.0008592|    3.065923|
-#|UNC26247792 |UNC26247792 |15  | 103.65408| 54.49084| 13.46949| 17.93947| 3.895506| 0.0122461|    1.912002|
+#chr19
+#|            |marker      |chr |      pos|       cM| perc.var|      lrs|      lod|         p| neg.log10.p|
+#|:-----------|:-----------|:---|--------:|--------:|--------:|--------:|--------:|---------:|-----------:|
+#|UNC30136851 |UNC30136851 |19  | 26.98658| 14.99423| 20.10076| 27.82608| 6.042356| 0.0002364|    3.626293|
+#|JAX00474835 |JAX00474835 |19  | 27.61228| 15.38569| 24.29844| 34.51806| 7.495501| 0.0000138|    4.860904|
+#|UNCHS047487 |UNCHS047487 |19  | 28.04451| 15.68458| 16.49212| 22.34842| 4.852898| 0.0022117|    2.655270|
 
 interval = bayesint(qtl, chr = 19)
 chr <- 19
 chr19.genes <- assoc.map(
-	pheno = pheno, 
-	pheno.col ="C2_log", 
-	probs = best.genoprobs.192, 
+	pheno = pheno,
+	pheno.col ="C2_log",
+	probs = best.genoprobs.192,
 	K = K_GS[[chr]],
-	addcovar = sex.covar, 
-	snps = GM_snps, 
-	chr = 19, 
+	addcovar = sex.covar,
+	snps = GM_snps,
+	chr = 19,
 	start = interval[1,3],
-	end = interval[3,3], 
+	end = interval[3,3],
 	output = "p-value")
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Chr19.candiates.png", width = 1500, height = 1000, res = 100)
 assoc.plot(chr19.genes, thr = 5, show.sdps = TRUE)
@@ -386,25 +386,3 @@ dev.off()
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/gfr.chr15.geno.dist.88.1.png", width = 1500, height = 1000, res = 100)
 pxg.plot(pheno = pheno, pheno.col = "C2_log", probs = best.genoprobs.192, snp.id = "JAX00408903", snps = GM_snps)
 dev.off()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
