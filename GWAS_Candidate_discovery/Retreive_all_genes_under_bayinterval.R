@@ -65,6 +65,24 @@ UCSC_list <- read.delim("/hpcdata/ytakemon/genome_index/Mus_musculus/UCSC/mm10/G
 UCSC_list <- UCSC_list[,c(13,2,3,5,6)]
 names(UCSC_list) <- c("Gene_name", "UCSC_id", "Chr", "Start", "End")
 
+#Find genes within GFR C2 qtl Chr19 bayesian interval genes
+#chr19
+#|            |marker      |chr |      pos|       cM| perc.var|      lrs|      lod|         p| neg.log10.p|
+#|:-----------|:-----------|:---|--------:|--------:|--------:|--------:|--------:|---------:|-----------:|
+#|UNC30136851 |UNC30136851 |19  | 26.98658| 14.99423| 20.10076| 27.82608| 6.042356| 0.0002364|    3.626293| (26986579)
+#|JAX00474835 |JAX00474835 |19  | 27.61228| 15.38569| 24.29844| 34.51806| 7.495501| 0.0000138|    4.860904|
+#|UNCHS047487 |UNCHS047487 |19  | 28.04451| 15.68458| 16.49212| 22.34842| 4.852898| 0.0022117|    2.655270| (28044513)
+#about 1 megabase
+
+sub_UCSC_list <- UCSC_list[UCSC_list$Chr == "chr19",]
+sub_UCSC_list <- sub_UCSC_list[sub_UCSC_list$Start >= 26986579, ]
+sub_UCSC_list <- sub_UCSC_list[sub_UCSC_list$End <= 28044513,]
+sub_UCSC_list <- sub_UCSC_list[order(sub_UCSC_list$Start),]
+sub_UCSC_list <- sub_UCSC_list[!duplicated(sub_UCSC_list$Gene_name),]
+#only 5 genes
+
+
+
 #Starting with C2 GFR gene list becuase its less overwhelming
 GFR_gene_list <- data.frame(Gene_name=character(),
                  UCSC_id=character(),
