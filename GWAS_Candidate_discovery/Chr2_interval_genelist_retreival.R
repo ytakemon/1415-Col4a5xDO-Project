@@ -106,3 +106,15 @@ sub_UCSC_list <- sub_UCSC_list[order(sub_UCSC_list$Start),]
 sub_UCSC_list <- sub_UCSC_list[!duplicated(sub_UCSC_list$UCSC_id),]
 
 write.table(sub_UCSC_list, "/hpcdata/ytakemon/Col4a5xDO/Chr2_interval_gene_list.txt", sep = "\t")
+
+#Get list with Ensembl genes names
+library(rtracklayer) # to easily parse gtf files
+gtf <- readGFF("/hpcdata/ytakemon/genome_index/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/genes.gtf")
+names(gtf)[1] <- "Chr"
+genes <- gtf[,c("gene_id", "gene_name", "Chr","start", "end")]
+sub_Ensembl_list <- genes[genes$Chr == 2,]
+sub_Ensembl_list <- sub_Ensembl_list[sub_Ensembl_list$start > 101000000,]
+sub_Ensembl_list <- sub_Ensembl_list[sub_Ensembl_list$end < 114000000,]
+sub_Ensembl_list <- sub_Ensembl_list[order(sub_Ensembl_list$start),]
+sub_Ensembl_list <- sub_Ensembl_list[!duplicated(sub_Ensembl_list$gene_id),]
+rownames(sub_Ensembl_list) <- NULL
