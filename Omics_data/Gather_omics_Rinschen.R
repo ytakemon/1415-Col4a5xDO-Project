@@ -39,12 +39,45 @@ setwd("/Users/ytakemon/GitHub/1415-Col4a5xDO-Project")
 Rat_glom <- read.delim("Omics_data/Data/Rinschen/aaf8165_Data file S2.txt", sep= "\t")
 Rat_glom <- Rat_glom[-c(1:3),]
 names(Rat_glom)[1:12] <- c("con1", "con2", "con3", "con4",
-                            "2d1", "2d2", "2d3", "2d4",
-                            "4d1", "4d2", "4d3", "4d4")
+                            "d2_1", "d2_2", "d2_3", "d2_4",
+                            "d4_1", "d4_2", "d4_3", "d4_4")
 Rat_glom$Gene.names <- as.character(Rat_glom$Gene.names)
 Rat_glom$Gene.names[Rat_glom$Gene.names == ""] <- NA
-Rat_glom <- Rat_glom[complete.cases(Rat_glom$Gene.names),]
+Rat_glom <- Rat_glom[complete.cases(Rat_glom$Gene.names),] #Removing results that don't have gene names associated with them
 Rat_glom$Gene_name <- str_split_fixed(Rat_glom$Gene.names, ";", 2)[,1]
 Rat_glom$ProteinID <- str_split_fixed(Rat_glom$Protein.IDs, ";", 2)[,1]
 
-#Need to redo t-test between the 3 groups because file does not give pval, only test stat (ugh... *eye roll*)
+# Need to redo t-test between the 3 groups because file does not give pval, only test stat (ugh... *eye roll*)
+# Values are currently in factor, gotta fix.
+Rat_glom$con1 <- as.numeric(levels(Rat_glom$con1))[Rat_glom$con1]
+Rat_glom$con2 <- as.numeric(levels(Rat_glom$con2))[Rat_glom$con2]
+Rat_glom$con3 <- as.numeric(levels(Rat_glom$con3))[Rat_glom$con3]
+Rat_glom$con4 <- as.numeric(levels(Rat_glom$con4))[Rat_glom$con4]
+Rat_glom$d2_1 <- as.numeric(levels(Rat_glom$d2_1))[Rat_glom$d2_1]
+Rat_glom$d2_2 <- as.numeric(levels(Rat_glom$d2_2))[Rat_glom$d2_2]
+Rat_glom$d2_3 <- as.numeric(levels(Rat_glom$d2_3))[Rat_glom$d2_3]
+Rat_glom$d2_4 <- as.numeric(levels(Rat_glom$d2_4))[Rat_glom$d2_4]
+Rat_glom$d4_1 <- as.numeric(levels(Rat_glom$d4_1))[Rat_glom$d4_1]
+Rat_glom$d4_2 <- as.numeric(levels(Rat_glom$d4_2))[Rat_glom$d4_2]
+Rat_glom$d4_3 <- as.numeric(levels(Rat_glom$d4_3))[Rat_glom$d4_3]
+Rat_glom$d4_4 <- as.numeric(levels(Rat_glom$d4_4))[Rat_glom$d4_4]
+
+for (i in 1:length(Rat_glom$Gene_name)){
+  con <- Rat_glom[i, c(1:4)]
+  d2 <- Rat_glom[i, c(5:8)]
+  d4 <- Rat_glom[i, c(9:12)]
+
+  test2 <- t.test(con, d2)
+  Rat_glom$con_mean[i] <- test2$estimate[[1]]
+  Rat_glom$d2_mean[i] <- test2$estimate[[2]]
+  Rat_glom$ttest_con_d2_pval[i] <- test2$p.value
+
+  test4 <- t.test(con, d4)
+  Rat_glom$d4_mean[i] <- test4$estimate[[2]]
+  Rat_glom$ttest_con_d4_pval[i] <- test4$p.value
+}
+
+Rat_glom$ttest_con_d2_fdr <- p.adjust(Rat_glom$ttest_con_d2_pval, method = "BH")
+Rat_glom$ttest_con_d4_fdr <- p.adjust(Rat_glom$ttest_con_d4_pval, method = "BH")
+
+write.table(Rat_glom, "Omics_data/Data/Rinschen/Rat_glom_cleaned.txt", sep ="\t")

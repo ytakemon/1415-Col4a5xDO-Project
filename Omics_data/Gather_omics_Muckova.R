@@ -42,7 +42,7 @@ Sieve20$UniprotID <- str_split_fixed(Sieve20$Protein.ID, "SP://", 2)[,2]
 Sieve20$Ratio.AS.0.C.0 <- as.character(Sieve20$Ratio.AS.0.C.0) #There are commas separating 100 positions that need to be removed
 Sieve20$Ratio.AS.0.C.0 <- as.numeric(gsub(",", "", Sieve20$Ratio.AS.0.C.0))
 
-write.table(Sieve20, "Omics_data/Data/Muckova/Muckova_Sieve20_AS0C0_cleaned.txt")
+write.table(Sieve20, "Omics_data/Data/Muckova/Muckova_Sieve20_AS0C0_cleaned.txt", sep = "\t")
 #Checking how many proetins are significant:
 # > dim(Sieve20)
 # [1] 7402   11
@@ -79,4 +79,4 @@ Sieve21$Ratio.AS.0.C.0 <- as.numeric(gsub(",", "", Sieve21$Ratio.AS.0.C.0))
 # Since I dont have the data to run a permutation test, I will have to use 3 thresholds 0.05, 0.01, and 0.001
 # during the analysis.
 
-write.table(Sieve21, "Omics_data/Data/Muckova/Muckova_Sieve21_AS0C0_cleaned.txt")
+write.table(Sieve21, "Omics_data/Data/Muckova/Muckova_Sieve21_AS0C0_cleaned.txt", sep = "\t")
