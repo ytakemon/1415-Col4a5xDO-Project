@@ -65,7 +65,14 @@ Sieve21$UniprotID <- str_split_fixed(Sieve21$Protein.ID, "SP://", 2)[,2]
 # [1] 4103   11
 # > dim(Sieve21[Sieve21$pValue < 0.05,])
 # [1] 2603   11
+# > dim(Sieve21[Sieve21$pValue < 0.01,])
+# [1] 1547   11
 # > dim(Sieve21[Sieve21$pValue < 0.001,])
 # [1] 870  11
 # Much more reasonable... First look at the data suggests some corrections were made, will have to
 # go through literature to figure out what they did or if its a software update.
+# Since I dont have the data to run a permutation test, I will use 3 thresholds 0.05, 0.01, and 0.001.
+
+Sieve21_05 <- Sieve21[Sieve21$pValue < 0.05,]
+Sieve21_01 <- Sieve21[Sieve21$pValue < 0.01,]
+Sieve21_001 <- Sieve21[Sieve21$pValue < 0.001,]
