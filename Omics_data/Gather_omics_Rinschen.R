@@ -28,3 +28,23 @@
 # aaf8165_Data file S2.txt <- Proteomic analysis of PAN effect in rat glomeruli in text format.
 # aaf8165_Data file S3.xlsx <- Proteomic analysis of PAN effect in human podocytes in Excel format.
 # aaf8165_Data file S4.txt <- Proteomic analysis of PAN effect in human podocytes in text format.
+
+# Notes:
+# Dont use excel sheet, some gene names were converted to dates
+
+#Rat glomeruli
+library(stringr)
+setwd("/Users/ytakemon/GitHub/1415-Col4a5xDO-Project")
+
+Rat_glom <- read.delim("Omics_data/Data/Rinschen/aaf8165_Data file S2.txt", sep= "\t")
+Rat_glom <- Rat_glom[-c(1:3),]
+names(Rat_glom)[1:12] <- c("con1", "con2", "con3", "con4",
+                            "2d1", "2d2", "2d3", "2d4",
+                            "4d1", "4d2", "4d3", "4d4")
+Rat_glom$Gene.names <- as.character(Rat_glom$Gene.names)
+Rat_glom$Gene.names[Rat_glom$Gene.names == ""] <- NA
+Rat_glom <- Rat_glom[complete.cases(Rat_glom$Gene.names),]
+Rat_glom$Gene_name <- str_split_fixed(Rat_glom$Gene.names, ";", 2)[,1]
+Rat_glom$ProteinID <- str_split_fixed(Rat_glom$Protein.IDs, ";", 2)[,1]
+
+#Need to redo t-test between the 3 groups because file does not give pval, only test stat (ugh... *eye roll*)
