@@ -81,3 +81,19 @@ Rat_glom$ttest_con_d2_fdr <- p.adjust(Rat_glom$ttest_con_d2_pval, method = "BH")
 Rat_glom$ttest_con_d4_fdr <- p.adjust(Rat_glom$ttest_con_d4_pval, method = "BH")
 
 write.table(Rat_glom, "Omics_data/Data/Rinschen/Rat_glom_cleaned.txt", sep ="\t")
+
+# Human podocytes cell line data
+# Cultured at 33 and 37 degrees (Podocytes differentiate at 37C).
+# Two treatments: PAN and control
+# There are 6 samples in each 33C group, and 4 samples in the 37C group
+Human_podo <- read.delim("Omics_data/Data/Rinschen/aaf8165_Data file S4.txt", sep= "\t")
+#> dim(Human_podo)
+#[1] 3878   28
+
+# Column ordering is messy, organise into blocks
+Human_podo <- Human_podo[,c(1,2,5,6,9,10,3,4,7,8,11:28)]
+Human_podo <- Human_podo[-c(1,2),]
+names(Human_podo)[1:20] <- c("con33_1", "con33_2", "con33_3", "con33_4", "con33_5", "con33_6",
+                              "PAN33_1", "PAN33_2", "PAN33_3", "PAN33_4", "PAN33_5", "PAN33_6",
+                              "con37_1", "con37_2", "con37_3", "con37_4",
+                              "PAN37_1", "PAN37_2", "PAN37_3", "PAN37_4")
