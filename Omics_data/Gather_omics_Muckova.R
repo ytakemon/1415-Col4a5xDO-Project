@@ -39,7 +39,10 @@ Sieve20$Gene_name <-str_split_fixed(Sieve20$Gene_name, " PE=", 2)[,1]
 
 # Clean up protein ID (eg: SP://A2A891-5, A2A891 is the Uniprot protein ID, A2A891-5 identified isoform 5 of protein)
 Sieve20$UniprotID <- str_split_fixed(Sieve20$Protein.ID, "SP://", 2)[,2]
+Sieve20$Ratio.AS.0.C.0 <- as.character(Sieve20$Ratio.AS.0.C.0) #There are commas separating 100 positions that need to be removed
+Sieve20$Ratio.AS.0.C.0 <- as.numeric(gsub(",", "", Sieve20$Ratio.AS.0.C.0))
 
+write.table(Sieve20, "Omics_data/Data/Muckova/Muckova_Sieve20_AS0C0_cleaned.txt")
 #Checking how many proetins are significant:
 # > dim(Sieve20)
 # [1] 7402   11
@@ -60,6 +63,8 @@ Sieve21$Gene_name <-str_split_fixed(Sieve21$Gene_name, " PE=", 2)[,1]
 
 # Clean up protein ID (eg: SP://A2A891-5, A2A891 is the Uniprot protein ID, A2A891-5 identified isoform 5 of protein)
 Sieve21$UniprotID <- str_split_fixed(Sieve21$Protein.ID, "SP://", 2)[,2]
+Sieve21$Ratio.AS.0.C.0 <- as.character(Sieve21$Ratio.AS.0.C.0) #There are commas separating 100 positions that need to be removed
+Sieve21$Ratio.AS.0.C.0 <- as.numeric(gsub(",", "", Sieve21$Ratio.AS.0.C.0))
 
 # > dim(Sieve21)
 # [1] 4103   11
@@ -71,8 +76,7 @@ Sieve21$UniprotID <- str_split_fixed(Sieve21$Protein.ID, "SP://", 2)[,2]
 # [1] 870  11
 # Much more reasonable... First look at the data suggests some corrections were made, will have to
 # go through literature to figure out what they did or if its a software update.
-# Since I dont have the data to run a permutation test, I will use 3 thresholds 0.05, 0.01, and 0.001.
+# Since I dont have the data to run a permutation test, I will have to use 3 thresholds 0.05, 0.01, and 0.001
+# during the analysis.
 
-Sieve21_05 <- Sieve21[Sieve21$pValue < 0.05,]
-Sieve21_01 <- Sieve21[Sieve21$pValue < 0.01,]
-Sieve21_001 <- Sieve21[Sieve21$pValue < 0.001,]
+write.table(Sieve21, "Omics_data/Data/Muckova/Muckova_Sieve21_AS0C0_cleaned.txt")
