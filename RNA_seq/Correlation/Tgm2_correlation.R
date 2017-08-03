@@ -1,43 +1,17 @@
 ########################################################################################################################
-## Plot corelation between Rfx3 or Fmn1 expression and phenotype
+## Plot corelation between Tgm2 expression and phenotype
 ## Yuka Takemon
 ## 08/03/17
 
 ## OBJECTIVE
-## Create ggplots of corelation between Rfx3 and GFR, and Fmn1 and ACR at 6wks. Additioanlly fit a liner regression model
-## to assess its liniarity and correlation. Rfx3 is a candiate gene found from the GFR qtl analysis, and Fmn1 is a candiate
-## gene from the 6-week ACR qlt analysis.
 
 ## sessionInfo()
-## R version 3.1.1 (2014-07-10)
-## Platform: x86_64-unknown-linux-gnu (64-bit)
-## locale:
-## [1] C
-## attached base packages:
-## [1] grid      parallel  stats4    stats     graphics  grDevices utils
-## [8] datasets  methods   base
-## other attached packages:
-## [1] ggplot2_2.1.0        DOQTL_1.0.0          AnnotationDbi_1.28.2
-## [4] GenomeInfoDb_1.2.5   IRanges_2.0.1        S4Vectors_0.4.0
-## [7] Biobase_2.26.0       BiocGenerics_0.12.1  RSQLite_1.0.0
-## [10] DBI_0.3.1
-## loaded via a namespace (and not attached):
-## [1] Biostrings_2.34.1      GenomicRanges_1.18.4   MUGAExampleData_1.0.0
-## [4] QTLRel_0.2-14          RCurl_1.95-4.7         RUnit_0.4.30
-## [7] Rcpp_0.11.3            Rsamtools_1.18.3       XML_3.98-1.3
-## [10] XVector_0.6.0          annotate_1.44.0        annotationTools_1.40.0
-## [13] biomaRt_2.22.0         bitops_1.0-6           colorspace_1.2-6
-## [16] corpcor_1.6.8          gdata_2.17.0           gtable_0.1.2
-## [19] gtools_3.5.0           hwriter_1.3.2          mclust_5.1
-## [22] munsell_0.4.2          org.Hs.eg.db_3.0.0     org.Mm.eg.db_3.0.0
-## [25] plyr_1.8.3             scales_0.3.0           tools_3.1.1
-## [28] xtable_1.8-0           zlibbioc_1.12.0
+
 
 ## List of data saved from this script (time savers for reanalysis)
 ## Rdata:
 ## Tables:
 ## Plots:
-## png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GFR_Rfx3_6ACR_Fmn1.png", width = 2000, height = 1000, res = 100)
 
 ########################################################################################################################
 #Ensembl ID for genes:
