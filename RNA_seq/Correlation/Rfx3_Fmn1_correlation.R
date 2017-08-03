@@ -41,8 +41,9 @@
 
 ########################################################################################################################
 #Ensembl ID for genes:
-#Rfx3: ENSMUSG00000040929 ENSMUSG00000040929
+#Rfx3: ENSMUSG00000040929
 #Fmn1: ENSMUSG00000044042
+#Tgm2: ENSMUSG00000037820
 
 library(DOQTL)
 library(ggplot2)
@@ -58,7 +59,7 @@ pheno <- pheno[rownames(RNA_seq),] #subset pheno to match 192 samples
 #clean up pheno and add log of ACR
 pheno[pheno < 0 ] = NA
 pheno[pheno ==  -Inf] = NA
-pheno$C2_log <- log(pheno$C2) 
+pheno$C2_log <- log(pheno$C2)
 pheno$ACR6WK_log <- log(pheno$ACR6WK)
 pheno$ACR10WK_log <- log(pheno$ACR10WK)
 pheno$ACR15WK_log <- log(pheno$ACR15WK)
@@ -99,11 +100,11 @@ eq2 <- paste(pval)
 gfr <- ggplot(data, aes(y = Rfx3, x = C2_log)) +
 	geom_smooth(method = lm) +
 	geom_point( aes(size = 2)) +
-	annotate( "text" , y = 2.6, x = 4.6, label = eq, fontface = "bold", size = 3) + 
+	annotate( "text" , y = 2.6, x = 4.6, label = eq, fontface = "bold", size = 3) +
 	scale_x_continuous( "log-transformed C2 GFR", breaks = seq(0, 2.5, by = 0.1)) +
 	scale_y_continuous( "Rfx3 tpm", breaks = seq(0, 7.5, by = 0.2)) +
 	labs( title = "Rfx3 TPM vs log C2 GFR") +
-	theme(plot.title = element_text(hjust = 0.5))  
+	theme(plot.title = element_text(hjust = 0.5))
 
 data <- RNA_pheno[ complete.cases(RNA_pheno$ACR6WK_log),]
 
@@ -118,11 +119,11 @@ eq2 <- paste(pval)
 ACR <- ggplot(data, aes(y = Rfx3, x = ACR6WK_log)) +
 	geom_smooth(method = lm) +
 	geom_point( aes(size = 2)) +
-	annotate( "text" , y = 2.6, x = 4.6, label = eq, fontface = "bold", size = 3) + 
+	annotate( "text" , y = 2.6, x = 4.6, label = eq, fontface = "bold", size = 3) +
 	scale_x_continuous( "log-transformed ACR6wk", breaks = seq(0, 2.5, by = 0.1)) +
 	scale_y_continuous( "Rfx3 tpm", breaks = seq(0, 7.5, by = 0.2)) +
 	labs( title = "Rfx3 TPM vs log ACR6wk") +
-	theme(plot.title = element_text(hjust = 0.5))  
+	theme(plot.title = element_text(hjust = 0.5))
 
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/GFR_Rfx3_6ACR_Fmn1.png", width = 2000, height = 1000, res = 100)
 pushViewport(viewport(layout = grid.layout(1, 2)))
@@ -132,6 +133,3 @@ dev.off()
 
 
 #need to add allele to colour in dots for Rfx3 and Fmn1
-
-
-

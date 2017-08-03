@@ -5,7 +5,7 @@
 
 ## OBJECTIVE
 ## We want to identify which transcript of Fmn1 is expressed in the Col4a5 B6xDO animals.
-## Isoforms have not been previously documented in detail, and we are using Chan 1995 to decipher which transcirpts we are seeing 
+## Isoforms have not been previously documented in detail, and we are using Chan 1995 to decipher which transcirpts we are seeing
 ##
 ## Probes I-III
 ## Chan 1995: Probe I-III was constructed by subcloning the 1692 basepair XbaI/HindIII fragment from isoform I (Woychik et al., 1990b) into pBluescript Stratagene).
@@ -14,7 +14,7 @@
 ## Chan 1995: Probe IV is a 1568 basepair EcoRI/NaeI fragment from isoform IV (Jackson- Grusby et al., 1992) in pBluescript.
 ##
 ## Probs I-IV
-## Chan 1995: Probe I-IV is a 1346 basepair Stu/Spe fragment from isoform I in pBluescript. 
+## Chan 1995: Probe I-IV is a 1346 basepair Stu/Spe fragment from isoform I in pBluescript.
 ##
 ## GeneID Ensembl
 ## Fmn1 ENSMUSG00000044042
@@ -29,7 +29,7 @@
 ## Fmn1-007: ENSMUST00000150510.7 (5 exons)
 ## Fmn1-008: ENSMUST00000161731.4 (16 exons)
 ## Fmn1-201: ENSMUST00000099576.8 (19 exons)
-## 
+##
 ## TranscriptID as found in isoform.tpm files
 ## Fmn1-001: ENSMUST00000102547
 ## Fmn1-002: ENSMUST00000081349
@@ -112,7 +112,7 @@ All_transcript_tpm <- array(0, c(length(sample_names), length(All_transcriptID_l
 for (i in 1:length(sample_names)){
 	temp <- read.delim(file = paste(civet_dir[i],"/gbrs.quantified.diploid.isoforms.tpm", sep =""), header = TRUE, sep ="\t")
 	rownames(temp) <- temp$locus
-	All_transcript_tpm[i, ] <- temp$total 
+	All_transcript_tpm[i, ] <- temp$total
 }
 save(All_transcript_tpm, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/All_transcript_tpm.Rdata")
 
@@ -141,7 +141,7 @@ load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/RNA_seq_Rdata/Fmn
 Fmn1_names <- c("Fmn1_001", "Fmn1_002", "Fmn1_003", "Fmn1_004", "Fmn1_005", "Fmn1_006", "Fmn1_007", "Fmn1_008", "Fmn1_201")
 
 #plot dot plot with discrete x and continuous y
-#change dataframe format 
+#change dataframe format
 gg_data <- Fmn1_transcript_tpm_rankZ
 colnames(gg_data) <- Fmn1_names
 gg_data <- melt(gg_data, id.vars = Fmn1_names,
@@ -150,9 +150,9 @@ names(gg_data)[2] <- "Fmn1_transcripts"
 
 #plot RankZ tpm
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_transcirpt_tpm_rankZ.png", width = 1500, height = 1000, res = 100)
-ggplot(gg_data, aes(x =Fmn1_transcripts, y = tpm_rankZ, fill =Fmn1_transcripts)) + 
+ggplot(gg_data, aes(x =Fmn1_transcripts, y = tpm_rankZ, fill =Fmn1_transcripts)) +
 	geom_dotplot(binaxis = "y", stackdir = "center", binwidth = 0.01) +
-	scale_x_discrete("Fmn1 transcirpts") + 
+	scale_x_discrete("Fmn1 transcirpts") +
 	scale_y_continuous("transcript tpm rankZ") +
 	labs( title = "Comparison of Fmn1 transcirpts tpm rankZ") +
 	theme( plot.title = element_text(hjust = 0.5))
@@ -168,12 +168,12 @@ colnames(gg_data) <- c("Allele", "Fmn1_transcripts", "Value")
 
 ggplot <- ggplot(gg_data, aes( x = Fmn1_transcripts, y = Value, fill = Allele)) +
 	geom_dotplot(binaxis = "y", stackdir = "center", binwidth = 0.03, position = position_dodge(1.5)) +
-	scale_x_discrete("Fmn1 transcirpts") + 
+	scale_x_discrete("Fmn1 transcirpts") +
 	scale_y_continuous("transcript rankZ tpm") +
 	labs( title = "Comparison of Fmn1 transcirpts rankZ tpm by allele") +
 	theme( plot.title = element_text(hjust = 0.5))
 
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_transcript_rankZ_tpm_by_allele.pdf", width = 10.0, height = 7.5)	
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_transcript_rankZ_tpm_by_allele.pdf", width = 10.0, height = 7.5)
 print(ggplot)
 dev.off()
 
@@ -186,15 +186,15 @@ gg_data <- melt(gg_data, id.vars = Fmn1_names,
 names(gg_data)[2] <- "Fmn1_transcripts"
 
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_transcirpt_tpm.png", width = 1500, height = 1000, res = 100)
-ggplot(gg_data, aes(x =Fmn1_transcripts, y = tpm, fill =Fmn1_transcripts)) + 
+ggplot(gg_data, aes(x =Fmn1_transcripts, y = tpm, fill =Fmn1_transcripts)) +
 	geom_dotplot(binaxis = "y", stackdir = "center", binwidth = 0.1) +
-	scale_x_discrete("Fmn1 transcirpts") + 
+	scale_x_discrete("Fmn1 transcirpts") +
 	scale_y_continuous("transcript tpm") +
 	labs( title = "Comparison of Fmn1 transcirpts tpm") +
 	theme( plot.title = element_text(hjust = 0.5))
 dev.off()
 
-#plot non-transformed tpm by allele 
+#plot non-transformed tpm by allele
 gg_data <- Fmn1_transcript_tpm
 gg_data <- as.data.frame(gg_data)
 colnames(gg_data) <- Fmn1_names
@@ -204,12 +204,12 @@ colnames(gg_data) <- c("Allele", "Fmn1_transcripts", "Value")
 
 ggplot <- ggplot(gg_data, aes( x = Fmn1_transcripts, y = Value, fill = Allele)) +
 	geom_dotplot(binaxis = "y", stackdir = "center", binwidth = 0.2, position = position_dodge(1)) +
-	scale_x_discrete("Fmn1 transcirpts") + 
+	scale_x_discrete("Fmn1 transcirpts") +
 	scale_y_continuous("transcript tpm") +
 	labs( title = "Comparison of Fmn1 transcirpts tpm by allele") +
 	theme( plot.title = element_text(hjust = 0.5))
 
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_transcript_tpm_by_allele.pdf", width = 10.0, height = 7.5)	
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_transcript_tpm_by_allele.pdf", width = 10.0, height = 7.5)
 print(ggplot)
 dev.off()
 
@@ -228,23 +228,23 @@ colnames(gg_data) <- c("Allele", "Fmn1_transcripts", "Value")
 
 ggplot <- ggplot(gg_data, aes( x = Fmn1_transcripts, y = Value, fill = Fmn1_transcripts)) +
 	geom_dotplot(binaxis = "y", stackdir = "center", binwidth = 0.2) +
-	scale_x_discrete("Fmn1 transcirpts") + 
+	scale_x_discrete("Fmn1 transcirpts") +
 	scale_y_continuous("transcript tpm") +
 	labs( title = "Comparison of Fmn1 transcirpts tpm by allele") +
 	theme( plot.title = element_text(hjust = 0.5), panel.background = element_blank(), axis.line = element_line(colour = "black"))
 
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_coding_transcript_tpm.pdf", width = 10.0, height = 7.5)	
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_coding_transcript_tpm.pdf", width = 10.0, height = 7.5)
 print(ggplot)
 dev.off()
 
 ggplot <- ggplot(gg_data, aes( x = Fmn1_transcripts, y = Value, fill = Allele)) +
 	geom_dotplot(binaxis = "y", stackdir = "center", binwidth = 0.2, position = position_dodge(1)) +
-	scale_x_discrete("Fmn1 transcirpts") + 
+	scale_x_discrete("Fmn1 transcirpts") +
 	scale_y_continuous("transcript tpm") +
 	labs( title = "Comparison of Fmn1 transcirpts tpm by allele") +
 	theme( plot.title = element_text(hjust = 0.5), panel.background = element_blank(), axis.line = element_line(colour = "black"))
 
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_coding_transcript_tpm_by_allele.pdf", width = 10.0, height = 7.5)	
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Fmn1_coding_transcript_tpm_by_allele.pdf", width = 10.0, height = 7.5)
 print(ggplot)
 dev.off()
 
@@ -294,10 +294,3 @@ qtl.Fmn1_201$coef$A[abs(qtl.Fmn1_201$coef$A) > 0.05 ] = 0
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/RNA_qtl/Fmn1_201.coef.chr2.png", width = 1500, height = 1000, res = 100)
 coefplot(qtl.Fmn1_201, chr = 2, main = "Allele effect of Fmn1_201 QTL at Chr 2")
 dev.off()
-
-
-
-
-
-
-
