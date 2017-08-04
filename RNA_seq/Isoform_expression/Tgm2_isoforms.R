@@ -121,8 +121,89 @@ ggplot(gg_data, aes( x = Tgm2_transcripts, y = Value, fill = Allele)) +
 	theme( plot.title = element_text(hjust = 0.5), axis.text.x=element_text(angle = 15, vjust = 0.5))
 dev.off()
 
+#ANOVA of Tgm2 TPM by allele
+gg_data <- Tgm2_transcript_tpm
+gg_data <- cbind(gg_data, as.character(Gene_allele$ENSMUSG00000037820))
+colnames(gg_data)[5] <- "Allele"
+gg_melt <- gg_data[,1:4]
+gg_melt <- melt(gg_melt, id.vars = Tgm2_names,
+					value.name = "tpm")
+names(gg_melt)[2] <- "Tgm2_transcripts"
+Tgm2_names4 <- c(gg_data[,5], gg_data[,5], gg_data[,5], gg_data[,5])
+gg_melt <- cbind(gg_melt, Tgm2_names4)
+gg_melt <- as.data.frame(gg_melt, stringsAsFactors = FALSE)
+gg_melt <- gg_melt[gg_melt$Tgm2_transcripts %in% "ENSMUST00000103122",]
+gg_melt$tpm <- as.numeric(as.character(gg_melt$tpm))
 
+fit <- lm(tpm ~ Tgm2_names4, data = gg_melt)
+summary(fit)
 
+#Call:
+#lm(formula = tpm ~ Tgm2_names4, data = gg_melt)
+#
+#Residuals:
+#   Min     1Q Median     3Q    Max
+#-66.41 -26.32 -10.40  22.72 129.39
+#
+#Coefficients:
+#              Estimate Std. Error t value Pr(>|t|)
+#(Intercept)   134.7785     7.9592  16.934   <2e-16 ***
+#Tgm2_names4BB  -6.6057    10.6359  -0.621   0.5353
+#Tgm2_names4BC   0.8770    10.3393   0.085   0.9325
+#Tgm2_names4BD  -0.7576    10.2146  -0.074   0.9410
+#Tgm2_names4BE  19.5405    11.6918   1.671   0.0964 .
+#Tgm2_names4BF   7.2041    12.5004   0.576   0.5651
+#Tgm2_names4BG -34.8265    15.4129  -2.260   0.0250 *
+#Tgm2_names4BH -20.1577    10.2146  -1.973   0.0499 *
+#---
+#Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#
+#Residual standard error: 37.33 on 184 degrees of freedom
+#Multiple R-squared:  0.1063,	Adjusted R-squared:  0.07229
+#F-statistic: 3.126 on 7 and 184 DF,  p-value: 0.003839
+colnames(gg_melt) <- c("SampleID", "Transcripts", "TPM", "Allele")
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Tgm2_transcript_boxplot.pdf", width = 7, height = 7.5)
+ggplot( gg_melt, aes( x = Allele, y = TPM, fill = Allele)) +
+      geom_boxplot() +
+      scale_x_discrete() +
+      theme( text = element_text(size = 20), plot.title = element_text(hjust = 0.5)) +
+      xlab( "Allele") +
+      ylab( "TPM") +
+      ggtitle( "ENSMUST00000103122 by DO diet groups")
+dev.off()
+
+#Reference AB
+gg_melt_AB <- within(gg_melt, Allele <- relevel(Allele, ref = "AB"))
+summary(lm(TPM ~ Allele, data = gg_melt_AB))
+# sig anova, pair: BG, BH
+#Reference BB
+gg_melt_BB <- within(gg_melt, Allele <- relevel(Allele, ref = "BB"))
+summary(lm(TPM ~ Allele, data = gg_melt_BB))
+# sig anova, pair: BE
+#Reference BC
+gg_melt_BC <- within(gg_melt, Allele <- relevel(Allele, ref = "BC"))
+summary(lm(TPM ~ Allele, data = gg_melt_BC))
+# sig anova, pair: BG, BH
+#Reference BD
+gg_melt_BD <- within(gg_melt, Allele <- relevel(Allele, ref = "BD"))
+summary(lm(TPM ~ Allele, data = gg_melt_BD))
+# sig anova, pair: BG,BH
+#Reference BE
+gg_melt_BE <- within(gg_melt, Allele <- relevel(Allele, ref = "BE"))
+summary(lm(TPM ~ Allele, data = gg_melt_BE))
+# sig anova, pair: BB, BG, BH
+#Reference BF
+gg_melt_BF <- within(gg_melt, Allele <- relevel(Allele, ref = "BF"))
+summary(lm(TPM ~ Allele, data = gg_melt_BF))
+# sig anova, pair: BG, BH
+#Reference BG
+gg_melt_BG <- within(gg_melt, Allele <- relevel(Allele, ref = "BG"))
+summary(lm(TPM ~ Allele, data = gg_melt_BG))
+# sig anova, pair: AB, BE, BF
+#Reference BH
+gg_melt_BH <- within(gg_melt, Allele <- relevel(Allele, ref = "BH"))
+summary(lm(TPM ~ Allele, data = gg_melt_BH))
+# sig anova, pair: AB, BC, BD, BE, BF
 
 
 

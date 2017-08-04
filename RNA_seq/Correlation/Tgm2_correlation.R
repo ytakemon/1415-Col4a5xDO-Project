@@ -60,27 +60,27 @@ RNA_pheno$Tgm2 <- RNA_subset$Tgm2
 # GFR both sexes----------------------------------------------------------------
 data <- RNA_pheno[ complete.cases(RNA_pheno$C2_log),]
 
-fit <- lm(Tgm2 ~ C2_log, data)
+fit <- lm(C2_log ~ Tgm2, data)
 fitsum <- summary(fit)
 intcp <- signif(coef(fit)[1], 3)
 slope <- signif(coef(fit)[2], 3)
 pval <- signif(fitsum$coefficients[2,4], 3)
 r2 <- signif(fitsum$adj.r.squared, 3)
 eq <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = ", pval, sep = "")
-GFR <- ggplot(data, aes(y = Tgm2, x = C2_log)) +
+GFR <- ggplot(data, aes(y = C2_log, x = Tgm2)) +
 	geom_smooth(method = lm) +
 	geom_point() +
 	background_grid(major = 'y', minor = "none") +
-	annotate( "text" , x = 5.5, y = 250.0,label = eq, fontface = "bold", size = 4) +
-	scale_x_continuous( "log-transformed C2 GFR", breaks = seq(0, max(data$C2_log), by = 0.5)) +
-	scale_y_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
+	annotate( "text" , x = 200, y = 6.5,label = eq, fontface = "bold", size = 4) +
+	scale_x_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
+	scale_y_continuous( "log-transformed C2 GFR", breaks = seq(0, max(data$C2_log), by = 0.5)) +
 	labs( title = "Tgm2 TPM vs log C2 GFR (Both sexes, n=126)") +
 	theme(plot.title = element_text(hjust = 0.5))
 
 # GFR both Females
 data <- RNA_pheno[ complete.cases(RNA_pheno$C2_log),]
 data <- data[data$Sex %in% "F",]
-fit <- lm(Tgm2 ~ C2_log, data)
+fit <- lm(C2_log ~ Tgm2, data)
 fitsum <- summary(fit)
 intcp <- signif(coef(fit)[1], 3)
 slope <- signif(coef(fit)[2], 3)
@@ -90,7 +90,7 @@ eq_F <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = 
 # GFR both Males
 data <- RNA_pheno[ complete.cases(RNA_pheno$C2_log),]
 data <- data[data$Sex %in% "M",]
-fit <- lm(Tgm2 ~ C2_log, data)
+fit <- lm(C2_log ~ Tgm2, data)
 fitsum <- summary(fit)
 intcp <- signif(coef(fit)[1], 3)
 slope <- signif(coef(fit)[2], 3)
@@ -100,14 +100,14 @@ eq_M <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = 
 
 # Plot both male and female
 data <- RNA_pheno[ complete.cases(RNA_pheno$C2_log),]
-GFR_FM <- ggplot(transform(data, Sex = c("Females n=65", "Males n=61")[as.numeric(Sex)]), aes(y = Tgm2, x = C2_log)) +
+GFR_FM <- ggplot(transform(data, Sex = c("Females n=65", "Males n=61")[as.numeric(Sex)]), aes(y = C2_log, x = Tgm2)) +
 	geom_point() +
 	facet_grid(. ~Sex) +
 	geom_smooth(method = lm) +
 	background_grid(major = 'y', minor = "none") +
-	annotate( "text" , x = 5.5, y = 250,label = c(eq_F,eq_M), fontface = "bold", size = 4) +
-	scale_x_continuous( "log-transformed C2 GFR", breaks = seq(0, max(data$C2_log), by = 0.5)) +
-	scale_y_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
+	annotate( "text" , x = 175, y = 7.0,label = c(eq_F,eq_M), fontface = "bold", size = 4) +
+	scale_x_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
+	scale_y_continuous( "log-transformed C2 GFR", breaks = seq(0, max(data$C2_log), by = 0.5)) +
 	panel_border()
 
 # Combine all 3 plots in to 1
@@ -119,27 +119,27 @@ dev.off()
 # Plotting ACR_log but linear model with creatinine as covariate
 data <- RNA_pheno[ complete.cases(RNA_pheno$ACR6WK_log),]
 
-fit <- lm(Tgm2 ~ ACR6WK_log + Creat6WK_log, data)
+fit <- lm(ACR6WK_log ~ Tgm2 + Creat6WK_log, data)
 fitsum <- summary(fit)
 intcp <- signif(coef(fit)[1], 3)
 slope <- signif(coef(fit)[2], 3)
 pval <- signif(fitsum$coefficients[2,4], 3)
 r2 <- signif(fitsum$adj.r.squared, 3)
 eq <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = ", pval, sep = "")
-ACR6 <- ggplot(data, aes(y = Tgm2, x = ACR6WK_log)) +
+ACR6 <- ggplot(data, aes(x = Tgm2, y = ACR6WK_log)) +
 	geom_smooth(method = lm) +
 	geom_point() +
 	background_grid(major = 'y', minor = "none") +
-	annotate( "text" , x = 5.5, y = 260.0,label = eq, fontface = "bold", size = 4) +
-	scale_x_continuous( "log-transformed ACR at 6wks", breaks = seq(0, max(data$ACR6WK_log), by = 0.5)) +
-	scale_y_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
+	annotate( "text" , y = 9.0, x = 100.0,label = eq, fontface = "bold", size = 4) +
+	scale_y_continuous( "log-transformed ACR at 6wks", breaks = seq(0, max(data$ACR6WK_log), by = 0.5)) +
+	scale_x_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
 	labs( title = "Tgm2 TPM vs log ACR 6wks (Both sexes, n=164)") +
 	theme(plot.title = element_text(hjust = 0.5))
 
 # ACR6wks both Females
 data <- RNA_pheno[ complete.cases(RNA_pheno$ACR6WK_log),]
 data <- data[data$Sex %in% "F",]
-fit <- lm(Tgm2 ~ ACR6WK_log + Creat6WK_log, data)
+fit <- lm(ACR6WK_log ~ Tgm2 + Creat6WK_log, data)
 fitsum <- summary(fit)
 intcp <- signif(coef(fit)[1], 3)
 slope <- signif(coef(fit)[2], 3)
@@ -149,7 +149,7 @@ eq_F <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = 
 # ACR6wks both Males
 data <- RNA_pheno[ complete.cases(RNA_pheno$ACR6WK_log),]
 data <- data[data$Sex %in% "M",]
-fit <- lm(Tgm2 ~ ACR6WK_log + Creat6WK_log, data)
+fit <- lm(ACR6WK_log ~ Tgm2 + Creat6WK_log, data)
 fitsum <- summary(fit)
 intcp <- signif(coef(fit)[1], 3)
 slope <- signif(coef(fit)[2], 3)
@@ -159,14 +159,14 @@ eq_M <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = 
 
 # Plot both male and female
 data <- RNA_pheno[ complete.cases(RNA_pheno$ACR6WK_log),]
-ACR6_FM <- ggplot(transform(data, Sex = c("Females n=79", "Males n=85")[as.numeric(Sex)]), aes(y = Tgm2, x = ACR6WK_log)) +
+ACR6_FM <- ggplot(transform(data, Sex = c("Females n=79", "Males n=85")[as.numeric(Sex)]), aes(x = Tgm2, y = ACR6WK_log)) +
 	geom_point() +
 	facet_grid(. ~Sex) +
 	geom_smooth(method = lm) +
 	background_grid(major = 'y', minor = "none") +
-	annotate( "text" , x = 5.5, y = 260,label = c(eq_F,eq_M), fontface = "bold", size = 4) +
-	scale_x_continuous( "log-transformed ACR at 6wks", breaks = seq(0, max(data$ACR6WK_log), by = 0.5)) +
-	scale_y_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
+	annotate( "text" , y = 9.0, x = 150,label = c(eq_F,eq_M), fontface = "bold", size = 4) +
+	scale_y_continuous( "log-transformed ACR at 6wks", breaks = seq(0, max(data$ACR6WK_log), by = 0.5)) +
+	scale_x_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
 	panel_border()
 
 # Combine all 3 plots in to 1
@@ -178,27 +178,27 @@ dev.off()
 # Plotting ACR_log but linear model with creatinine as covariate
 data <- RNA_pheno[ complete.cases(RNA_pheno$ACR10WK_log),]
 
-fit <- lm(Tgm2 ~ ACR10WK_log + Creat10WK_log, data)
+fit <- lm(ACR10WK_log ~ Tgm2 + Creat10WK_log, data)
 fitsum <- summary(fit)
 intcp <- signif(coef(fit)[1], 3)
 slope <- signif(coef(fit)[2], 3)
 pval <- signif(fitsum$coefficients[2,4], 3)
 r2 <- signif(fitsum$adj.r.squared, 3)
 eq <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = ", pval, sep = "")
-ACR10 <- ggplot(data, aes(y = Tgm2, x = ACR10WK_log)) +
+ACR10 <- ggplot(data, aes(x = Tgm2, y = ACR10WK_log)) +
 	geom_smooth(method = lm) +
 	geom_point() +
 	background_grid(major = 'y', minor = "none") +
-	annotate( "text" , x = 6.0, y = 260.0,label = eq, fontface = "bold", size = 4) +
-	scale_x_continuous( "log-transformed ACR at 10wks", breaks = seq(0, max(data$ACR10WK_log), by = 0.5)) +
-	scale_y_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
+	annotate( "text" , y = 9.5, x = 150.0,label = eq, fontface = "bold", size = 4) +
+	scale_y_continuous( "log-transformed ACR at 10wks", breaks = seq(0, max(data$ACR10WK_log), by = 0.5)) +
+	scale_x_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
 	labs( title = "Tgm2 TPM vs log ACR 10wks (Both sexes, n=160)") +
 	theme(plot.title = element_text(hjust = 0.5))
 
 # ACR10wks both Females
 data <- RNA_pheno[ complete.cases(RNA_pheno$ACR10WK_log),]
 data <- data[data$Sex %in% "F",]
-fit <- lm(Tgm2 ~ ACR10WK_log + Creat10WK_log, data)
+fit <- lm(ACR10WK_log ~ Tgm2 + Creat10WK_log, data)
 fitsum <- summary(fit)
 intcp <- signif(coef(fit)[1], 3)
 slope <- signif(coef(fit)[2], 3)
@@ -208,7 +208,7 @@ eq_F <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = 
 # ACR10wks both Males
 data <- RNA_pheno[ complete.cases(RNA_pheno$ACR10WK_log),]
 data <- data[data$Sex %in% "M",]
-fit <- lm(Tgm2 ~ ACR10WK_log + Creat10WK_log, data)
+fit <- lm(ACR10WK_log ~ Tgm2 + Creat10WK_log, data)
 fitsum <- summary(fit)
 intcp <- signif(coef(fit)[1], 3)
 slope <- signif(coef(fit)[2], 3)
@@ -218,14 +218,14 @@ eq_M <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = 
 
 # Plot both male and female
 data <- RNA_pheno[ complete.cases(RNA_pheno$ACR10WK_log),]
-ACR10_FM <- ggplot(transform(data, Sex = c("Females n=83", "Males n=77")[as.numeric(Sex)]), aes(y = Tgm2, x = ACR10WK_log)) +
+ACR10_FM <- ggplot(transform(data, Sex = c("Females n=83", "Males n=77")[as.numeric(Sex)]), aes(x = Tgm2, y = ACR10WK_log)) +
 	geom_point() +
 	facet_grid(. ~Sex) +
 	geom_smooth(method = lm) +
 	background_grid(major = 'y', minor = "none") +
-	annotate( "text" , x = 6.0, y = 260,label = c(eq_F,eq_M), fontface = "bold", size = 4) +
-	scale_x_continuous( "log-transformed ACR at 10wks", breaks = seq(0, max(data$ACR10WK_log), by = 0.5)) +
-	scale_y_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
+	annotate( "text" , y = 9.5, x = 150,label = c(eq_F,eq_M), fontface = "bold", size = 4) +
+	scale_y_continuous( "log-transformed ACR at 10wks", breaks = seq(0, max(data$ACR10WK_log), by = 0.5)) +
+	scale_x_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
 	panel_border()
 
 # Combine all 3 plots in to 1
@@ -244,14 +244,14 @@ slope <- signif(coef(fit)[2], 3)
 pval <- signif(fitsum$coefficients[2,4], 3)
 r2 <- signif(fitsum$adj.r.squared, 3)
 eq <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = ", pval, sep = "")
-ACR15 <- ggplot(data, aes(y = Tgm2, x = ACR15WK_log)) +
+ACR15 <- ggplot(data, aes(x = Tgm2, y = ACR15WK_log)) +
 	geom_smooth(method = lm) +
 	geom_point() +
 	background_grid(major = 'y', minor = "none") +
-	annotate( "text" , x = 6.0, y = 260.0,label = eq, fontface = "bold", size = 4) +
-	scale_x_continuous( "log-transformed ACR at 10wks", breaks = seq(0, max(data$ACR15WK_log), by = 0.5)) +
-	scale_y_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
-	labs( title = "Tgm2 TPM vs log ACR 10wks (Both sexes, n=169)") +
+	annotate( "text" , y = 10, x = 150.0,label = eq, fontface = "bold", size = 4) +
+	scale_y_continuous( "log-transformed ACR at 10wks", breaks = seq(0, max(data$ACR15WK_log), by = 0.5)) +
+	scale_x_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
+	labs( title = "Tgm2 TPM vs log ACR 15wks (Both sexes, n=169)") +
 	theme(plot.title = element_text(hjust = 0.5))
 
 # ACR15wks both Females
@@ -277,14 +277,14 @@ eq_M <- paste("y = ", slope,"x ","+ ", intcp, ", ", "R^2 =", r2, ", ", " pval = 
 
 # Plot both male and female
 data <- RNA_pheno[ complete.cases(RNA_pheno$ACR15WK_log),]
-ACR15_FM <- ggplot(transform(data, Sex = c("Females n=86", "Males n=83")[as.numeric(Sex)]), aes(y = Tgm2, x = ACR15WK_log)) +
+ACR15_FM <- ggplot(transform(data, Sex = c("Females n=86", "Males n=83")[as.numeric(Sex)]), aes(x = Tgm2, y = ACR15WK_log)) +
 	geom_point() +
 	facet_grid(. ~Sex) +
 	geom_smooth(method = lm) +
 	background_grid(major = 'y', minor = "none") +
-	annotate( "text" , x = 6.0, y = 260,label = c(eq_F,eq_M), fontface = "bold", size = 4) +
-	scale_x_continuous( "log-transformed ACR at 10wks", breaks = seq(0, max(data$ACR15WK_log), by = 0.5)) +
-	scale_y_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
+	annotate( "text" , y = 10, x = 150,label = c(eq_F,eq_M), fontface = "bold", size = 4) +
+	scale_y_continuous( "log-transformed ACR at 15wks", breaks = seq(0, max(data$ACR15WK_log), by = 0.5)) +
+	scale_x_continuous( "Tgm2 TPM", breaks = seq(0, max(data$Tgm2), by = 50)) +
 	panel_border()
 
 # Combine all 3 plots in to 1
