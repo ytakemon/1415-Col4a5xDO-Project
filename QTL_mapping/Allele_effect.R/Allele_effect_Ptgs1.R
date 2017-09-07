@@ -22,17 +22,17 @@ pheno$Creat6WK_log <- log(pheno$Creat6WK)
 pheno[pheno ==  -Inf] = NA
 options(na.action = 'na.pass') #leave in NAs
 
-# Plcd1 is location Chromosome 9: 119,071,527-119,093,502
+# Ptgs1 is location Chromosome 2: 36,230,426-36,252,272
 # Get list of markers in this position then find marker with highest lod score
 qtl <- qtl.log.ACR6WK.192
 qtl <- qtl$lod$A
-qtl <- qtl[qtl$chr == 9,]
-qtl <- qtl[qtl$pos > 119.071,]
-qtl <- qtl[qtl$pos < 119.094,]
-target <- qtl[qtl$lod == max(qtl$lod),] # pos 101.761
+qtl <- qtl[qtl$chr == 2,]
+qtl <- qtl[qtl$pos > 36.230,]
+qtl <- qtl[qtl$pos < 36.253,]
+target <- qtl[qtl$lod == max(qtl$lod),] # pos 36.24123
 
 #Look up rsid
-GM_snps[GM_snps$marker == target$marker,] # rs29691525
+GM_snps[GM_snps$marker == target$marker,] # rs27144155
 
 #calculate coef at target marker
 fit <- lm(pheno$ACR6WK_log ~ pheno$Sex + best.genoprobs.192[,,target$marker], na.action = na.exclude)
@@ -94,11 +94,11 @@ colnames(eggdata) <- c("Founder", "Sex", "Value")
 eggplot <- ggplot(eggdata, aes( x = Founder, y = Value, fill = Sex)) +
 	geom_bar( stat = "identity", position = "dodge") +
 	scale_fill_discrete( labels = c("Females","Males")) +
-	labs(title = paste0("Col4a5xDO allele effect at Plcd1 (chr", target$chr, " ", target$marker, " position: ", target$pos, ") for ACR6WK by founder"),
+	labs(title = paste0("Col4a5xDO allele effect at Ptgs1 (chr", target$chr, " ", target$marker, " position: ", target$pos, ") for ACR6WK by founder"),
 				x = "DO Founders",
 				y = "ACR6WK values") +
 	theme( legend.position = "right", plot.title = element_text(hjust = 0.5))
 
-pdf(paste0("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Allele_effect_at_", target$marker,"_ACR6WK_Plcd1.pdf"), width = 10.0, height = 7.5)
+pdf(paste0("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Allele_effect_at_", target$marker,"_ACR6WK_Ptgs1.pdf"), width = 10.0, height = 7.5)
 print(eggplot)
 dev.off()
