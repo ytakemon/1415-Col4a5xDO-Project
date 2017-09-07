@@ -31,6 +31,9 @@ qtl <- qtl[qtl$pos > 101.68,]
 qtl <- qtl[qtl$pos < 101.77,]
 target <- qtl[qtl$lod == max(qtl$lod),] # pos 101.761
 
+#Look up rsid
+GM_snps[GM_snps$marker == target$marker,] # rs245364821
+
 #calculate coef at target marker
 fit <- lm(pheno$ACR6WK_log ~ pheno$Sex + best.genoprobs.192[,,target$marker], na.action = na.exclude)
 
@@ -91,11 +94,11 @@ colnames(eggdata) <- c("Founder", "Sex", "Value")
 eggplot <- ggplot(eggdata, aes( x = Founder, y = Value, fill = Sex)) +
 	geom_bar( stat = "identity", position = "dodge") +
 	scale_fill_discrete( labels = c("Females","Males")) +
-	labs(title = paste0("Col4a5xDO allele effect at ", target$marker, " position: ", target$pos, " for ACR6WK by founder"),
+	labs(title = paste0("Col4a5xDO allele effect at Pik3r1 (chr", target$chr, " ", target$marker, " position: ", target$pos, ") for ACR6WK by founder"),
 				x = "DO Founders",
-				y = "Raw ACR6WK values") +
+				y = "ACR6WK values") +
 	theme( legend.position = "right", plot.title = element_text(hjust = 0.5))
 
-pdf(paste0("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Allele_effect_at_", target$marker,"_ACR6WK_Dgke.pdf"), width = 10.0, height = 7.5)
+pdf(paste0("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Allele_effect_at_", target$marker,"_ACR6WK_Pik3r1.pdf"), width = 10.0, height = 7.5)
 print(eggplot)
 dev.off()
