@@ -65,7 +65,6 @@ ggplot <- ggplot(ggdata, aes( x = Founder, y = Value, fill = Sex)) +
 				y = "Log-Transformed ACR6WK values") +
 	theme( legend.position = "right", plot.title = element_text(hjust = 0.5))
 
-
 #Female averages by strain at Snp marker
 cfit <- coef(fit)
 cfit[10] = 0 #set standard (ie strain compared to) to 0
@@ -96,3 +95,7 @@ eggplot <- ggplot(eggdata, aes( x = Founder, y = Value, fill = Sex)) +
 				x = "DO Founders",
 				y = "Raw ACR6WK values") +
 	theme( legend.position = "right", plot.title = element_text(hjust = 0.5))
+
+pdf(paste0("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Allele_effect_at_", target$marker,"_ACR6WK_Dgke.pdf"), width = 10.0, height = 7.5)
+print(eggplot)
+dev.off()
