@@ -10,3 +10,7 @@ pheno <- read.csv("pheno.csv")
 
 Ensembl_mouseID <- Ensembl_mouseID[Ensembl_mouseID$chromosome_name %in% c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19, "X"),]
 Ensembl_mouseID <- arrange(Ensembl_mouseID, ensembl_gene_id) %>% select(ensembl_gene_id, mgi_symbol, chromosome_name, start_position, end_position)
+
+
+# Need to redo add eQTL and full eQTL to calculate interaction.
+# Need to check generation of DO in phenotype data and properly account for them
