@@ -1,17 +1,21 @@
 library(tidyverse)
 library(stringr)
+library(data.table)
+wd <- "/projects/korstanje-lab/ytakemon/Col4a5xDO/"
+setwd(wd)
 
-# Check out data and extract data type
-df5rows <- read.table("/projects/korstanje-lab/ytakemon/Col4a5xDO/civet_run/160629-134704_1415-0300_cat_R1.fastq.gz/test_output", sep = "\t", header = FALSE, nrows = 5)
-classes <- sapply(df5rows, class)
+# Identify samples
+input_sample <- commandArgs(trailingOnly = TRUE)[1] # input_sample <- "1415-0324_cat_R1.fastq.gz"
+name <- str_sub(input_sample,,-17)
+# find samtools depth output
+sample_dir <- list.files( path = "./civet_run", pattern = name, full.name = TRUE)
+input_file <- list.files( path = sample_dir, pattern = "samtools.depth", full.name = TRUE)
 
 # Load data
-df <- read.table("/projects/korstanje-lab/ytakemon/Col4a5xDO/civet_run/160629-134704_1415-0300_cat_R1.fastq.gz/test_output", sep = "\t", header = FALSE, colClasses = classes, comment.char = "")
+df <- fread(input = input_file, sep = "\t", header = FALSE, stringsAsFactors = FALSE, verbose = TRUE)
 
 # rename and restructure
 names(df) <- c("ID","pos","depth")
-df$ID <- as.character(df$ID)
-
 # get gene and founder information to split
 df1 <- df[1:(nrow(df)/2),]
 df1 <- df1 %>% mutate(
@@ -24,7 +28,7 @@ df2 <- df2 %>% mutate(
 # join together
 df <- rbind(df1, df2)
 
-# split by Founder
+# split by founder to rename depth column to join later
 df_A <-  filter(df, Founder == "A") %>%
   select(Name, pos, depth) %>%
   rename(depth_A = depth)
@@ -74,5 +78,9 @@ df_all_founders <- df_all_founders %>% mutate(
   depth_all = depth_A + depth_B + depth_C + depth_D + depth_E + depth_F + depth_G + depth_H
 )
 
-# calcualte cover
-(sum(df_all_founders$depth_all)/nrow(df_all_founders))/8
+# calcualte coverage: (sum of total founder depth / # of positions) / # of founders
+cover <- (sum(df_all_founders$depth_all)/nrow(df_all_founders))/8
+output <- matrix(c(name, cover), nrow = 1, ncol = 2)
+
+# append output to list
+write.table(output, file = "./civet_run/AvgReadCoverage.txt", sep = "\t", append = TRUE, quote = FALSE, row.names = FALSE, col.names = FALSE)
