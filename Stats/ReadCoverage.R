@@ -5,7 +5,7 @@ wd <- "/projects/korstanje-lab/ytakemon/Col4a5xDO/"
 setwd(wd)
 
 # Identify samples
-input_sample <- commandArgs(trailingOnly = TRUE)[1] # input_sample <- "1415-0324_cat_R1.fastq.gz"
+input_sample <- commandArgs(trailingOnly = TRUE)[1] # input_sample <- "1415-0557_cat_R1.fastq.gz"
 name <- str_sub(input_sample,,-17)
 # find samtools depth output
 sample_dir <- list.files( path = "./civet_run", pattern = name, full.name = TRUE)
@@ -13,6 +13,7 @@ input_file <- list.files( path = sample_dir, pattern = "samtools.depth", full.na
 
 # Load data
 df <- fread(input = input_file, sep = "\t", header = FALSE, stringsAsFactors = FALSE, verbose = TRUE)
+print(paste0("Done reading in data from: ", name))
 
 # rename and restructure
 names(df) <- c("ID","pos","depth")

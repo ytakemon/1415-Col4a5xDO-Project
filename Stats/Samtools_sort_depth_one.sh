@@ -7,3 +7,5 @@ samtools sort ${sample}.bowtie.bam > ${sample}.bowtie.sorted.bam
 
 # get depth using -a to also gather 0 reads
 samtools depth -a ${sample}.bowtie.sorted.bam > ${sample}.bowtie.sorted.bam.samtools.depth
+
+rm ${sample}.bowtie.sorted.bam

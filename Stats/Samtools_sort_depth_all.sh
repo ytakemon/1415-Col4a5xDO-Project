@@ -7,5 +7,5 @@ done < /projects/korstanje-lab/ytakemon/Col4a5xDO/civet_run/Name_list.txt
 # OOPS!
 #while read sample
 #do
-#   rm /projects/korstanje-lab/ytakemon/Col4a5xDO/civet_run/*${sample}/samtools*.bam
+#   rm /projects/korstanje-lab/ytakemon/Col4a5xDO/civet_run/*${sample}/${sample}.bowtie.sorted.bam
 #done < /projects/korstanje-lab/ytakemon/Col4a5xDO/civet_run/Name_list.txt
