@@ -1,4 +1,4 @@
-setwd("~/Dropbox/Col4a5/Data/")
+setwd("/projects/korstanje-lab/ytakemon/Col4a5xDO/")
 
 # Load individual data for consolidation
 load("best.genoprobs.192.Rdata")

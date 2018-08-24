@@ -5,7 +5,9 @@ list <- str_sub(list,15,)
 
 write.table(list, "./Name_list.txt", row.names = FALSE, quote = FALSE, sep = "\t", col.names = FALSE)
 
-
+# Get subset of samples that were not successfully run
+library(stringr)
+setwd("/projects/korstanje-lab/ytakemon/Col4a5xDO/civet_run/")
 list <- read.delim("/projects/korstanje-lab/ytakemon/Col4a5xDO/civet_run/Name_list.txt",
   sep = "\t", header = F, stringsAsFactors = FALSE)
 now <- read.delim("/projects/korstanje-lab/ytakemon/Col4a5xDO/civet_run/AvgReadCoverage.txt",
