@@ -47,3 +47,37 @@ Covar <- Covar
 
 # Save as one big Rdata
 save(Genoprobs, Snps, K, Pheno, Covar, file = "Col4a5xDO_192data_YT.Rdata")
+
+# Save all QTL in one
+setwd("~/Dropbox/Col4a5/Data/")
+load("./QTL/qtl.GFR.log.C2.192.Rdata")
+load("./QTL/qtl.log.Alb6WK.192.Rdata")
+load("./QTL/qtl.log.Alb10WK.192.Rdata")
+load("./QTL/qtl.log.Alb15WK.192.Rdata")
+save(qtl.GFR.log.C2.192, qtl.log.Alb6WK.192, qtl.log.Alb10WK.192, qtl.log.Alb15WK.192,
+    file = "Col4a5xDO_QTL_YT.Rdata")
+
+# Save all QTL perms in one
+load("./QTL/perms.1000.qtl.GFR.log.C2.192.Rdata")
+load("./QTL/perms.1000.qtl.log.Alb6WK.192.Rdata")
+load("./QTL/perms.1000.qtl.log.Alb10WK.192.Rdata")
+load("./QTL/perms.1000.qtl.log.Alb15WK.192.Rdata")
+save(perms.1000.qtl.GFR.log.C2.192, perms.1000.qtl.log.Alb10WK.192, perms.1000.qtl.log.Alb15WK.192, perms.1000.qtl.log.Alb6WK.192,
+  file = "Col4a5xDO_QTLperm1000_YT.Rdata")
+
+# Save all Gwas in one
+load("./GWAS/gwas.log.C2.Rdata")
+load("./GWAS/gwas.Alb6WK.Rdata")
+load("./GWAS/gwas.Alb10WK.Rdata")
+load("./GWAS/gwas.Alb15WK.Rdata")
+save(GWAS.Alb6WK, GWAS.Alb10WK, GWAS.Alb15WK, GWAS.log.C2,
+  file = "Col4a5xDO_GWAS_YT.Rdata")
+
+# Save all Gwas perm in one
+GWAS.Alb6WK.perm <- read.delim("./GWAS/all.perm.Alb6.txt", sep = "\t", header = F)
+GWAS.Alb10WK.perm <- read.delim("./GWAS/all.perm.Alb10.txt", sep = "\t")
+GWAS.Alb15WK.perm <- read.delim("./GWAS/all.perm.Alb15.txt", sep = "\t")
+GWAS.GFR.perm <- read.delim("./GWAS/all.perm.GFR.txt", sep = "\t")
+names(GWAS.Alb6WK.perm) <- names(GWAS.Alb10WK.perm) <- names(GWAS.Alb15WK.perm) <- names(GWAS.GFR.perm) <- "perm1000"
+save(GWAS.Alb6WK.perm, GWAS.Alb10WK.perm, GWAS.Alb15WK.perm, GWAS.GFR.perm, 
+  file = "Col4a5xDO_GWASperm1000_YT.Rdata")

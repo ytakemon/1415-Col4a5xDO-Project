@@ -1,55 +1,59 @@
 library(DOQTL)
-library("biomaRt")
+library(biomaRt)
 setwd("/hpcdata/ytakemon/Col4a5xDO")
 
 # set up biomaRt
 ensembl <- useMart("ENSEMBL_MART_ENSEMBL", dataset = "mmusculus_gene_ensembl")
 
 #	load files
-load("./QTL/qtl.GFR.log.C2.192.Rdata")
-load("./QTL/qtl.log.Alb6WK.192.Rdata")
-load("./QTL/qtl.log.Alb10WK.192.Rdata")
-load("./QTL/qtl.log.Alb15WK.192.Rdata")
-#load("QTL/qtl_delta_ACR15_6.192.Rdata")
-load("./QTL/perms.1000.qtl.GFR.log.C2.192.Rdata")
-load("./QTL/perms.1000.qtl.log.Alb6WK.192.Rdata")
-load("./QTL/perms.1000.qtl.log.Alb10WK.192.Rdata")
-load("./QTL/perms.1000.qtl.log.Alb15WK.192.Rdata")
-#load("./QTL/perms.1000.qtl.delta_ACR15_6.192.Rdata")
-
-#	Create threshold by permutations
-thr.1000.qtl.logAlb.6wk <- get.sig.thr( perms.1000.qtl.log.Alb6WK.192[,,1], alpha = c(0.05, 0.1, 0.63), Xchr = FALSE)
-thr.1000.qtl.logAlb.10wk <- get.sig.thr( perms.1000.qtl.log.Alb10WK.192[,,1], alpha = c(0.05, 0.1, 0.63), Xchr = FALSE)
-thr.1000.qtl.logAlb.15wk <- get.sig.thr( perms.1000.qtl.log.Alb15WK.192[,,1], alpha = c(0.05, 0.1, 0.63), Xchr = FALSE)
-#thr.1000.qtl.deltaACR15_6 <- get.sig.thr(perms.1000.qtl.deltaACR15_6.192[,,1], alpha = c(0.05, 0.1, 0.63), Xchr  = FALSE)
+load("./Col4a5xDO_192data_YT.Rdata")
+load("./Col4a5xDO_QTL_YT.Rdata")
+load("./Col4a5xDO_QTLperm1000_YT.Rdata")
+load("./Col4a5xDO_GWAS_YT.Rdata")
+load("./Col4a5xDO_GWASperm1000_YT.Rdata")
 
 ## Threshold : C2
-# Calcualte threshold
+# Calcualte QTL threshold
 thr.1000.qtl.logGFR.6wk <- get.sig.thr( perms.1000.qtl.GFR.log.C2.192[,,1], alpha = c(0.05, 0.1, 0.63), Xchr = FALSE)
 # show threshold
 thr.1000.qtl.logGFR.6wk
 #    0.05      0.1     0.63
 #7.340369 6.945842 4.659221
 
-# Generate gene list in invterval:
-bayes <- bayesint(qtl, 19, 0.95)
-interval <- bayes$pos * 1e6
-getBM(attributes = c("ensembl_gene_id", "chromosome_name", "start_position", "end_position", "coding"))
-
-
-
-# Plot QTL: GFR
 #	remove X chr from qtl object
 qtl <- qtl.GFR.log.C2.192
 qtl$lod$X <- NULL
 qtl$coef$X <- NULL
-#	plot qtl
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Figure4.1.qtl.log.C2.GFR.noX.pdf", width = 10.0, height = 7.5)
-plot(qtl, sig.thr = thr.1000.qtl.logAlb.6wk, sig.col = c("red", "orange", "chartreuse"), main = "Col4a5xDO log.C2.GFR QTL perms.1000.noX")
+
+# Generate gene list in invterval:
+bayes <- bayesint(qtl, 19, 0.95)
+interval <- bayes$pos * 1e6
+bayes_geneList <- getBM(attributes = c("ensembl_gene_id", "external_gene_name","chromosome_name", "start_position", "end_position"),
+  filters = c("chromosome_name", "start", "end"),
+  values = list(19, interval[1], interval[3]),
+  mart = ensembl)
+
+write.csv(bayes_geneList, "../Results/GFR_chr19_bayes_geneList.csv", row.names = FALSE, quote = FALSE)
+
+# Plot QTL: GFR
+pdf("../Results/Figure4.qtl.log.C2.GFR.noX.pdf", width = 12, height = 5)
+plot(qtl, sig.thr = thr.1000.qtl.logGFR.6wk, sig.col = c("red", "orange", "chartreuse"), main = "Col4a5xDO log.C2.GFR QTL perms.1000.noX")
 dev.off()
 
+# calculate GWAS Threshold
+gwas.thr.1000 <- get.sig.thr(-log10(GFR.C2.perm), alpha = c(0.05, 0.1, 0.63), Xchr = FALSE)
 
 
+
+
+
+
+
+#	Create threshold by permutations
+thr.1000.qtl.logAlb.6wk <- get.sig.thr( perms.1000.qtl.log.Alb6WK.192[,,1], alpha = c(0.05, 0.1, 0.63), Xchr = FALSE)
+thr.1000.qtl.logAlb.10wk <- get.sig.thr( perms.1000.qtl.log.Alb10WK.192[,,1], alpha = c(0.05, 0.1, 0.63), Xchr = FALSE)
+thr.1000.qtl.logAlb.15wk <- get.sig.thr( perms.1000.qtl.log.Alb15WK.192[,,1], alpha = c(0.05, 0.1, 0.63), Xchr = FALSE)
+#thr.1000.qtl.deltaACR15_6 <- get.sig.thr(perms.1000.qtl.deltaACR15_6.192[,,1], alpha = c(0.05, 0.1, 0.63), Xchr  = FALSE)
 
 
 ## Alb6wk QTL plot
