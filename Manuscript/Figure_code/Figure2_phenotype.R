@@ -1,4 +1,6 @@
-#R/3.3.1
+# Yuka Takemon
+# 08/29/18
+# Phenotype distribution plots for publication and statistics
 library(tidyverse)
 library(ggsignif)
 library(ggsci)

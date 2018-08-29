@@ -1,3 +1,6 @@
+# Yuka Takemon
+# 08/29/18
+# List all samples
 library(stringr)
 setwd("/projects/korstanje-lab/ytakemon/Col4a5xDO/civet_run/")
 list <- list.files(pattern = "fastq.gz")

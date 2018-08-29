@@ -1,3 +1,7 @@
+# Yuka Takemon
+# 08/29/18
+# Run each Samtools_sort_one
+
 cd /projects/korstanje-lab/ytakemon/Col4a5xDO/Scripts
 while read sample
 do

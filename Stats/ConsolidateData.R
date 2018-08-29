@@ -1,3 +1,6 @@
+# Yuka Takemon
+# 08/29/18
+# Consolidate main data in to one Rdata
 setwd("/projects/korstanje-lab/ytakemon/Col4a5xDO/")
 
 # Load individual data for consolidation
@@ -32,11 +35,14 @@ Pheno <- Pheno %>% bind_rows(Missed) %>%
   mutate(MouseID = rownames(best.genoprobs.192),
     ACR6WK = Alb6WK/Creat6WK * 1000,
     ACR10WK = Alb10WK/Creat10WK * 1000,
-    ACR15WK = Alb15WK/Creat15WK * 1000)
+    ACR15WK = Alb15WK/Creat15WK * 1000,
+    C2_log = log(C2))
+rownames(Pheno) <- Pheno$Mouse.ID
 
 # Add covar
 Covar <- sex.covar %>%
   mutate(Generation = Pheno$SireGeneration)
+rownames(Covar) <- Pheno$Mouse.ID)
 
 # Rename data for consolidation
 Genoprobs <- best.genoprobs.192
@@ -79,5 +85,5 @@ GWAS.Alb10WK.perm <- read.delim("./GWAS/all.perm.Alb10.txt", sep = "\t")
 GWAS.Alb15WK.perm <- read.delim("./GWAS/all.perm.Alb15.txt", sep = "\t")
 GWAS.GFR.perm <- read.delim("./GWAS/all.perm.GFR.txt", sep = "\t")
 names(GWAS.Alb6WK.perm) <- names(GWAS.Alb10WK.perm) <- names(GWAS.Alb15WK.perm) <- names(GWAS.GFR.perm) <- "perm1000"
-save(GWAS.Alb6WK.perm, GWAS.Alb10WK.perm, GWAS.Alb15WK.perm, GWAS.GFR.perm, 
+save(GWAS.Alb6WK.perm, GWAS.Alb10WK.perm, GWAS.Alb15WK.perm, GWAS.GFR.perm,
   file = "Col4a5xDO_GWASperm1000_YT.Rdata")

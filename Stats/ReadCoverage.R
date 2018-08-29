@@ -1,3 +1,6 @@
+# Yuka Takemon
+# 08/29/18
+# Calculate average read coverage
 library(tidyverse)
 library(stringr)
 library(data.table)
