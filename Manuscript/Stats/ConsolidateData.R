@@ -1,6 +1,8 @@
 # Yuka Takemon
 # 08/29/18
 # Consolidate main data in to one Rdata
+library(tidyverse)
+library(biomaRt)
 setwd("/projects/korstanje-lab/ytakemon/Col4a5xDO/")
 
 # Load individual data for consolidation
@@ -46,10 +48,28 @@ Covar <- sex.covar %>%
   mutate(Generation = Pheno$SireGeneration)
 rownames(Covar) <- Pheno$Mouse.ID)
 
-# RNAseq data
-mRNAexpr <- as.data.frame(RNA_seqZ)
-mRNAraw <- as.data.frame(RNA_seq)
+# Get gene annotations common symbol to ensembl gene id
+# set up biomaRt
+ensembl <- useMart("ENSEMBL_MART_ENSEMBL", dataset = "mmusculus_gene_ensembl")
 
+id <- colnames(RNA_seqZ)
+AnnotGenes <- getBM(
+  attributes = c("ensembl_gene_id","external_gene_name",
+    "chromosome_name","start_position","end_position"),
+  filters = "ensembl_gene_id",
+  values = id,
+  mart = ensembl)
+rownames(AnnotGenes) <- AnnotGenes$ensembl_gene_id
+
+notAnnot <- RNA_seqZ[,!(id %in% AnnotGenes$ensembl_gene_id)] # these gene have been deprecated
+
+# remove deprecated gene from RNA-seq data
+mRNAexpr <- as.data.frame(RNA_seqZ) %>%
+  select(AnnotGenes$ensembl_gene_id)
+mRNAraw <- as.data.frame(RNA_seq) %>%
+  select(AnnotGenes$ensembl_gene_id)
+# check
+ncol(mRNAexpr) == ncol(mRNAraw) & ncol(mRNAraw) == nrow(AnnotGenes)
 
 # Rename data for consolidation
 Genoprobs <- best.genoprobs.192
@@ -59,7 +79,7 @@ Pheno <- Pheno
 Covar <- Covar
 
 # Save as one big Rdata
-save(Genoprobs, Snps, K, Pheno, Covar, mRNAraw, mRNAexpr, file = "Col4a5xDO_192data_YT.Rdata")
+save(Genoprobs, Snps, K, Pheno, Covar, mRNAraw, mRNAexpr, AnnotGenes, file = "Col4a5xDO_192data_YT.Rdata")
 
 # Save all QTL in one ----------------------------------------------------------
 setwd("~/Dropbox/Col4a5/Data/")
