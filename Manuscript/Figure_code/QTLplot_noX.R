@@ -3,16 +3,17 @@
 # Create QTL and GWAS maps for publication
 library(DOQTL)
 library(biomaRt)
-#setwd("/hpcdata/ytakemon/Col4a5xDO")
+
+DO_dir <- "/projects/marralab/ytakemon_prj/Col4a5/"
 # set up biomaRt
 ensembl <- useMart("ENSEMBL_MART_ENSEMBL", dataset = "mmusculus_gene_ensembl")
 
 #	load files
-load("./Col4a5xDO_192data_YT.Rdata")
-load("./Col4a5xDO_QTL_YT.Rdata")
-load("./Col4a5xDO_QTLperm1000_YT.Rdata")
-load("./Col4a5xDO_GWAS_YT.Rdata")
-load("./Col4a5xDO_GWASperm1000_YT.Rdata")
+load(paste0(DO_dir,"Data/Col4a5xDO_192data_YT.Rdata"))
+load(paste0(DO_dir,"Data/Col4a5xDO_QTL_YT.Rdata"))
+load(paste0(DO_dir,"Data/Col4a5xDO_QTLperm1000_YT.Rdata"))
+load(paste0(DO_dir,"Data/Col4a5xDO_GWAS_YT.Rdata"))
+load(paste0(DO_dir,"Data/Col4a5xDO_GWASperm1000_YT.Rdata"))
 
 # Just sex as covariate
 sex.covar <- as.data.frame(Covar[,"sex"])
@@ -104,7 +105,7 @@ dev.off()
 
 # Threshold
 thr <- get.sig.thr( perms.1000.qtl.log.Alb6WK.192[,,1], alpha = c(0.05, 0.1, 0.63), Xchr = FALSE)
-#> thr
+thr
 #    0.05      0.1     0.63
 #7.305748 6.890369 4.756593
 
@@ -179,7 +180,7 @@ dev.off()
 
 # Threshold
 thr <- get.sig.thr( perms.1000.qtl.log.Alb10WK.192[,,1], alpha = c(0.05, 0.1, 0.63), Xchr = FALSE)
-#> thr
+thr
 #    0.05      0.1     0.63
 #8.515490 7.776707 5.728013
 
@@ -253,9 +254,9 @@ dev.off()
 
 # Threshold
 thr <- get.sig.thr( perms.1000.qtl.log.Alb15WK.192[,,1], alpha = c(0.05, 0.1, 0.63), Xchr = FALSE)
-#> thr
-#    0.05      0.1     0.63
-#8.515490 7.776707 5.728013
+thr
+#     0.05       0.1      0.63
+#16.731738 15.415288  7.591056
 
 #	remove X chr from qtl object
 qtl <- qtl.log.Alb15WK.192
