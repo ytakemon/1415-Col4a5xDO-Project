@@ -34,6 +34,9 @@ thr <- get.sig.thr( perms.1000.qtl.GFR.log.C2.192[,,1], alpha = c(0.05, 0.1, 0.6
 thr
 #    0.05      0.1     0.63
 #7.340369 6.945842 4.659221
+10^-thr # original p-value
+#        0.05          0.1         0.63
+#4.566995e-08 1.132813e-07 2.191690e-05
 
 #	remove X chr from qtl object
 qtl <- qtl.GFR.log.C2.192
@@ -108,6 +111,10 @@ thr <- get.sig.thr( perms.1000.qtl.log.Alb6WK.192[,,1], alpha = c(0.05, 0.1, 0.6
 thr
 #    0.05      0.1     0.63
 #7.305748 6.890369 4.756593
+10^-thr # original p-value
+#        0.05          0.1         0.63
+#4.945977e-08 1.287156e-07 1.751488e-05
+
 
 #	remove X chr from qtl object
 qtl <- qtl.log.Alb6WK.192
@@ -177,12 +184,14 @@ assoc.plot(genes, thr = 3, show.sdps = TRUE)
 dev.off()
 
 # Alb 10WK-----------------------------------------------------------------------
-
 # Threshold
 thr <- get.sig.thr( perms.1000.qtl.log.Alb10WK.192[,,1], alpha = c(0.05, 0.1, 0.63), Xchr = FALSE)
 thr
 #    0.05      0.1     0.63
 #8.515490 7.776707 5.728013
+10^-thr # original p-value
+#        0.05          0.1         0.63
+#3.051473e-09 1.672218e-08 1.870626e-06
 
 #	remove X chr from qtl object
 qtl <- qtl.log.Alb10WK.192
@@ -251,12 +260,14 @@ assoc.plot(genes, thr = 4, show.sdps = TRUE)
 dev.off()
 
 # Alb 15WK-----------------------------------------------------------------------
-
 # Threshold
 thr <- get.sig.thr( perms.1000.qtl.log.Alb15WK.192[,,1], alpha = c(0.05, 0.1, 0.63), Xchr = FALSE)
 thr
 #     0.05       0.1      0.63
 #16.731738 15.415288  7.591056
+10^-thr # original p-value
+# 0.05          0.1         0.63
+#1.854649e-17 3.843370e-16 2.564156e-08
 
 #	remove X chr from qtl object
 qtl <- qtl.log.Alb15WK.192
