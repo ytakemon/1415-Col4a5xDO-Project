@@ -4,12 +4,12 @@
 #	Modified last: 12/07/16
 
 ##Intro:
-#	We know that X chromosome silencing is driven by a region called the Xce (X controlling element), which is a cis-regulatory gene. 
-#	Xist, 5' to Xce, is expressed by the inactive X-chromosome and facilitates the spread of inactivation of that chromosome. 
+#	We know that X chromosome silencing is driven by a region called the Xce (X controlling element), which is a cis-regulatory gene.
+#	Xist, 5' to Xce, is expressed by the inactive X-chromosome and facilitates the spread of inactivation of that chromosome.
 #	In Mus musculus there are 4 known Xce alleles: Xce^a, Xce^b, Xce^c, and Xce^e, which effect the probability that the X-chromosome will be
 #	expressed. The liklihood is as follows: Xce^a < Xce^e < Xce^b < Xce^c
 #	We would like to perform ANOVA test to see if the allele of Xce allele has an effect on the phenotype on females as they are Hets for the Col4a5
-#	mutation located on the B6 X-chromosome. 
+#	mutation located on the B6 X-chromosome.
 
 ##Xce allels of 8 founders:
 #	Xce^a : AJ, 129
@@ -19,9 +19,9 @@
 
 ##Expectation of phenotype severity:
 #	Xce^a x Xce^b: will have more severe phenotype as the mutation is on the Xce^b chromosome.
-#	Xce^b x Xce^b: will have equal distribution of phenotype as the probability is equal. 
-#	Xce^c x Xce^b: will have less severe phenotype as the dominant allele does not carry the mutaiton. 
-#	Xce^e x Xce^b: will have more severe phenotype as the Xce^e is less dominanat that the allele carrying the mutation. 
+#	Xce^b x Xce^b: will have equal distribution of phenotype as the probability is equal.
+#	Xce^c x Xce^b: will have less severe phenotype as the dominant allele does not carry the mutaiton.
+#	Xce^e x Xce^b: will have more severe phenotype as the Xce^e is less dominanat that the allele carrying the mutation.
 
 ##Xce is not yet on Ensemble but there are a few papers that have located a specific locus that suggests to the the Xce alelle. (Calaway et al., 2013)
 #	Using the two markers: JAX00716733 and JAX00182728 we can distinguish between the four alleles.
@@ -52,15 +52,14 @@ library(knitr)
 library(ggplot2)
 library(grid)
 
-setwd("/hpcdata/ytakemon/Col4a5xDO/")
-
+dir <- "/projects/marralab/ytakemon_prj/Col4a5/"
 #load sample
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/genoprobs/best.genoprobs.192.Rdata")
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/GM_snps.Rdata")
+load(paste0(dir, "Data/consolidated/best.genoprobs.192.Rdata"))
+load(paste0(dir, "Data/consolidated/GM_snps.Rdata"))
 
 ##Identify Xce region and find GigaMuga array markers within this region:
 #	In Calaway et al., 2013, the MDA snps show an interval of : x:102826982-102990039
-#	We need to first find the snp markers in the GigaMuga array that are within this region. 
+#	We need to first find the snp markers in the GigaMuga array that are within this region.
 
 #subset to only the X chromosome
 GM_X <- GM_snps[GM_snps$chr == "X",]
@@ -100,7 +99,7 @@ marker_names <- c("UNC31159403","JAX00716738","UNC31159628","UNC31159865")
 
 Xce_markers <- array(0, c(192, 2, 4), dimnames  = list( sample_names, c("max.founders", "max.probs"), marker_names)) #192 samples, 2col(allele, maxprob), 4 markers
 for (sample in sample_names){
-	
+
 	for (snp in marker_names){
 
 		df <- as.data.frame(best.genoprobs.192[sample,, snp])
@@ -118,7 +117,7 @@ rownames(Xce_markers)[Xce_markers[,"max.probs",] < 0.95] #samples less than 95% 
 samples_under <- c("X1415.0101", "X1415.0176", "X1415.0300")
 
 for (sample in samples_under){
-	print(ssample)
+	print(sample)
 	for (marker in marker_names){
 		x <- best.genoprobs.192[sample, , marker]
 		print(marker)
@@ -127,7 +126,7 @@ for (sample in samples_under){
 }
 
 #	X1415.0101 is a B (0.2-0.3) & E (0.7-0.8) het, which is fine because both B6 and NZO have XceB allele.
-#	X1415.0176 is also a B (0.2 - 0.4) & E (0.6 - 0.8) het. 
+#	X1415.0176 is also a B (0.2 - 0.4) & E (0.6 - 0.8) het.
 #	X1415.0300 is a A (0.4) & C (0.6) het, AJ & 129 respectively, both of which have the XceA allele.
 #	since they are all going to be called the same Xce allele I am moving on without correction
 
@@ -154,20 +153,20 @@ for (sample in sample_names){
 
 	else if ((founder == "F")){
 		Xce_allele[sample, ] <- "Xce_c"
-	} 
+	}
 
 	else if ((founder == "G")){
 		Xce_allele[sample, ] <- "Xce_e"
 	}
 	else {
 		print("error with sample: ", sample)
-	}	
+	}
 }
 
 Xce_allele <- as.data.frame(Xce_allele)
 #This is the DO Xce allele, now accounting for B6 allele figure out which Xce is most likely to be expressed.
 #Subset females out
-pheno <- read.delim("./Phenotype/1415_master_pheno.txt", sep = "\t", header = TRUE)
+pheno <- read.delim(paste0(dir,"Data/consolidated/Phenotype/1415_master_pheno.txt"), sep = "\t", header = TRUE)
 rownames(pheno) <- make.names(pheno[,1]) #move sample ID to row names
 pheno <- pheno[rownames(Xce_allele),] #subset pheno to match 192
 #clean up pheno and add log of ACR
@@ -176,7 +175,7 @@ pheno[pheno ==  -Inf] = NA
 pheno$C2[76] = NA #over sigma 650000 cut off
 pheno$C2[138] = NA #over sigma 650000 cut off
 
-pheno$C2_log <- log(pheno$C2) 
+pheno$C2_log <- log(pheno$C2)
 
 pheno$ACR6WK_log <- log(pheno$ACR6WK)
 pheno$ACR10WK_log <- log(pheno$ACR10WK)
@@ -207,12 +206,12 @@ for (sample in sample_names){
 
 	if ((Xce_allele[sample, "Xce_DO"] == "Xce_a") || (Xce_allele[sample, "Xce_DO"] == "Xce_b") ||
 		(Xce_allele[sample, "Xce_DO"] == "Xce_e")){
-		
+
 		Xce_allele[sample, "Xce_winner"] <- "Xce_b"
 	}
 	else{
 		Xce_allele[sample, "Xce_winner"] <- "Xce_c"
-	} 
+	}
 }
 
 #lable origin either: DO, Mut, Both
@@ -231,7 +230,7 @@ for (sample in sample_names){
 	}
 }
 
-save(Xce_allele, file = "./Phenotype/Xce_allele.Rdata")
+save(Xce_allele, file = paste0(dir,"Data/consolidated/Phenotype/Xce_allele.Rdata"))
 
 ####################################################################################################################################################################
 ####################################################################################################################################################################
@@ -274,7 +273,7 @@ save(Xist_max_founder, file = "/hpcdata/ytakemon/Col4a5xDO/Phenotype/Max_Xist_fo
 load("/hpcdata/ytakemon/Col4a5xDO/Phenotype/Max_Xist_founder.Rdata")
 load("./Phenotype/Xce_allele.Rdata")
 
-#subset Xist to only females 
+#subset Xist to only females
 Xist_max_founder <- Xist_max_founder[rownames(Xce_allele),]
 
 ##	HYPOTHESIS
@@ -292,7 +291,7 @@ for (sample in sample_names){
 	Test <- Xce_allele[sample, "Winner_origin"]
 	Xist <- Xce_allele[sample, "Xist_maxfounder"]
 
-	if (Test == "Mut"){		
+	if (Test == "Mut"){
 		Xce_allele[sample, "Hypothesis_test"] <- "TRUE"
 	}
 	else if (Test == "DO"){
@@ -324,8 +323,8 @@ for (sample in sample_names){
 ##ANOVA test between Xce allele and phenotype
 #	Test to see if phenotypes such as ACR and GFR are assocaited with the orgigin of Xce allele
 #load and organize data
-load("./Phenotype/Xce_allele.Rdata")
-pheno <- read.delim("./Phenotype/1415_master_pheno.txt", sep = "\t", header = TRUE)
+load(paste0(dir,"Data/consolidated/Phenotype/Xce_allele.Rdata"))
+pheno <- read.delim(paste0(dir,"Data/consolidated/Phenotype/1415_master_pheno.txt"), sep = "\t", header = TRUE)
 rownames(pheno) <- make.names(pheno[,1]) #move sample ID to row names
 pheno <- pheno[rownames(Xce_allele),] #subset pheno to match only females
 
@@ -337,7 +336,7 @@ pheno$Xce_winner <- Xce_allele$Xce_winner
 pheno[pheno < 0 ] = NA
 pheno[pheno ==  -Inf] = NA
 
-pheno$C2_log <- log(pheno$C2) 
+pheno$C2_log <- log(pheno$C2)
 
 pheno$ACR6WK_log <- log(pheno$ACR6WK)
 pheno$ACR10WK_log <- log(pheno$ACR10WK)
@@ -362,7 +361,7 @@ table(pheno$Winner_origin)
 
 ###### ANOVA test between Xce_winner and phenotypes
 #Actually Xce_winner only has 2, so T-test.... wiat acutally ANOVA because of covariates
-#first plot them 
+#first plot them
 library(ggplot2)
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Boxplot_Xce_winner_GFR.png", width = 1500, height = 1000, res = 100)
 ggplot( pheno, aes(x  = Xce_winner, y = C2_log)) +
@@ -414,7 +413,7 @@ anova(GFR_lm)
 knitr::kable(anova(GFR_anova))
 ##ANOVA result
 #no sign difference
-#ANOVA test assumptions for heteroscadacity 
+#ANOVA test assumptions for heteroscadacity
 GFR_lm_resid <- data.frame(Fitted = fitted(GFR_lm), Residuals = resid(GFR_lm), Xce = G.pheno$Xce_winner)
 #plot residuals
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Residual_Xce_winner_GFR.png", width = 1500, height = 1000, res = 100)
@@ -547,7 +546,7 @@ anova(GFR_lm)
 knitr::kable((anova(GFR_anova)))
 ##ANOVA result
 #no sign difference
-#ANOVA test assumptions for heteroscadacity 
+#ANOVA test assumptions for heteroscadacity
 GFR_lm_resid <- data.frame(Fitted = fitted(GFR_lm), Residuals = resid(GFR_lm), Xce = G.pheno$Winner_origin)
 #plot residuals
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Residual_Winner_origin_GFR.png", width = 1500, height = 1000, res = 100)
@@ -666,8 +665,9 @@ dev.off()
 #	aov() and lm() gives different outputs, however if the object is then run with anova() the resutls are the same.
 
 ##Make avg with std.error for Xce alleles vs ACR 6, 10, 15
-data <- pheno
-data <- data[,c(30, 20, 21, 22, 33, 34, 35)]
+data <- pheno %>%
+  mutate(sample = rownames(pheno)) %>%
+  select(sample, Xce_DO, ACR6WK_log, ACR10WK_log, ACR15WK_log)
 
 data6 <- data[,c(1,2)]
 data10 <- data[,c(1,3)]
@@ -684,12 +684,67 @@ ggdata6log <- summarySE(data6log, measurevar = "ACR6WK_log", groupvars = "Xce_DO
 ggdata10log <- summarySE(data10log, measurevar = "ACR10WK_log", groupvars = "Xce_DO", na.rm = TRUE)
 ggdata15log <- summarySE(data15log, measurevar = "ACR15WK_log", groupvars = "Xce_DO", na.rm = TRUE)
 
-ggdata <- melt(data[,c(1,5,6,7)])
-colnames(ggdata) <- c("Xce_DO", "ACR_month", "Value")
+
+ggdata <- data %>%
+  pivot_longer(-c(sample,Xce_DO), names_to = "ACR_month", values_to = "Value")
+p_load(ggsci)
+
+png(paste0(dir,"Results/Xce_allele_ACR.png"), height = 4, width = 6, units = "in", compression = "none", res = )
+ggdata %>%
+  mutate(Month = case_when(
+            .$ACR_month == "ACR6WK_log" ~ "6",
+            .$ACR_month == "ACR10WK_log" ~ "10",
+            .$ACR_month == "ACR15WK_log" ~ "15",
+            TRUE ~ "NA")) %>%
+  mutate(Month = fct_relevel(Month, "6","10","15")) %>%
+ggplot(., aes(x = Month, y = Value, fill = Xce_DO))+
+  geom_boxplot() +
+  scale_fill_aaas() +
+  labs(x = "Weeks of age",
+       y = "log(ACR)",
+       fill = "Xce allele") +
+  theme_bw()+
+  ylim(1,10)
+dev.off()
+
+test <- ggdata %>%
+  mutate(Month = case_when(
+            .$ACR_month == "ACR6WK_log" ~ "6",
+            .$ACR_month == "ACR10WK_log" ~ "10",
+            .$ACR_month == "ACR15WK_log" ~ "15",
+            TRUE ~ "NA")) %>%
+  mutate(Month = fct_relevel(Month, "6","10","15"))
+
+# repeated measures ANOVA in R
+test %>%
+  filter(complete.cases(Value)) %>%
+  aov(Value ~ Xce_DO + Error(sample/Month), data = .) %>% tidy()
+# A tibble: 3 x 7
+#  stratum      term         df sumsq meansq statistic  p.value
+#  <chr>        <chr>     <dbl> <dbl>  <dbl>     <dbl>    <dbl>
+#1 sample       Xce_DO        3  36.8  12.3       5.18  0.00236
+#2 sample       Residuals    92 218.    2.37     NA    NA
+#3 sample:Month Residuals   152 241.    1.59     NA    NA
+
+
+# post hoc
+test %>%
+  filter(Month == "10") %>%
+  filter(complete.cases(Value)) %>%
+  aov(Value ~ Xce_DO, + Error().) %>% tidy()
+
+# post hoc
+test %>%
+  filter(Month == "10") %>%
+  filter(complete.cases(Value)) %>%
+  aov(Value ~ Xce_DO, .) %>%
+  TukeyHSD(.,"Xce_DO")
+
+source("~/GitHub/1415-Col4a5xDO-Project/RHelper_func/STDEV_SE_NORM_functions.R")
 ggdata <- summarySE(ggdata, measurevar = "Value", groupvars = c("Xce_DO", "ACR_month"), na.rm = TRUE)
 
 allggplot <- ggplot(ggdata, aes(x = ACR_month, y = Value, colour = Xce_DO)) +
-	geom_line(aes( group = Xce_DO)) +	
+	geom_line(aes( group = Xce_DO)) +
 	geom_errorbar(aes(ymin = Value - se, ymax = Value + se), width = 0.2) +
 	geom_point() +
 	labs(title = "Log-transformed ACR by DO Xce Alleles", x = "Months", y = "Log-transformed ACR") +
@@ -735,35 +790,35 @@ ggplot15log <- ggplot(ggdata15log, aes(x = Xce_DO, y = ACR15WK_log, colour = Xce
 	labs( title = "Log-transformed 15-week ACR by DO Xce Alleles", x = "DO Xce alleles", y = "15-week ACR") +
 	theme( legend.position = "right", plot.title = element_text(hjust = 0.5))
 
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Avg_stderror_Xce_DO_All_logACR.pdf", width = 10.0, height = 7.5)	
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Avg_stderror_Xce_DO_All_logACR.pdf", width = 10.0, height = 7.5)
 allggplot
 dev.off()
 
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Avg_stderror_Xce_DO_ACR6WK.pdf", width = 10.0, height = 7.5)	
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Avg_stderror_Xce_DO_ACR6WK.pdf", width = 10.0, height = 7.5)
 ggplot6
 dev.off()
 
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Avg_stderror_Xce_DO_ACR10WK.pdf", width = 10.0, height = 7.5)	
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Avg_stderror_Xce_DO_ACR10WK.pdf", width = 10.0, height = 7.5)
 ggplot10
 dev.off()
 
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Avg_stderror_Xce_DO_ACR15WK.pdf", width = 10.0, height = 7.5)	
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Avg_stderror_Xce_DO_ACR15WK.pdf", width = 10.0, height = 7.5)
 ggplot15
 dev.off()
 
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Avg_stderror_Xce_DO_ACR6WK_log.pdf", width = 10.0, height = 7.5)	
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Avg_stderror_Xce_DO_ACR6WK_log.pdf", width = 10.0, height = 7.5)
 ggplot6log
 dev.off()
 
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Avg_stderror_Xce_DO_ACR10WK_log.pdf", width = 10.0, height = 7.5)	
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Avg_stderror_Xce_DO_ACR10WK_log.pdf", width = 10.0, height = 7.5)
 ggplot10log
 dev.off()
 
-pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Avg_stderror_Xce_DO_ACR15WK_log.pdf", width = 10.0, height = 7.5)	
+pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Avg_stderror_Xce_DO_ACR15WK_log.pdf", width = 10.0, height = 7.5)
 ggplot15log
 dev.off()
 
-#view statistics 
+#view statistics
 ggdata6 <- data6[complete.cases(data6$ACR6WK),]
 ggdata10 <- data10[complete.cases(data10$ACR10WK),]
 ggdata15 <- data15[complete.cases(data15$ACR15WK),]
@@ -837,7 +892,7 @@ anova(GFR_lm)
 kable(anova(GFR_anova))
 ##ANOVA result
 #no sign difference
-#ANOVA test assumptions for heteroscadacity 
+#ANOVA test assumptions for heteroscadacity
 GFR_lm_resid <- data.frame(Fitted = fitted(GFR_lm), Residuals = resid(GFR_lm), Xce = G.pheno$Xce_DO)
 #plot residuals
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/Residual_Xce_DO_GFR.png", width = 1500, height = 1000, res = 100)
