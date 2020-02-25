@@ -1,5 +1,5 @@
 # Run this script
-# R-3.6.0 --no-save < Phenotype_RNA_cor.R > Rout/Phenotype_RNA_cor.Rout 2>&1 &
+# R-3.6.0 --no-save < Phenotype_RNA_cor_bySex_F.R > Rout/Phenotype_RNA_cor_bySex_F.Rout 2>&1 &
 
 # Create a heatmap of correlation between gene expression and ACR @ 15wks and GFR at 14wks
 
@@ -14,7 +14,6 @@ load(paste0(cor_dir,"Data/Col4a5xDO_192data_YT.Rdata"))
 # get a list of genes that have no expression and remove
 zero <- NULL
 for(i in 1:ncol(RNA_seq)){
-  print(i)
   gene <- colnames(RNA_seq)[i]
   if(all(RNA_seq[,gene] == 0)){
     zero <- c(zero, gene)
@@ -23,16 +22,23 @@ for(i in 1:ncol(RNA_seq)){
   }
 }
 
-RNA_seqZ <- RNA_seqZ %>% as_tibble(., rownames = "MouseID")
 select_pheno <- Pheno %>% mutate(ACR15WK_log = log(ACR15WK)) %>%
+  filter(Sex == "F") %>%
   select(MouseID, ACR15WK_log, C2_log)
+select_RNA_seqZ <- RNA_seqZ %>% as_tibble(., rownames = "MouseID") %>%
+    filter(MouseID %in% select_pheno$MouseID) %>%
+    select(-all_of(zero)) #get rid of zeros
 
-identical(RNA_seqZ$MouseID, select_pheno$MouseID) # good to compare directly
+all(zero %in% colnames(select_RNA_seqZ))
+    select_RNA_seqZ %>%
+    select(-any_of(zero)) %>% dim()
+
+identical(select_RNA_seqZ$MouseID, select_pheno$MouseID) # good to compare directly
 
 # Create function to get results
 getRNACor <- function(gene, pheno, res){
 
-  rna <- RNA_seqZ %>% select(MouseID, all_of(gene))
+  rna <- select_RNA_seqZ %>% select(MouseID, all_of(gene))
   df <- full_join(select_pheno, rna, by = "MouseID")
 
   fit <- cor.test(df[,pheno], df[,gene], use = "complete.obs", method = "pearson" ) %>%tidy()
@@ -41,7 +47,7 @@ getRNACor <- function(gene, pheno, res){
   return(output)
 }
 
-cor <- tibble(EnsID = colnames(RNA_seqZ)[-1],
+cor <- tibble(EnsID = colnames(select_RNA_seqZ)[-1],
               acr_cor = NA,
               acr_pval  = NA,
               gfr = NA,
@@ -52,23 +58,18 @@ cor <- tibble(EnsID = colnames(RNA_seqZ)[-1],
           gfr = map_dbl(EnsID, getRNACor, "C2_log", "estimate"),
           gfr_pval = map_dbl(EnsID, getRNACor, "C2_log", "p.value"))
 
-write_csv(cor, paste0(cor_dir,"Data/RNAseq/RNAseq_phenotype_cor_15wk.csv"))
+write_csv(cor, paste0(cor_dir,"Data/RNAseq/RNAseq_phenotype_cor_15wk_F.csv"))
 
 # ANALYSIS -------------------------------------------------------
-cor <- read_csv(paste0(cor_dir,"Data/RNAseq/RNAseq_phenotype_cor_15wk.csv")) %>%
+cor <- read_csv(paste0(cor_dir,"Data/RNAseq/RNAseq_phenotype_cor_15wk_F.csv")) %>%
   mutate(acr_fdr = p.adjust(acr_pval, n = nrow(cor), method = "BH"),
          gfr_fdr = p.adjust(gfr_pval, n = nrow(cor), method = "BH")) %>%
-  rename(gfr_cor = gfr_cor) %>%
-  filter(!(EnsID %in% zero))
+  rename(gfr_cor = gfr)
 
-write_csv(cor, paste0(cor_dir,"Data/RNAseq/RNAseq_phenotype_cor_15wk_wFDR.csv"))
-
-write_csv(cor, "~/Desktop/RNAseq_phenotype_cor_15wk_wFDR.csv")
-
+write_csv(cor, paste0(cor_dir,"Data/RNAseq/RNAseq_phenotype_cor_15wk_F_wFDR.csv"))
 
 cor_sig_both <- cor %>% filter(acr_fdr < 0.05 & gfr_fdr < 0.05)
 
-pdf(paste0(cor_dir,"Results/RNAseq_cor/Gene_cor_all.pdf"), height = 3, width = 5)
 cor %>%
   rename(ACR = acr_cor,
          GFR = gfr_cor) %>%
@@ -78,10 +79,7 @@ cor %>%
     geom_freqpoly(bins = 20)+
     labs(x = "Correlation",
          y = "Frequency")
-dev.off()
 
-
-pdf(paste0(cor_dir,"Results/RNAseq_cor/Gene_cor_sig.pdf"), height = 3, width = 5)
 cor %>%
   rename(ACR = acr_cor,
          GFR = gfr_cor) %>%
@@ -92,9 +90,8 @@ cor %>%
     geom_freqpoly(bins = 20)+
     labs(x = "Correlation",
          y = "Frequency")
-dev.off()
 
-pdf(paste0(cor_dir,"Results/RNAseq_cor/15wk_RNAseq_cor_scatter.pdf"), height = 5, width = 7)
+pdf(paste0(cor_dir,"Results/RNAseq_cor/15wk_RNAseq_cor_scatter_F.pdf"), height = 5, width = 7)
 cor %>%
   rename(ACR = acr_cor,
          GFR = gfr_cor) %>%
@@ -112,12 +109,30 @@ heat_df <- cor %>%
          GFR = gfr_cor) %>%
   filter(acr_fdr < 0.05 & gfr_fdr < 0.05) %>%
   select(EnsID, ACR, GFR)
+write_csv(heat_df, paste0(cor_dir,"Results/RNAseq_cor/15wk_RNAseq_cor_heatmap_sig_F.csv"))
 
-heat_mat <- heat_df %>% select(ACR, GFR) %>% as.matrix()
-rownames(heat_mat) <- heat_df %>% pull(EnsID)
+heat_mat_F <- heat_df %>% select(ACR, GFR) %>% as.matrix()
+rownames(heat_mat_F) <- heat_df %>% pull(EnsID)
 
-pdf(paste0(cor_dir,"Results/RNAseq_cor/15wk_RNAseq_cor_heatmap_sig.pdf"), height = 5, width = 3)
-pheatmap(heat_mat, cutree_rows = 2, scale = "none",
+pdf(paste0(cor_dir,"Results/RNAseq_cor/15wk_RNAseq_cor_heatmap_sig_F.pdf"), height = 5, width = 3)
+pheatmap(heat_mat_F, cutree_rows = 3, scale = "none",
   annotation_names_row = FALSE,
   show_rownames = FALSE)
+dev.off()
+
+# Weird outliers
+weirdos <- heat_df %>% filter(ACR < 0 & GFR < 0)
+genes <- c(weirdos$EnsID)
+rna <- select_RNA_seqZ %>% select(MouseID, all_of(genes))
+df <- full_join(select_pheno, rna, by = "MouseID")
+df <- df %>% pivot_longer(-c(MouseID, ACR15WK_log, C2_log), names_to = "EnsID", values_to = "expr") %>%
+pivot_longer(-c(MouseID,EnsID,expr), names_to = "Pheno", values_to = "values")
+
+pdf(paste0(cor_dir,"Results/RNAseq_cor/15wk_RNAseq_cor_heatmap_sig_F_outliers.pdf"), height = 5, width = 5)
+ggplot(df, aes(x = expr, y = values)) +
+  geom_point()+
+  geom_smooth(method = "lm", se = FALSE, colour = "grey")+
+  facet_wrap(Pheno ~ EnsID) +
+  theme_bw()+
+  labs(x = "Ranked expression", y = "Log-phenotype values")
 dev.off()

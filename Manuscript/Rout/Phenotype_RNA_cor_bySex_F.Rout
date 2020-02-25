@@ -1,0 +1,84 @@
+
+R version 3.6.0 (2019-04-26) -- "Planting of a Tree"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # Run this script
+> # R-3.6.0 --no-save < Phenotype_RNA_cor_bySex_F.R > Rout/Phenotype_RNA_cor_bySex_F.Rout 2>&1 &
+> 
+> # Create a heatmap of correlation between gene expression and ACR @ 15wks and GFR at 14wks
+> 
+> library(pacman)
+> p_load(tidyverse, broom)
+> 
+> cor_dir <- "/projects/marralab/ytakemon_prj/Col4a5/"
+> load(paste0(cor_dir,"Data/RNAseq/RNA_seq_rankZ_tpm.Rdata"))
+> load(paste0(cor_dir,"Data/RNAseq/RNA_seq_tpm.Rdata"))
+> load(paste0(cor_dir,"Data/Col4a5xDO_192data_YT.Rdata"))
+> 
+> # get a list of genes that have no expression and remove
+> zero <- NULL
+> for(i in 1:ncol(RNA_seq)){
++   gene <- colnames(RNA_seq)[i]
++   if(all(RNA_seq[,gene] == 0)){
++     zero <- c(zero, gene)
++   } else {
++     next
++   }
++ }
+> 
+> select_pheno <- Pheno %>% mutate(ACR15WK_log = log(ACR15WK)) %>%
++   filter(Sex == "F") %>%
++   select(MouseID, ACR15WK_log, C2_log)
+> select_RNA_seqZ <- RNA_seqZ %>% as_tibble(., rownames = "MouseID") %>%
++     filter(MouseID %in% select_pheno$MouseID) %>%
++     select(-all_of(zero)) #get rid of zeros
+> 
+> all(zero %in% colnames(select_RNA_seqZ))
+[1] FALSE
+>     select_RNA_seqZ %>%
++     select(-any_of(zero)) %>% dim()
+[1]    97 36627
+> 
+> identical(select_RNA_seqZ$MouseID, select_pheno$MouseID) # good to compare directly
+[1] TRUE
+> 
+> # Create function to get results
+> getRNACor <- function(gene, pheno, res){
++ 
++   rna <- select_RNA_seqZ %>% select(MouseID, all_of(gene))
++   df <- full_join(select_pheno, rna, by = "MouseID")
++ 
++   fit <- cor.test(df[,pheno], df[,gene], use = "complete.obs", method = "pearson" ) %>%tidy()
++ 
++   output <- fit %>% pull(res)
++   return(output)
++ }
+> 
+> cor <- tibble(EnsID = colnames(select_RNA_seqZ)[-1],
++               acr_cor = NA,
++               acr_pval  = NA,
++               gfr = NA,
++               gfr_pval = NA) %>%
++         mutate(
++           acr_cor = map_dbl(EnsID, getRNACor, "ACR15WK_log", "estimate"),
++           acr_pval = map_dbl(EnsID, getRNACor, "ACR15WK_log", "p.value"),
++           gfr = map_dbl(EnsID, getRNACor, "C2_log", "estimate"),
++           gfr_pval = map_dbl(EnsID, getRNACor, "C2_log", "p.value"))
+> 
+> write_csv(cor, paste0(cor_dir,"Data/RNAseq/RNAseq_phenotype_cor_15wk_F.csv"))
+> 
