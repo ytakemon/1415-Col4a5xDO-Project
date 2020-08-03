@@ -1,7 +1,7 @@
 ## QTL analysis for Ha model of ACR and Albumin
 ## Yuka Takemon
 ## Created 10/03/16
-## Updataed 12/05/16
+## Updataed 03/08/20
 
 #	Two different analysis
 #	ACR with sex as covariate at 6wks, 10wks, and 15wks
@@ -11,14 +11,14 @@ library(DOQTL)
 library(abind)
 library(knitr)
 
-setwd("/hpcdata/ytakemon/Col4a5xDO")
+dir <- "/projects/marralab/ytakemon_prj/Col4a5/"
 
 #load sample
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/genoprobs/best.genoprobs.192.Rdata")
+load(paste0(dir,"Data/consolidated/best.genoprobs.192.Rdata"))
 load(url("ftp://ftp.jax.org/MUGA/GM_snps.Rdata"))
 
 #read and clean up phenotype data
-pheno <- read.delim("./Phenotype/1415_master_pheno.txt", sep = "\t", header = TRUE)
+pheno <- read.delim(paste0(dir,"Data/consolidated/Phenotype/1415_master_pheno.txt"), sep = "\t", header = TRUE)
 rownames(pheno) <- make.names(pheno[,1]) #move sample ID to row names
 pheno <- pheno[rownames(best.genoprobs.192),] #subset pheno to match 192
 #clean up pheno and add log of ACR
@@ -49,7 +49,7 @@ hist(pheno$ACR10WK_log)
 hist(pheno$ACR15WK)
 hist(pheno$ACR15WK_log)
 dev.off()
-#check distribution of Albumin 
+#check distribution of Albumin
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/hist.Albumin.compare.png", width = 1000, height = 1000, res = 100)
 layout(matrix(1:6,2,3))
 hist(pheno$Alb6WK)
@@ -136,77 +136,79 @@ temp$creat15wk <- pheno.M$Creat15WK_log
 covar.sex.creat15wk.M <- temp
 
 #kinship mapping
-K_GS <- kinship.probs(best.genoprobs.192, snps = GM_snps, bychr = TRUE)
-K_GS.F <- kinship.probs(genoprob.F, snps = GM_snps, bychr = TRUE)
-K_GS.M <- kinship.probs(genoprob.M, snps = GM_snps, bychr = TRUE)
+#K_GS <- kinship.probs(best.genoprobs.192, snps = GM_snps, bychr = TRUE)
+saveRDS(K_GS, paste0(dir,"Data/consolidated/K_GS.rds"))
+#K_GS.F <- kinship.probs(genoprob.F, snps = GM_snps, bychr = TRUE)
+#K_GS.M <- kinship.probs(genoprob.M, snps = GM_snps, bychr = TRUE)
 
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/kinship/K_GS.Rdata")
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/kinship/K_GS.F.Rdata")
-load("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/kinship/K_GS.M.Rdata")
+K_GS <- readRDS(paste0(dir,"Data/consolidated/K_GS.rds"))
 
 #QTL mapping of ACR with sex as covariate at 3 different time points
 #Both sexes
 #log ACR6WKS
 qtl.log.ACR6WK.192 <- scanone( pheno = pheno, pheno.col = "ACR6WK_log", probs = best.genoprobs.192, K = K_GS, addcovar = sex.covar, snps = GM_snps)
-save(qtl.log.ACR6WK.192, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.ACR6WK.192.Rdata")
+save(qtl.log.ACR6WK.192, file = paste0(dir,"Data/consolidated/qtl.log.ACR6WK.192.Rdata.rds"))
 #log ACR10WKS
 qtl.log.ACR10WK.192 <- scanone( pheno = pheno, pheno.col = "ACR10WK_log", probs = best.genoprobs.192, K = K_GS, addcovar = sex.covar, snps = GM_snps)
-save(qtl.log.ACR10WK.192, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.ACR10WK.192.Rdata")
+save(qtl.log.ACR10WK.192, file = paste0(dir,"Data/consolidated/qtl.log.ACR10WK.192.Rdata.rds"))
 #log ACR15WKS
 qtl.log.ACR15WK.192 <- scanone( pheno = pheno, pheno.col = "ACR15WK_log", probs = best.genoprobs.192, K = K_GS, addcovar = sex.covar, snps = GM_snps)
-save(qtl.log.ACR15WK.192, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.ACR15WK.192.Rdata")
-#Females
-#log ACR6WKS
-qtl.log.ACR6WK.192.F <- scanone( pheno = pheno.F, pheno.col = "ACR6WK_log", probs = genoprob.F, K = K_GS.F, addcovar = sex.covar.F, snps = GM_snps)
-save(qtl.log.ACR6WK.192.F, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.ACR6WK.192.F.Rdata")
-#log ACR10WKS
-qtl.log.ACR10WK.192.F <- scanone( pheno = pheno, pheno.col = "ACR10WK_log", probs = genoprob.F, K = K_GS.F, addcovar = sex.covar.F, snps = GM_snps)
-save(qtl.log.ACR10WK.192.F, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.ACR10WK.192.F.Rdata")
-#log ACR15WKS
-qtl.log.ACR15WK.192.F <- scanone( pheno = pheno, pheno.col = "ACR15WK_log", probs = genoprob.F, K = K_GS.F, addcovar = sex.covar.F, snps = GM_snps)
-save(qtl.log.ACR15WK.192.F, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.ACR15WK.192.F.Rdata")
-#Males
-#log ACR6WKS
-qtl.log.ACR6WK.192.M <- scanone( pheno = pheno.M, pheno.col = "ACR6WK_log", probs = genoprob.M, K = K_GS.M, addcovar = sex.covar.M, snps = GM_snps)
-save(qtl.log.ACR6WK.192.M, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.ACR6WK.192.M.Rdata")
-#log ACR10WKS
-qtl.log.ACR10WK.192.M <- scanone( pheno = pheno, pheno.col = "ACR10WK_log", probs = genoprob.M, K = K_GS.M, addcovar = sex.covar.M, snps = GM_snps)
-save(qtl.log.ACR10WK.192.M, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.ACR10WK.192.M.Rdata")
-#log ACR15WKS
-qtl.log.ACR15WK.192.M <- scanone( pheno = pheno, pheno.col = "ACR15WK_log", probs = genoprob.M, K = K_GS.M, addcovar = sex.covar.M, snps = GM_snps)
-save(qtl.log.ACR15WK.192.M, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.ACR15WK.192.M.Rdata")
+save(qtl.log.ACR15WK.192, file = paste0(dir,"Data/consolidated/qtl.log.ACR15WK.192.Rdata.rds"))
+
+# #Females
+# #log ACR6WKS
+# qtl.log.ACR6WK.192.F <- scanone( pheno = pheno.F, pheno.col = "ACR6WK_log", probs = genoprob.F, K = K_GS.F, addcovar = sex.covar.F, snps = GM_snps)
+# save(qtl.log.ACR6WK.192.F, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.ACR6WK.192.F.Rdata")
+# #log ACR10WKS
+# qtl.log.ACR10WK.192.F <- scanone( pheno = pheno, pheno.col = "ACR10WK_log", probs = genoprob.F, K = K_GS.F, addcovar = sex.covar.F, snps = GM_snps)
+# save(qtl.log.ACR10WK.192.F, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.ACR10WK.192.F.Rdata")
+# #log ACR15WKS
+# qtl.log.ACR15WK.192.F <- scanone( pheno = pheno, pheno.col = "ACR15WK_log", probs = genoprob.F, K = K_GS.F, addcovar = sex.covar.F, snps = GM_snps)
+# save(qtl.log.ACR15WK.192.F, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.ACR15WK.192.F.Rdata")
+# #Males
+# #log ACR6WKS
+# qtl.log.ACR6WK.192.M <- scanone( pheno = pheno.M, pheno.col = "ACR6WK_log", probs = genoprob.M, K = K_GS.M, addcovar = sex.covar.M, snps = GM_snps)
+# save(qtl.log.ACR6WK.192.M, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.ACR6WK.192.M.Rdata")
+# #log ACR10WKS
+# qtl.log.ACR10WK.192.M <- scanone( pheno = pheno, pheno.col = "ACR10WK_log", probs = genoprob.M, K = K_GS.M, addcovar = sex.covar.M, snps = GM_snps)
+# save(qtl.log.ACR10WK.192.M, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.ACR10WK.192.M.Rdata")
+# #log ACR15WKS
+# qtl.log.ACR15WK.192.M <- scanone( pheno = pheno, pheno.col = "ACR15WK_log", probs = genoprob.M, K = K_GS.M, addcovar = sex.covar.M, snps = GM_snps)
+# save(qtl.log.ACR15WK.192.M, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.ACR15WK.192.M.Rdata")
+
 #QTL mapping of Albumin with creatinine as covariate at 3 different time points
 #log Albumin 6WKS
 qtl.log.Alb6WK.192 <- scanone( pheno = pheno, pheno.col = "Alb6WK_log", probs = best.genoprobs.192, K = K_GS, addcovar = covar.sex.creat6wk, snps = GM_snps)
-save(qtl.log.Alb6WK.192, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.Alb6WK.192.Rdata")
+save(qtl.log.Alb6WK.192, file = paste0(dir,"Data/consolidated/qtl.log.Alb6WK.192.Rdata.rds"))
 #log Albumin 10WKS
 qtl.log.Alb10WK.192 <- scanone( pheno = pheno, pheno.col = "Alb10WK_log", probs = best.genoprobs.192, K = K_GS, addcovar = covar.sex.creat10wk, snps = GM_snps)
-save(qtl.log.Alb10WK.192, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.Alb10WK.192.Rdata")
+save(qtl.log.Alb10WK.192, file = paste0(dir,"Data/consolidated/qtl.log.Alb10WK.192.Rdata.rds"))
 #log Albumin 15WKS
 qtl.log.Alb15WK.192 <- scanone( pheno = pheno, pheno.col = "Alb15WK_log", probs = best.genoprobs.192, K = K_GS, addcovar = covar.sex.creat15wk, snps = GM_snps)
-save(qtl.log.Alb15WK.192, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.Alb15WK.192.Rdata")
-#Females
-#log Albumin 6WKS
-qtl.log.Alb6WK.192.F <- scanone( pheno = pheno.F, pheno.col = "Alb6WK_log", probs = genoprob.F, K = K_GS.F, addcovar = covar.sex.creat6wk.F, snps = GM_snps)
-save(qtl.log.Alb6WK.192.F, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.Alb6WK.192.F.Rdata")
-#log Albumin 10WKS
-qtl.log.Alb10WK.192.F <- scanone( pheno = pheno.F, pheno.col = "Alb10WK_log", probs = genoprob.F, K = K_GS.F, addcovar = covar.sex.creat10wk.F, snps = GM_snps)
-save(qtl.log.Alb10WK.192.F, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.Alb10WK.192.F.Rdata")
-#log Albumin 15WKS
-qtl.log.Alb15WK.192.F <- scanone( pheno = pheno.F, pheno.col = "Alb15WK_log", probs = genoprob.F, K = K_GS.F, addcovar = covar.sex.creat15wk.F, snps = GM_snps)
-save(qtl.log.Alb15WK.192.F, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.Alb15WK.192.F.Rdata")
-#Males
-#log Albumin 6WKS
-qtl.log.Alb6WK.192.M <- scanone( pheno = pheno.M, pheno.col = "Alb6WK_log", probs = genoprob.M, K = K_GS.M, addcovar = covar.sex.creat6wk.M, snps = GM_snps)
-save(qtl.log.Alb6WK.192.M, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.Alb6WK.192.M.Rdata")
-#log Albumin 10WKS
-qtl.log.Alb10WK.192.M <- scanone( pheno = pheno.M, pheno.col = "Alb10WK_log", probs = genoprob.M, K = K_GS.M, addcovar = covar.sex.creat10wk.M, snps = GM_snps)
-save(qtl.log.Alb10WK.192.M, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.Alb10WK.192.M.Rdata")
-#log Albumin 15WKS
-qtl.log.Alb15WK.192.M <- scanone( pheno = pheno.M, pheno.col = "Alb15WK_log", probs = genoprob.M, K = K_GS.M, addcovar = covar.sex.creat15wk.M, snps = GM_snps)
-save(qtl.log.Alb15WK.192.M, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.Alb15WK.192.M.Rdata")
+save(qtl.log.Alb15WK.192, file = paste0(dir,"Data/consolidated/qtl.log.Alb15WK.192.Rdata.rds"))
 
-#Run permutations 
+# #Females
+# #log Albumin 6WKS
+# qtl.log.Alb6WK.192.F <- scanone( pheno = pheno.F, pheno.col = "Alb6WK_log", probs = genoprob.F, K = K_GS.F, addcovar = covar.sex.creat6wk.F, snps = GM_snps)
+# save(qtl.log.Alb6WK.192.F, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.Alb6WK.192.F.Rdata")
+# #log Albumin 10WKS
+# qtl.log.Alb10WK.192.F <- scanone( pheno = pheno.F, pheno.col = "Alb10WK_log", probs = genoprob.F, K = K_GS.F, addcovar = covar.sex.creat10wk.F, snps = GM_snps)
+# save(qtl.log.Alb10WK.192.F, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.Alb10WK.192.F.Rdata")
+# #log Albumin 15WKS
+# qtl.log.Alb15WK.192.F <- scanone( pheno = pheno.F, pheno.col = "Alb15WK_log", probs = genoprob.F, K = K_GS.F, addcovar = covar.sex.creat15wk.F, snps = GM_snps)
+# save(qtl.log.Alb15WK.192.F, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.Alb15WK.192.F.Rdata")
+# #Males
+# #log Albumin 6WKS
+# qtl.log.Alb6WK.192.M <- scanone( pheno = pheno.M, pheno.col = "Alb6WK_log", probs = genoprob.M, K = K_GS.M, addcovar = covar.sex.creat6wk.M, snps = GM_snps)
+# save(qtl.log.Alb6WK.192.M, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.Alb6WK.192.M.Rdata")
+# #log Albumin 10WKS
+# qtl.log.Alb10WK.192.M <- scanone( pheno = pheno.M, pheno.col = "Alb10WK_log", probs = genoprob.M, K = K_GS.M, addcovar = covar.sex.creat10wk.M, snps = GM_snps)
+# save(qtl.log.Alb10WK.192.M, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.Alb10WK.192.M.Rdata")
+# #log Albumin 15WKS
+# qtl.log.Alb15WK.192.M <- scanone( pheno = pheno.M, pheno.col = "Alb15WK_log", probs = genoprob.M, K = K_GS.M, addcovar = covar.sex.creat15wk.M, snps = GM_snps)
+# save(qtl.log.Alb15WK.192.M, file = "./GBRS_reconstruction/reconstruct/best.compiled.genoprob/qtl/qtl.log.Alb15WK.192.M.Rdata")
+
+#Run permutations
 #Perms 100: ACR
 #log ACR6WKS
 perms.100.qtl.log.ACR6WK.192  <- scanone.perm( pheno = pheno, pheno.col = "ACR6WK_log", probs = best.genoprobs.192, addcovar = sex.covar, snps = GM_snps, nperm = 100)
@@ -250,7 +252,7 @@ thr.1000.qtl.logAlb.15wk <- get.sig.thr( perms.1000.qtl.log.Alb15WK.192[,,1], al
 
 
 #Create plots
-#plot QTL: ACR 
+#plot QTL: ACR
 #ACR : both sexes
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/qtl.perm1000.log.ACR6wk.png", width = 1500, height = 1000, res = 100)
 plot(qtl.log.ACR6WK.192, sig.thr = thr.1000.qtl.logACR.6wk, sig.col = c("red", "orange", "chartreuse"), main = "Col4a5xDO log.ACR.6WK QTL perms.1000")
@@ -271,7 +273,7 @@ dev.off()
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/qtl.log.ACR15wk.F.png", width = 1500, height = 1000, res = 100)
 plot(qtl.log.ACR15WK.192.F, main = "Col4a5xDO log.ACR.15WK QTL Females")
 dev.off()
-#ACR : Males no threshold 
+#ACR : Males no threshold
 png("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/qtl.log.ACR6wk.M.png", width = 1500, height = 1000, res = 100)
 plot(qtl.log.ACR6WK.192.M, main = "Col4a5xDO log.ACR.6WK QTL Males")
 dev.off()
@@ -425,13 +427,13 @@ summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
       measurevar
     )
 
-    # Rename the "mean" column    
+    # Rename the "mean" column
     datac <- rename(datac, c("mean" = measurevar))
 
     datac$se <- datac$sd / sqrt(datac$N)  # Calculate standard error of the mean
 
     # Confidence interval multiplier for standard error
-    # Calculate t-statistic for confidence interval: 
+    # Calculate t-statistic for confidence interval:
     # e.g., if conf.interval is .95, use .975 (above/below), and use df=N-1
     ciMult <- qt(conf.interval/2 + .5, datac$N-1)
     datac$ci <- datac$se * ciMult
@@ -513,11 +515,11 @@ lodA <- lodA[lodA$pos < 113.7, ]
 coefA <- qtl$coef$A #matrix
 coefA <- as.data.frame(coefA)
 coefA <- coefA[rownames(lodA),]
-# replace 
+# replace
 qtl$lod$A <- lodA
 qtl$coef$A <- coefA
-#	plot allele effect 
-qtl$coef$A[abs(qtl$coef$A) > 2 ] = 0 
+#	plot allele effect
+qtl$coef$A[abs(qtl$coef$A) > 2 ] = 0
 pdf("./GBRS_reconstruction/reconstruct/best.compiled.genoprob/plot/coef.Alb10.chr2.bayesian.int.pdf", width = 10.0, height = 7.5)
 coefplot(qtl, chr = 2, main = "Chr 2 Alb10WK_log Allele Effect Plot @ bayesian interval")
 dev.off()
@@ -549,6 +551,3 @@ ggplot(ggdata_SE, aes(Founders, Effect)) +
 	labs( title = "Average founder effect within bayesian interval of Alb10wk QTL Chr 2", x = "DO Founders", y = "Founder Effect") +
 	theme( plot.title = element_text(hjust = 0.5))
 dev.off()
-
-
-
