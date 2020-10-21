@@ -1,7 +1,7 @@
 ##Xce and Xist allele for Col4a5xDO
 #	Yuka Takemon
 #	Created: 11/09/16
-#	Modified last: 12/07/16
+#	Modified last: 21/10/20
 
 ##Intro:
 #	We know that X chromosome silencing is driven by a region called the Xce (X controlling element), which is a cis-regulatory gene.
