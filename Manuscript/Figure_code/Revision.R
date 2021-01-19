@@ -16,8 +16,8 @@ pheno <- read.delim(paste0(dir,"Data/consolidated/Phenotype/1415_master_pheno.tx
 rownames(pheno) <- make.names(pheno[,1]) #move sample ID to row names
 pheno <- pheno[rownames(best.genoprobs.192),] #subset pheno to match 192
 #clean up pheno and add log of ACR
-pheno[pheno < 0 ] = NA
-pheno[pheno ==  -Inf] = NA
+pheno[pheno < 0 ] = NA # remove negative values after log
+pheno[pheno ==  -Inf] = NA # remove non- numbers
 pheno$ACR6WK_log <- log(pheno$ACR6WK)
 pheno$ACR10WK_log <- log(pheno$ACR10WK)
 pheno$ACR15WK_log <- log(pheno$ACR15WK)

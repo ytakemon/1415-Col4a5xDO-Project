@@ -78,18 +78,20 @@ options(na.action = 'na.pass') #leave in NAs
 # Figure 3 plot
 ggdata <- pheno %>%
   mutate(sample = rownames(pheno)) %>%
-  select(sample, Xce_DO, ACR6WK_log, ACR10WK_log, ACR15WK_log) %>%
-  pivot_longer(-c(sample,Xce_DO), names_to = "ACR_month", values_to = "Value") %>%
-  mutate(Month = case_when(
+  select(sample, Sex, Xce_DO, ACR6WK_log, ACR10WK_log, ACR15WK_log, C2_log) %>%
+  rename(log_C2 = C2_log) %>%
+  pivot_longer(-c(sample,Sex,Xce_DO, log_C2), names_to = "ACR_month", values_to = "log_ACR_value") %>%
+  mutate(Age_in_Months = case_when(
             .$ACR_month == "ACR6WK_log" ~ "6",
             .$ACR_month == "ACR10WK_log" ~ "10",
             .$ACR_month == "ACR15WK_log" ~ "15",
             TRUE ~ "NA")) %>%
-  mutate(Month = fct_relevel(Month, "6","10","15"))
+  mutate(Age_in_Months = fct_relevel(Age_in_Months, "6","10","15")) %>%
+  select(sample, Sex, Age_in_Months, Xce_DO, log_C2, log_ACR_value)
 
 # Plot figure 3
-png(paste0(dir,"Results/Xce_allele_ACR.png"), height = 4, width = 6, units = "in", compression = "none", res = )
-ggplot(ggdata, aes(x = Month, y = Value, fill = Xce_DO))+
+pdf(paste0(dir,"Results/Xce_allele_ACR.pdf"), height = 4, width = 6)
+ggplot(ggdata, aes(x = Age_in_Months, y = log_ACR_value, fill = Xce_DO))+
   geom_boxplot() +
   scale_fill_aaas() +
   labs(x = "Weeks of age",
@@ -100,5 +102,47 @@ ggplot(ggdata, aes(x = Month, y = Value, fill = Xce_DO))+
 dev.off()
 
 # Get sample numbers for Figure 3
-ggdata %>% drop_na() %>% count(Month)
-ggdata %>% drop_na() %>% count(Month, Xce_DO)
+ggdata %>% drop_na() %>% count(Age_in_Months)
+ggdata %>% drop_na() %>% count(Age_in_Months, Xce_DO)
+
+# export data for sharing:
+write_csv(ggdata, paste0(dir,"Results/Sample_Xce_info_with_phenotype.csv"))
+
+# get mean and SD for GFR
+ggdata %>% select(sample, Sex, Xce_DO, log_C2) %>% group_by(Sex, Xce_DO) %>%
+  na.omit() %>%
+  summarise(log_C2_mean = mean(log_C2),
+            log_C2_sd = sd(log_C2))
+
+
+# > fit <- aov(log_C2 ~ Xce_DO, df)
+# > summary(fit)
+#              Df Sum Sq Mean Sq F value Pr(>F)
+# Xce_DO        3  1.764  0.5880   3.553 0.0155 *
+# Residuals   191 31.609  0.1655
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+# > TukeyHSD(fit)
+#   Tukey multiple comparisons of means
+#     95% family-wise confidence level
+#
+# Fit: aov(formula = log_C2 ~ Xce_DO, data = df)
+#
+# $Xce_DO
+#                   diff         lwr        upr     p adj
+# Xce_b-Xce_a -0.0762419 -0.25020279 0.09771899 0.6678057
+# Xce_c-Xce_a  0.1524694 -0.05568201 0.36062078 0.2321434
+# Xce_e-Xce_a -0.2239204 -0.59586442 0.14802364 0.4038323
+# Xce_c-Xce_b  0.2287113  0.01908161 0.43834097 0.0264456
+# Xce_e-Xce_b -0.1476785 -0.52045182 0.22509486 0.7339746
+# Xce_e-Xce_c -0.3763898 -0.76629306 0.01351351 0.0627897
+
+pdf(paste0(dir,"Results/Xce_allele_GFR.pdf"), width = 6, height = 4)
+ggplot(ggdata, aes(x = Xce_DO, y = log_C2, fill = Xce_DO))+
+  geom_boxplot() +
+  scale_fill_aaas() +
+  labs(x = "Xce allele",
+       y = "log(GFR)",
+       fill = "Xce allele") +
+  theme_bw()
+dev.off()

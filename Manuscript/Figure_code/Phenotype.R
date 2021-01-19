@@ -15,19 +15,17 @@ Pheno <- Pheno[rownames(Genoprobs),] #subset Pheno to match 192 samples
 #clean up Pheno and add log of ACR
 Pheno[Pheno < 0 ] = NA
 Pheno[Pheno ==  -Inf] = NA
-Pheno[Pheno ==  -Inf] = NA
 options(na.action = 'na.pass') #leave in NAs
 #keep only interested columns
 
 # Phenotype: ACR
 PhenoACR <- Pheno[,c("MouseID", "Sex", "ACR6WK", "ACR10WK", "ACR15WK")] %>%
 	rename(Week6 = ACR6WK,
-				 Week10 = ACR10WK,
-			 	 Week15 = ACR15WK) %>%
+				Week10 = ACR10WK,
+				Week15 = ACR15WK) %>%
 	gather(key = ACRWK, value = Measurement,
-		Week6, Week10, Week15) %>%
-	mutate(Sex = as.factor(Sex),
-				 ACRWK = as.character(ACRWK))
+				Week6, Week10, Week15) %>%
+	mutate(Sex = as.factor(Sex), ACRWK = as.character(ACRWK))
 
 PhenoACR[PhenoACR$ACRWK == "Week6",]$ACRWK <- 6
 PhenoACR[PhenoACR$ACRWK == "Week10",]$ACRWK <- 10
@@ -96,6 +94,14 @@ Pheno[,c("MouseID", "Sex", "C2")] %>%
 	group_by(Sex) %>%
 	summarise(meanGFR = mean(C2),
 						log_meanGFR = log(mean(C2)))
+
+Pheno %>% select(MouseID, Sex, C2) %>%
+	na.omit() %>%
+	group_by(Sex) %>%
+	summarise(meanGFR = mean(C2),
+						sdGFR = sd(C2),
+						log_meanGFR = log(mean(C2)))
+
 # T-test
 Pheno[,c("MouseID", "Sex", "C2")] %>%
 	na.omit() %>%
