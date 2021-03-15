@@ -66,9 +66,15 @@ cor <- read_csv(paste0(cor_dir,"Data/RNAseq/RNAseq_phenotype_cor_15wk_F.csv")) %
          gfr_fdr = p.adjust(gfr_pval, n = nrow(cor), method = "BH")) %>%
   rename(gfr_cor = gfr)
 
+cor_bonf <- read_csv(paste0(cor_dir,"Data/RNAseq/RNAseq_phenotype_cor_15wk_F.csv")) %>%
+  mutate(acr_fdr = p.adjust(acr_pval, n = nrow(cor), method = "bonferroni"),
+         gfr_fdr = p.adjust(gfr_pval, n = nrow(cor), method = "bonferroni")) %>%
+  rename(gfr_cor = gfr)
+
 write_csv(cor, paste0(cor_dir,"Data/RNAseq/RNAseq_phenotype_cor_15wk_F_wFDR.csv"))
 
 cor_sig_both <- cor %>% filter(acr_fdr < 0.05 & gfr_fdr < 0.05)
+cor_sig_both_bonf <- cor_bonf %>% filter(acr_fdr < 0.05 & gfr_fdr < 0.05)
 
 cor %>%
   rename(ACR = acr_cor,
