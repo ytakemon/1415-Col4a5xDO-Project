@@ -1,9 +1,7 @@
-# 1415 Col4a5xDO Project Readme
+# 1415 Col4a5xDO Project
 
-This repo contails all bash and R code used in the 1415 Col4a5xDO project. For more information regarding this project please see our lab wikipage (Animal experiment [1415](http://korstanjelabwiki.jax.org/wiki/index.php5/14-15)). 
+This repo contails all bash and R code used in the 1415 Col4a5xDO project. Results from this project was published on JASN, [Takemon et al](https://jasn.asnjournals.org/content/early/2021/05/24/ASN.2020060777)
 
-There are (will be) Readme.md files in each directory describing in detail the contents of reach script.
+If you have any questions regarding this repo please add an issue. <br />
 
-If any question regarding this repo please add an issue. <br />
-Thank you, <br />
-Yuka
+Thank you!
